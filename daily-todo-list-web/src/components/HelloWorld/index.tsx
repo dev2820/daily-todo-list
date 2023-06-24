@@ -1,5 +1,6 @@
-import React from "react";
-
-export const HelloWorld: React.FC = () => {
-  return <p>Hello World</p>;
+interface Props {
+  className?: string;
+}
+export const HelloWorld = (props: Props) => {
+  return <p className={props.className}>Hello World</p>;
 };
