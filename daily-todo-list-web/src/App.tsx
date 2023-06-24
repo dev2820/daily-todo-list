@@ -3,7 +3,7 @@ import { HelloWorld } from "./components";
 function App() {
   return (
     <>
-      <HelloWorld></HelloWorld>
+      <HelloWorld className={"color-red"}></HelloWorld>
     </>
   );
 }
