@@ -13,11 +13,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    todos: [
+    initialTodos: [
       { content: "Todo A", done: false },
       { content: "Todo B", done: true },
       { content: "Todo C", done: false },
     ],
   },
-  render: (args) => <TodoList todos={args.todos}></TodoList>,
+  render: (args) => <TodoList initialTodos={args.initialTodos}></TodoList>,
 };

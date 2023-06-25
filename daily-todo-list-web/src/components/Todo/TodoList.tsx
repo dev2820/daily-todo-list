@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { type Todo } from "@/hooks";
+import { useTodoList, type Todo } from "@/hooks";
 import {
   SortableElement,
   SortableContainer,
@@ -7,7 +6,6 @@ import {
   type SortableContainerProps,
 } from "react-sortable-hoc";
 import { TodoItem } from ".";
-import { arrayMoveImmutable } from "array-move";
 
 export interface TodoItemProps {
   value: Todo;
@@ -49,37 +47,13 @@ export const SortableList: React.ComponentClass<
   );
 });
 
-export const TodoList = ({ todos }: { todos: Todo[] }) => {
-  const [items, setItems] = useState<Todo[]>(todos);
-  const onSortEnd = ({
-    oldIndex,
-    newIndex,
-  }: {
-    oldIndex: number;
-    newIndex: number;
-  }) => {
-    setItems((items) => {
-      return arrayMoveImmutable(items, oldIndex, newIndex);
-    });
-  };
-  const doit = (index: number) => {
-    setItems((oldItems) => {
-      const newItems = [...oldItems];
-      newItems[index].done = true;
-      return newItems;
-    });
-  };
-  const undo = (index: number) => {
-    setItems((oldItems) => {
-      const newItems = [...oldItems];
-      newItems[index].done = false;
-      return newItems;
-    });
-  };
+export const TodoList = ({ initialTodos }: { initialTodos: Todo[] }) => {
+  const { todos, sort, doit, undo } = useTodoList(initialTodos);
+
   return (
     <SortableList
-      items={items}
-      onSortEnd={onSortEnd}
+      items={todos}
+      onSortEnd={sort}
       onDo={doit}
       onUndo={undo}
     ></SortableList>
