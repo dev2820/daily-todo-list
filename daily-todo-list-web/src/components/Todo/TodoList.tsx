@@ -2,11 +2,15 @@ import { useTodoList, type Todo } from "@/hooks";
 import {
   SortableElement,
   SortableContainer,
+  SortableHandle,
   type SortableElementProps,
   type SortableContainerProps,
 } from "react-sortable-hoc";
+import { cva } from "class-variance-authority";
 import { TodoItem } from ".";
+import { DragHandle as _DragHandle } from "@/components";
 
+export const DragHandle = SortableHandle(() => <_DragHandle></_DragHandle>);
 export interface TodoItemProps {
   value: Todo;
   onDo: () => void;
@@ -18,16 +22,26 @@ export type SortableItemProp<T> = SortableElementProps & T;
 export const SortableItem: React.ComponentClass<
   SortableItemProp<TodoItemProps>
 > = SortableElement(
-  ({ value, onDo, onUndo, onContentChange }: TodoItemProps) => (
-    <li>
-      <TodoItem
-        todo={value}
-        onDo={onDo}
-        onUndo={onUndo}
-        onChangeContent={onContentChange}
-      ></TodoItem>
-    </li>
-  )
+  ({ value, onDo, onUndo, onContentChange }: TodoItemProps) => {
+    const style = cva([
+      "p-2 rounded-md",
+      "flex gap-x-2",
+      "hover:bg-slate-200/50",
+      "duration-200",
+    ]);
+
+    return (
+      <li className={style()}>
+        <DragHandle></DragHandle>
+        <TodoItem
+          todo={value}
+          onDo={onDo}
+          onUndo={onUndo}
+          onChangeContent={onContentChange}
+        ></TodoItem>
+      </li>
+    );
+  }
 );
 
 export interface TodoListProps {
@@ -63,9 +77,9 @@ export const SortableList: React.ComponentClass<
 
 export const TodoList = ({ initialTodos }: { initialTodos: Todo[] }) => {
   const { todos, sort, doit, undo, changeContent } = useTodoList(initialTodos);
-
   return (
     <SortableList
+      useDragHandle
       items={todos}
       onSortEnd={sort}
       onDo={doit}
