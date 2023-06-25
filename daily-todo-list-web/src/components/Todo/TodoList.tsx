@@ -10,12 +10,6 @@ import {
 import { cva } from "class-variance-authority";
 import { DragHandle as _DragHandle } from "@/components";
 
-const style = cva([
-  "py-2 px-3 rounded-md",
-  "flex gap-x-4",
-  "hover:bg-slate-200/50",
-  "duration-200",
-]);
 interface TodoListProp {
   todos: Todo[];
   onSortEnd: SortEndHandler;
@@ -68,3 +62,10 @@ const TodoItem: React.ComponentClass<
 ));
 
 const DragHandle = SortableHandle(() => <_DragHandle></_DragHandle>);
+
+const style = cva([
+  "py-2 px-3 rounded-md",
+  "flex gap-x-4",
+  "hover:bg-slate-200/50",
+  "duration-200",
+]);
