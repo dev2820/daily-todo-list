@@ -1,10 +1,4 @@
-import {
-  useState,
-  ChangeEvent,
-  PropsWithChildren,
-  useEffect,
-  useRef,
-} from "react";
+import { useState, ChangeEvent, PropsWithChildren } from "react";
 import { type Todo } from "@/hooks";
 import { cva } from "class-variance-authority";
 import { Checkbox } from "primereact/checkbox";
@@ -26,7 +20,6 @@ export const TodoItem = ({
 }: PropsWithChildren<Props>) => {
   const [content, setContent] = useState(todo.content);
   const [contentInlineStyle, setContentInlineStyle] = useState({});
-  const $contentArea = useRef(null);
 
   const onDoneChange = () => {
     if (todo.done && onUndo) onUndo();
@@ -63,15 +56,13 @@ export const TodoItem = ({
 };
 
 const style = cva(["w-full flex gap-x-2", "duration-200"]);
-const flexCenterStyle = cva("my-auto");
 const textareaStyle = cva(["resize-none"]);
 const contentStyle = cva(
   [
     "m-0 p-0",
     "bg-transparent",
     "focus:outline-none",
-    "grow",
-    flexCenterStyle(),
+    "grow items-start",
     textareaStyle(),
   ],
   {
@@ -82,4 +73,4 @@ const contentStyle = cva(
     },
   }
 );
-const checkboxStyle = cva([flexCenterStyle()]);
+const checkboxStyle = cva(["mt-[2px] items-start"]);
