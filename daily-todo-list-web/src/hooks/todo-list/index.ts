@@ -19,7 +19,7 @@ export const useTodoList = (initialTodos: Todo[]) => {
       const newTodos = [...todos];
       const targetIndex = newTodos.findIndex((todo) => todo.id === id);
       if (targetIndex < 0) return newTodos;
-      newTodos[targetIndex].done = true;
+      newTodos[targetIndex] = { ...newTodos[targetIndex], done: true };
 
       return newTodos;
     });
@@ -29,7 +29,7 @@ export const useTodoList = (initialTodos: Todo[]) => {
       const newTodos = [...todos];
       const targetIndex = newTodos.findIndex((todo) => todo.id === id);
       if (targetIndex < 0) return newTodos;
-      newTodos[targetIndex].done = false;
+      newTodos[targetIndex] = { ...newTodos[targetIndex], done: false };
 
       return newTodos;
     });
@@ -40,7 +40,7 @@ export const useTodoList = (initialTodos: Todo[]) => {
       const newTodos = [...todos];
       const targetIndex = newTodos.findIndex((todo) => todo.id === id);
       if (targetIndex < 0) return newTodos;
-      newTodos[targetIndex].content = content;
+      newTodos[targetIndex] = { ...newTodos[targetIndex], content };
 
       return newTodos;
     });
@@ -53,6 +53,12 @@ export const useTodoList = (initialTodos: Todo[]) => {
     });
   };
 
+  const removeTodo = (id: string) => {
+    setTodos((todos: Todo[]) => {
+      return todos.filter((todo) => todo.id !== id);
+    });
+  };
+
   return {
     todos,
     sort,
@@ -60,5 +66,6 @@ export const useTodoList = (initialTodos: Todo[]) => {
     undo,
     changeContent,
     addTodo,
+    removeTodo,
   };
 };

@@ -58,4 +58,14 @@ describe("useTodoList", () => {
 
     expect(todoList.current.todos.length).toBe(4);
   });
+
+  it("should remove Todo", () => {
+    const { result: todoList } = renderHook(() => useTodoList(items));
+    todoList.current.removeTodo("1");
+
+    expect(todoList.current.todos).toEqual([
+      { id: "0", content: "A", done: false },
+      { id: "2", content: "C", done: true },
+    ]);
+  });
 });
