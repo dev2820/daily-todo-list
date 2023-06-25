@@ -19,64 +19,46 @@ const style = cva([
 const todoStyle = cva(["grow"]);
 
 export const DragHandle = SortableHandle(() => <_DragHandle></_DragHandle>);
-export interface TodoItemProps<T> {
-  value: T;
-}
-export type SortableItemProp<T> = SortableElementProps & T;
 
-export const SortableItem = <T,>() => {
-  return SortableElement(
-    ({
-      renderItem,
-    }: { value: T } & {
-      renderItem: () => JSX.Element;
-    } & SortableItemProp<T>) => {
-      return (
-        <li className={style()}>
-          <DragHandle></DragHandle>
-          <div className={todoStyle()}>{renderItem()}</div>
-        </li>
-      );
-    }
-  ) as React.ComponentClass<
-    SortableItemProp<TodoItemProps<T>> & {
-      renderItem: () => JSX.Element;
-    }
-  >;
-};
-
-type RenderItemFunction<T> = (item: T, index: number) => JSX.Element;
+export const SortableItem = <T extends { renderItem: () => JSX.Element }>() =>
+  SortableElement(({ renderItem }: SortableElementProps & T) => {
+    return (
+      <li className={style()}>
+        <DragHandle></DragHandle>
+        <div className={todoStyle()}>{renderItem()}</div>
+      </li>
+    );
+  }) as React.ComponentClass<SortableElementProps & T>;
 
 export interface SortableListProps<T> extends SortableContainerProps {
   items: T[];
-  renderItem: RenderItemFunction<T>;
+  renderItem: (item: T, index: number) => JSX.Element;
 }
 
-export const SortableList = <T extends { id: string }>() => {
-  return SortableContainer(({ items, renderItem }: SortableListProps<T>) => {
-    const _SortableItem = SortableItem<T>();
+export const SortableList = <T extends { id: string }>() =>
+  SortableContainer(({ items, renderItem }: SortableListProps<T>) => {
+    const _SortableItem = SortableItem();
+
     return (
       <ul>
         {items.map((value, index) => (
           <_SortableItem
             key={`item-${value.id}`}
             index={index}
-            value={value}
             renderItem={() => renderItem(value, index)}
           ></_SortableItem>
         ))}
       </ul>
     );
   }) as React.ComponentClass<SortableListProps<T>>;
-};
 
-interface TodoList2Prop {
+interface TodoListProp {
   todos: Todo[];
   onSortEnd: SortEndHandler;
   renderTodo: (todo: Todo, index: number) => JSX.Element;
 }
 
-export const TodoList = ({ todos, onSortEnd, renderTodo }: TodoList2Prop) => {
+export const TodoList = ({ todos, onSortEnd, renderTodo }: TodoListProp) => {
   const _TodoList = SortableList<Todo>();
   return (
     <_TodoList
