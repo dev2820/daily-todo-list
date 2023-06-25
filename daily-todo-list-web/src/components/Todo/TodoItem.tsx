@@ -19,7 +19,7 @@ export const TodoItem = ({
   const [content, setContent] = useState(todo.content);
   const onDoneChange = () => {
     if (todo.done && onUndo) onUndo();
-    if (!todo.done && onDo) onDo();
+    else if (!todo.done && onDo) onDo();
   };
 
   const onContentChange = (event: ChangeEvent<HTMLInputElement>) => {
