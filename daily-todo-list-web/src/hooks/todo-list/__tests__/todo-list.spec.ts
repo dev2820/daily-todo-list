@@ -4,17 +4,17 @@ import { renderHook } from "@testing-library/react-hooks";
 
 describe("useTodoList", () => {
   const items: Todo[] = [
-    { content: "A", done: false },
-    { content: "B", done: false },
-    { content: "C", done: true },
+    { id: "0", content: "A", done: false },
+    { id: "1", content: "B", done: false },
+    { id: "2", content: "C", done: true },
   ];
 
   it("should return todo list", () => {
     const { result: todoList } = renderHook(() => useTodoList(items));
     expect(todoList.current.todos).toEqual([
-      { content: "A", done: false },
-      { content: "B", done: false },
-      { content: "C", done: true },
+      { id: "0", content: "A", done: false },
+      { id: "1", content: "B", done: false },
+      { id: "2", content: "C", done: true },
     ]);
   });
 
@@ -23,9 +23,9 @@ describe("useTodoList", () => {
     todoList.current.sort({ oldIndex: 1, newIndex: 2 });
 
     expect(todoList.current.todos).toEqual([
-      { content: "A", done: false },
-      { content: "C", done: true },
-      { content: "B", done: false },
+      { id: "0", content: "A", done: false },
+      { id: "2", content: "C", done: true },
+      { id: "1", content: "B", done: false },
     ]);
   });
 

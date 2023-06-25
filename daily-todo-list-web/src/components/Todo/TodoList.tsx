@@ -60,7 +60,7 @@ export const SortableList: React.ComponentClass<
       <ul>
         {items.map((value, index) => (
           <SortableItem
-            key={`item-${index}`}
+            key={`item-${value.id}`}
             index={index}
             value={value}
             onDo={() => onDo(index)}

@@ -13,14 +13,14 @@ type Story = StoryObj<typeof meta>;
 
 export const NotDone: Story = {
   args: {
-    todo: { content: "Todo Not Done", done: false },
+    todo: { id: "0", content: "Todo Not Done", done: false },
   },
   render: (args) => <TodoItem todo={args.todo}></TodoItem>,
 };
 
 export const Done: Story = {
   args: {
-    todo: { content: "Todo Done", done: true },
+    todo: { id: "0", content: "Todo Done", done: true },
   },
   render: (args) => <TodoItem todo={args.todo}></TodoItem>,
 };

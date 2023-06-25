@@ -1,6 +1,7 @@
 import { useSortableList } from "@/hooks/sortable-list";
 
 export type Todo = {
+  id: string;
   content: string;
   done: boolean;
 };
