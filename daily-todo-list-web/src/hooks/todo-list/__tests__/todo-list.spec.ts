@@ -31,8 +31,8 @@ describe("useTodoList", () => {
 
   it("should have doit method that change todo's state to done", () => {
     const { result: todoList } = renderHook(() => useTodoList(items));
-    todoList.current.doit(0);
-    todoList.current.doit(2);
+    todoList.current.doit("0");
+    todoList.current.doit("2");
 
     expect(todoList.current.todos[0].done).toBe(true);
     expect(todoList.current.todos[2].done).toBe(true);
@@ -40,14 +40,14 @@ describe("useTodoList", () => {
 
   it("should have undo method that change todo's state to undo", () => {
     const { result: todoList } = renderHook(() => useTodoList(items));
-    todoList.current.undo(2);
+    todoList.current.undo("2");
 
     expect(todoList.current.todos[2].done).toBe(false);
   });
 
   it("should change content of Todo", () => {
     const { result: todoList } = renderHook(() => useTodoList(items));
-    todoList.current.changeContent(1, "D");
+    todoList.current.changeContent("1", "D");
 
     expect(todoList.current.todos[1].content).toBe("D");
   });

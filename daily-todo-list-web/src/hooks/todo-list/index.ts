@@ -13,27 +13,33 @@ export const useTodoList = (initialTodos: Todo[]) => {
     setList: setTodos,
   } = useSortableList<Todo>(initialTodos);
 
-  const doit = (index: number) => {
+  const doit = (id: string) => {
     setTodos((todos: Todo[]) => {
       const newTodos = [...todos];
-      newTodos[index].done = true;
+      const target = newTodos.find((todo) => todo.id === id);
+      if (!target) return todos;
+      target.done = true;
 
       return newTodos;
     });
   };
-  const undo = (index: number) => {
+  const undo = (id: string) => {
     setTodos((todos: Todo[]) => {
       const newTodos = [...todos];
-      newTodos[index].done = false;
+      const target = newTodos.find((todo) => todo.id === id);
+      if (!target) return todos;
+      target.done = false;
 
       return newTodos;
     });
   };
 
-  const changeContent = (index: number, content: string) => {
+  const changeContent = (id: string, content: string) => {
     setTodos((todos: Todo[]) => {
       const newTodos = [...todos];
-      newTodos[index].content = content;
+      const target = newTodos.find((todo) => todo.id === id);
+      if (!target) return todos;
+      target.content = content;
 
       return newTodos;
     });

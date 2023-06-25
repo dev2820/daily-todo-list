@@ -32,7 +32,7 @@ export const SortableItem = <T extends { renderItem: () => JSX.Element }>() =>
 
 export interface SortableListProps<T> extends SortableContainerProps {
   items: T[];
-  renderItem: (item: T, index: number) => JSX.Element;
+  renderItem: (item: T, id: string) => JSX.Element;
 }
 
 export const SortableList = <T extends { id: string }>() =>
@@ -45,7 +45,7 @@ export const SortableList = <T extends { id: string }>() =>
           <_SortableItem
             key={`item-${value.id}`}
             index={index}
-            renderItem={() => renderItem(value, index)}
+            renderItem={() => renderItem(value, value.id)}
           ></_SortableItem>
         ))}
       </ul>
@@ -55,7 +55,7 @@ export const SortableList = <T extends { id: string }>() =>
 interface TodoListProp {
   todos: Todo[];
   onSortEnd: SortEndHandler;
-  renderTodo: (todo: Todo, index: number) => JSX.Element;
+  renderTodo: (todo: Todo, id: string) => JSX.Element;
 }
 
 export const TodoList = ({ todos, onSortEnd, renderTodo }: TodoListProp) => {
