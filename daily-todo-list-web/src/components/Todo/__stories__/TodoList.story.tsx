@@ -21,14 +21,14 @@ const TodoListExample = () => {
     { id: "2", content: "Todo C", done: false },
   ]);
 
-  const renderTodo = (todo: Todo, index: number) => {
+  const renderTodo = (id: string, todo: Todo) => {
     return (
       <TodoItem
         todo={todo}
-        onDo={() => todoList.doit(index)}
-        onUndo={() => todoList.undo(index)}
+        onDo={() => todoList.doit(id)}
+        onUndo={() => todoList.undo(id)}
         onChangeContent={(content: string) =>
-          todoList.changeContent(index, content)
+          todoList.changeContent(id, content)
         }
       ></TodoItem>
     );

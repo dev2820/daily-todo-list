@@ -16,50 +16,13 @@ const style = cva([
   "hover:bg-slate-200/50",
   "duration-200",
 ]);
-const todoStyle = cva(["grow"]);
-
-export const DragHandle = SortableHandle(() => <_DragHandle></_DragHandle>);
-
-export const SortableItem = <T extends { renderItem: () => JSX.Element }>() =>
-  SortableElement(({ renderItem }: SortableElementProps & T) => {
-    return (
-      <li className={style()}>
-        <DragHandle></DragHandle>
-        <div className={todoStyle()}>{renderItem()}</div>
-      </li>
-    );
-  }) as React.ComponentClass<SortableElementProps & T>;
-
-export interface SortableListProps<T> extends SortableContainerProps {
-  items: T[];
-  renderItem: (item: T, id: string) => JSX.Element;
-}
-
-export const SortableList = <T extends { id: string }>() =>
-  SortableContainer(({ items, renderItem }: SortableListProps<T>) => {
-    const _SortableItem = SortableItem();
-
-    return (
-      <ul>
-        {items.map((value, index) => (
-          <_SortableItem
-            key={`item-${value.id}`}
-            index={index}
-            renderItem={() => renderItem(value, value.id)}
-          ></_SortableItem>
-        ))}
-      </ul>
-    );
-  }) as React.ComponentClass<SortableListProps<T>>;
-
 interface TodoListProp {
   todos: Todo[];
   onSortEnd: SortEndHandler;
-  renderTodo: (todo: Todo, id: string) => JSX.Element;
+  renderTodo: (id: string, todo: Todo) => JSX.Element;
 }
 
 export const TodoList = ({ todos, onSortEnd, renderTodo }: TodoListProp) => {
-  const _TodoList = SortableList<Todo>();
   return (
     <_TodoList
       useDragHandle
@@ -69,3 +32,39 @@ export const TodoList = ({ todos, onSortEnd, renderTodo }: TodoListProp) => {
     ></_TodoList>
   );
 };
+
+const _TodoList: React.ComponentClass<
+  SortableContainerProps & {
+    items: Todo[];
+    renderItem: (id: string, todo: Todo) => JSX.Element;
+  }
+> = SortableContainer(
+  ({
+    items,
+    renderItem,
+  }: {
+    items: Todo[];
+    renderItem: (id: string, todo: Todo) => JSX.Element;
+  }) => {
+    return (
+      <ul>
+        {items.map((value: Todo, index: number) => (
+          <TodoItem key={`item-${value.id}`} index={index}>
+            {renderItem(value.id, value)}
+          </TodoItem>
+        ))}
+      </ul>
+    );
+  }
+);
+
+const TodoItem: React.ComponentClass<
+  SortableElementProps & { children: JSX.Element }
+> = SortableElement(({ children }: { children: JSX.Element }) => (
+  <li className={style()}>
+    <DragHandle></DragHandle>
+    {children}
+  </li>
+));
+
+const DragHandle = SortableHandle(() => <_DragHandle></_DragHandle>);

@@ -1,4 +1,5 @@
 import { useSortableList } from "@/hooks/sortable-list";
+import { useEffect } from "react";
 
 export type Todo = {
   id: string;
@@ -12,7 +13,9 @@ export const useTodoList = (initialTodos: Todo[]) => {
     sort,
     setList: setTodos,
   } = useSortableList<Todo>(initialTodos);
-
+  useEffect(() => {
+    console.log(todos);
+  }, [todos]);
   const doit = (id: string) => {
     setTodos((todos: Todo[]) => {
       const newTodos = [...todos];
