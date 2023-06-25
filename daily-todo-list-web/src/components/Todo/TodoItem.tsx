@@ -19,19 +19,13 @@ export const TodoItem = ({
   className,
 }: PropsWithChildren<Props>) => {
   const [content, setContent] = useState(todo.content);
-  useEffect(() => {
-    setContent(todo.content);
-  }, [todo.content]);
+
   const onDoneChange = () => {
     if (todo.done && onUndo) onUndo();
     else if (!todo.done && onDo) onDo();
   };
 
-  const onContentChange = (event: ChangeEvent<HTMLInputElement>) => {
-    /**
-     * TODO:
-     * debounce 적용 할 것
-     */
+  const onEdit = (event: ChangeEvent<HTMLInputElement>) => {
     setContent(event.target.value);
 
     if (!onChangeContent) return;
@@ -49,7 +43,7 @@ export const TodoItem = ({
         className={contentStyle({ done: todo.done })}
         type="text"
         value={content}
-        onChange={onContentChange}
+        onChange={onEdit}
       ></input>
     </div>
   );

@@ -16,9 +16,9 @@ export const useTodoList = (initialTodos: Todo[]) => {
   const doit = (id: string) => {
     setTodos((todos: Todo[]) => {
       const newTodos = [...todos];
-      const target = newTodos.find((todo) => todo.id === id);
-      if (!target) return todos;
-      target.done = true;
+      const targetIndex = newTodos.findIndex((todo) => todo.id === id);
+      if (targetIndex < 0) return newTodos;
+      newTodos[targetIndex].done = true;
 
       return newTodos;
     });
@@ -26,9 +26,9 @@ export const useTodoList = (initialTodos: Todo[]) => {
   const undo = (id: string) => {
     setTodos((todos: Todo[]) => {
       const newTodos = [...todos];
-      const target = newTodos.find((todo) => todo.id === id);
-      if (!target) return todos;
-      target.done = false;
+      const targetIndex = newTodos.findIndex((todo) => todo.id === id);
+      if (targetIndex < 0) return newTodos;
+      newTodos[targetIndex].done = false;
 
       return newTodos;
     });
@@ -37,9 +37,9 @@ export const useTodoList = (initialTodos: Todo[]) => {
   const changeContent = (id: string, content: string) => {
     setTodos((todos: Todo[]) => {
       const newTodos = [...todos];
-      const target = newTodos.find((todo) => todo.id === id);
-      if (!target) return todos;
-      target.content = content;
+      const targetIndex = newTodos.findIndex((todo) => todo.id === id);
+      if (targetIndex < 0) return newTodos;
+      newTodos[targetIndex].content = content;
 
       return newTodos;
     });
