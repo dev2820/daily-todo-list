@@ -24,8 +24,8 @@ export const SortableItem: React.ComponentClass<
 > = SortableElement(
   ({ value, onDo, onUndo, onContentChange }: TodoItemProps) => {
     const style = cva([
-      "p-2 rounded-md",
-      "flex gap-x-2",
+      "py-2 px-3 rounded-md",
+      "flex gap-x-4",
       "hover:bg-slate-200/50",
       "duration-200",
     ]);
