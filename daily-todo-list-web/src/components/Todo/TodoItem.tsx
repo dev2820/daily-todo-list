@@ -50,12 +50,7 @@ export const TodoItem = ({
   );
 };
 
-const style = cva([
-  "p-2 rounded-md",
-  "flex gap-x-2",
-  "hover:bg-slate-200/50",
-  "duration-200",
-]);
+const style = cva(["flex gap-x-2", "duration-200"]);
 const flexCenterStyle = cva("my-auto");
 const contentStyle = cva(
   ["m-0 p-0", "bg-transparent", "focus:outline-none", flexCenterStyle()],
