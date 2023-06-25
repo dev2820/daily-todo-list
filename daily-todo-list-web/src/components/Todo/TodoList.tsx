@@ -14,38 +14,40 @@ export interface TodoItemProps {
   onDo: () => void;
   onUndo: () => void;
 }
-export type SortableItemProp = SortableElementProps & TodoItemProps;
+export type SortableItemProp<T> = SortableElementProps & T;
 
-export const SortableItem: React.ComponentClass<SortableItemProp> =
-  SortableElement(({ value, onDo, onUndo }: TodoItemProps) => (
-    <li>
-      <TodoItem todo={value} onDo={onDo} onUndo={onUndo}></TodoItem>
-    </li>
-  ));
+export const SortableItem: React.ComponentClass<
+  SortableItemProp<TodoItemProps>
+> = SortableElement(({ value, onDo, onUndo }: TodoItemProps) => (
+  <li>
+    <TodoItem todo={value} onDo={onDo} onUndo={onUndo}></TodoItem>
+  </li>
+));
 
 export interface TodoListProps {
   items: Todo[];
   onDo: (index: number) => void;
   onUndo: (index: number) => void;
 }
-export type SortableListProps = SortableContainerProps & TodoListProps;
+export type SortableListProps<T> = SortableContainerProps & T;
 
-export const SortableList: React.ComponentClass<SortableListProps> =
-  SortableContainer(({ items, onDo, onUndo }: TodoListProps) => {
-    return (
-      <ul>
-        {items.map((value, index) => (
-          <SortableItem
-            key={`item-${index}`}
-            index={index}
-            value={value}
-            onDo={() => onDo(index)}
-            onUndo={() => onUndo(index)}
-          ></SortableItem>
-        ))}
-      </ul>
-    );
-  });
+export const SortableList: React.ComponentClass<
+  SortableListProps<TodoListProps>
+> = SortableContainer(({ items, onDo, onUndo }: TodoListProps) => {
+  return (
+    <ul>
+      {items.map((value, index) => (
+        <SortableItem
+          key={`item-${index}`}
+          index={index}
+          value={value}
+          onDo={() => onDo(index)}
+          onUndo={() => onUndo(index)}
+        ></SortableItem>
+      ))}
+    </ul>
+  );
+});
 
 export const TodoList = ({ todos }: { todos: Todo[] }) => {
   const [items, setItems] = useState<Todo[]>(todos);
