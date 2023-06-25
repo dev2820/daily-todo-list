@@ -1,10 +1,4 @@
-import {
-  useState,
-  ChangeEvent,
-  PropsWithChildren,
-  useEffect,
-  useRef,
-} from "react";
+import { useState, ChangeEvent, PropsWithChildren } from "react";
 import { type Todo } from "@/hooks";
 import { cva } from "class-variance-authority";
 import { Checkbox } from "primereact/checkbox";
