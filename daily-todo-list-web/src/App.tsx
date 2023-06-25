@@ -1,3 +1,4 @@
+import { Button } from "primereact/button";
 import { HelloWorld, TodoList, TodoItem } from "@/components";
 import { useTodoList, type Todo } from "@/hooks";
 
@@ -21,6 +22,10 @@ function App() {
     );
   };
 
+  const onAddTodo = () => {
+    todoList.addTodo();
+  };
+
   return (
     <>
       <HelloWorld className={"color-red"}></HelloWorld>
@@ -29,6 +34,7 @@ function App() {
         todos={todoList.todos}
         onSortEnd={todoList.sort}
       ></TodoList>
+      <Button onClick={onAddTodo}>Add Todo</Button>
     </>
   );
 }

@@ -51,4 +51,11 @@ describe("useTodoList", () => {
 
     expect(todoList.current.todos[1].content).toBe("D");
   });
+
+  it("should add new Todo", () => {
+    const { result: todoList } = renderHook(() => useTodoList(items));
+    todoList.current.addTodo();
+
+    expect(todoList.current.todos.length).toBe(4);
+  });
 });

@@ -1,4 +1,5 @@
 import { useSortableList } from "@/hooks/sortable-list";
+import { uid } from "@/utils";
 
 export type Todo = {
   id: string;
@@ -44,11 +45,20 @@ export const useTodoList = (initialTodos: Todo[]) => {
       return newTodos;
     });
   };
+
+  const addTodo = () => {
+    setTodos((todos: Todo[]) => {
+      const newTodo = { id: uid(), content: "", done: false };
+      return [...todos, newTodo];
+    });
+  };
+
   return {
     todos,
     sort,
     doit,
     undo,
     changeContent,
+    addTodo,
   };
 };
