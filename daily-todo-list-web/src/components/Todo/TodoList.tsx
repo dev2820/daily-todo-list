@@ -29,11 +29,13 @@ export const SortableItem: React.ComponentClass<
       "hover:bg-slate-200/50",
       "duration-200",
     ]);
+    const todoStyle = cva(["grow"]);
 
     return (
       <li className={style()}>
         <DragHandle></DragHandle>
         <TodoItem
+          className={todoStyle()}
           todo={value}
           onDo={onDo}
           onUndo={onUndo}

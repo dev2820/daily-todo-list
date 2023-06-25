@@ -8,6 +8,7 @@ interface Props {
   onDo?: () => void;
   onUndo?: () => void;
   onChangeContent?: (content: string) => void;
+  className?: string;
 }
 
 export const TodoItem = ({
@@ -15,6 +16,7 @@ export const TodoItem = ({
   onDo,
   onUndo,
   onChangeContent,
+  className,
 }: PropsWithChildren<Props>) => {
   const [content, setContent] = useState(todo.content);
   useEffect(() => {
@@ -37,7 +39,7 @@ export const TodoItem = ({
   };
 
   return (
-    <div className={style()}>
+    <div className={`${style()} ${className}`}>
       <Checkbox
         checked={todo.done}
         className={checkboxStyle()}
@@ -56,7 +58,13 @@ export const TodoItem = ({
 const style = cva(["flex gap-x-2", "duration-200"]);
 const flexCenterStyle = cva("my-auto");
 const contentStyle = cva(
-  ["m-0 p-0", "bg-transparent", "focus:outline-none", flexCenterStyle()],
+  [
+    "m-0 p-0",
+    "bg-transparent",
+    "focus:outline-none",
+    "grow",
+    flexCenterStyle(),
+  ],
   {
     variants: {
       done: {
