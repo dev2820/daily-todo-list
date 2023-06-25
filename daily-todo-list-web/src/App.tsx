@@ -15,6 +15,7 @@ function App() {
         todo={todo}
         onDo={() => todoList.doit(id)}
         onUndo={() => todoList.undo(id)}
+        onRemove={() => todoList.removeTodo(id)}
         onChangeContent={(content: string) =>
           todoList.changeContent(id, content)
         }
