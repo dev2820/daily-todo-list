@@ -11,6 +11,7 @@ export const useTodoList = (initialTodos: Todo[]) => {
     sort,
     setList: setTodos,
   } = useSortableList<Todo>(initialTodos);
+
   const doit = (index: number) => {
     setTodos((todos: Todo[]) => {
       const newTodos = [...todos];
@@ -28,10 +29,19 @@ export const useTodoList = (initialTodos: Todo[]) => {
     });
   };
 
+  const changeContent = (index: number, content: string) => {
+    setTodos((todos: Todo[]) => {
+      const newTodos = [...todos];
+      newTodos[index].content = content;
+
+      return newTodos;
+    });
+  };
   return {
     todos,
     sort,
     doit,
     undo,
+    changeContent,
   };
 };

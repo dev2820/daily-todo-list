@@ -44,4 +44,11 @@ describe("useTodoList", () => {
 
     expect(todoList.current.todos[2].done).toBe(false);
   });
+
+  it("should change content of Todo", () => {
+    const { result: todoList } = renderHook(() => useTodoList(items));
+    todoList.current.changeContent(1, "D");
+
+    expect(todoList.current.todos[1].content).toBe("D");
+  });
 });

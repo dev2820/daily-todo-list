@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { useState, ChangeEvent, PropsWithChildren } from "react";
 import { type Todo } from "@/hooks";
 import { cva } from "class-variance-authority";
 import { Checkbox } from "primereact/checkbox";
@@ -7,9 +7,32 @@ interface Props {
   todo: Todo;
   onDo?: () => void;
   onUndo?: () => void;
+  onChangeContent?: (content: string) => void;
 }
 
-export const TodoItem = ({ todo, onDo, onUndo }: PropsWithChildren<Props>) => {
+export const TodoItem = ({
+  todo,
+  onDo,
+  onUndo,
+  onChangeContent,
+}: PropsWithChildren<Props>) => {
+  const [content, setContent] = useState(todo.content);
+  const onDoneChange = () => {
+    if (todo.done && onUndo) onUndo();
+    if (!todo.done && onDo) onDo();
+  };
+
+  const onContentChange = (event: ChangeEvent<HTMLInputElement>) => {
+    /**
+     * TODO:
+     * debounce 적용 할 것
+     */
+    setContent(event.target.value);
+
+    if (!onChangeContent) return;
+    onChangeContent(event.target.value);
+  };
+
   const style = cva([
     "p-2 rounded-md",
     "flex gap-x-2",
@@ -26,19 +49,19 @@ export const TodoItem = ({ todo, onDo, onUndo }: PropsWithChildren<Props>) => {
   });
   const checkboxStyle = cva([flexCenterStyle()]);
 
-  const onChange = () => {
-    if (todo.done && onUndo) onUndo();
-    if (!todo.done && onDo) onDo();
-  };
-
   return (
     <div className={style()}>
       <Checkbox
         checked={todo.done}
         className={checkboxStyle()}
-        onChange={onChange}
+        onChange={onDoneChange}
       ></Checkbox>
-      <p className={contentStyle({ done: todo.done })}>{todo.content}</p>
+      <input
+        className={contentStyle({ done: todo.done })}
+        type="text"
+        value={content}
+        onChange={onContentChange}
+      ></input>
     </div>
   );
 };
