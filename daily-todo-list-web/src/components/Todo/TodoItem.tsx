@@ -1,4 +1,10 @@
-import { useState, ChangeEvent, PropsWithChildren, useEffect } from "react";
+import {
+  useState,
+  ChangeEvent,
+  PropsWithChildren,
+  useEffect,
+  useRef,
+} from "react";
 import { type Todo } from "@/hooks";
 import { cva } from "class-variance-authority";
 import { Checkbox } from "primereact/checkbox";
@@ -19,38 +25,46 @@ export const TodoItem = ({
   className,
 }: PropsWithChildren<Props>) => {
   const [content, setContent] = useState(todo.content);
+  const [contentInlineStyle, setContentInlineStyle] = useState({});
+  const $contentArea = useRef(null);
 
   const onDoneChange = () => {
     if (todo.done && onUndo) onUndo();
     else if (!todo.done && onDo) onDo();
   };
 
-  const onEdit = (event: ChangeEvent<HTMLInputElement>) => {
-    setContent(event.target.value);
-
+  const onEdit = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const $target = event.target;
+    setContent($target.value);
+    setContentInlineStyle({
+      height: `${$target.scrollHeight}px`,
+    });
     if (!onChangeContent) return;
-    onChangeContent(event.target.value);
+    onChangeContent($target.value);
   };
 
   return (
-    <div className={`${style()} ${className}`}>
+    <div className={`${style()} ${className ?? ""}`}>
       <Checkbox
         checked={todo.done}
         className={checkboxStyle()}
         onChange={onDoneChange}
       ></Checkbox>
-      <input
+      <textarea
         className={contentStyle({ done: todo.done })}
-        type="text"
-        value={content}
         onChange={onEdit}
-      ></input>
+        value={content}
+        style={contentInlineStyle}
+      >
+        {}
+      </textarea>
     </div>
   );
 };
 
-const style = cva(["flex gap-x-2", "duration-200"]);
+const style = cva(["w-full flex gap-x-2", "duration-200"]);
 const flexCenterStyle = cva("my-auto");
+const textareaStyle = cva(["resize-none"]);
 const contentStyle = cva(
   [
     "m-0 p-0",
@@ -58,6 +72,7 @@ const contentStyle = cva(
     "focus:outline-none",
     "grow",
     flexCenterStyle(),
+    textareaStyle(),
   ],
   {
     variants: {
