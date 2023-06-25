@@ -5,9 +5,9 @@ import {
   SortableContainer,
   type SortableElementProps,
   type SortableContainerProps,
-  arrayMove,
 } from "react-sortable-hoc";
 import { TodoItem } from ".";
+import { arrayMoveImmutable } from "array-move";
 
 export const SortableItem: React.ComponentClass<
   SortableElementProps & { value: Todo; onDo: () => void; onUndo: () => void }
@@ -69,7 +69,7 @@ export const TodoList = ({ todos }: { todos: Todo[] }) => {
     newIndex: number;
   }) => {
     setItems((items) => {
-      return arrayMove(items, oldIndex, newIndex);
+      return arrayMoveImmutable(items, oldIndex, newIndex);
     });
   };
   const doit = (index: number) => {
