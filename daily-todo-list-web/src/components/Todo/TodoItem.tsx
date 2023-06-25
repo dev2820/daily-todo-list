@@ -63,6 +63,7 @@ export const TodoItem = ({
         value={content}
         style={contentInlineStyle}
         ref={$textarea}
+        rows={1}
       >
         {}
       </textarea>
