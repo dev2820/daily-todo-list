@@ -1,28 +1,31 @@
-import { useTodoList, type Todo } from "@/hooks";
+import { type Todo } from "@/hooks";
 import {
   SortableElement,
   SortableContainer,
   SortableHandle,
+  SortEndHandler,
   type SortableElementProps,
   type SortableContainerProps,
 } from "react-sortable-hoc";
 import { cva } from "class-variance-authority";
-import { TodoItem } from ".";
 import { DragHandle as _DragHandle } from "@/components";
 
 export const DragHandle = SortableHandle(() => <_DragHandle></_DragHandle>);
 export interface TodoItemProps {
   value: Todo;
-  onDo: () => void;
-  onUndo: () => void;
-  onContentChange: (content: string) => void;
 }
 export type SortableItemProp<T> = SortableElementProps & T;
 
 export const SortableItem: React.ComponentClass<
-  SortableItemProp<TodoItemProps>
+  SortableItemProp<TodoItemProps> & {
+    renderItem: () => JSX.Element;
+  }
 > = SortableElement(
-  ({ value, onDo, onUndo, onContentChange }: TodoItemProps) => {
+  ({
+    renderItem,
+  }: TodoItemProps & {
+    renderItem: () => JSX.Element;
+  }) => {
     const style = cva([
       "py-2 px-3 rounded-md",
       "flex gap-x-4",
@@ -34,30 +37,28 @@ export const SortableItem: React.ComponentClass<
     return (
       <li className={style()}>
         <DragHandle></DragHandle>
-        <TodoItem
-          className={todoStyle()}
-          todo={value}
-          onDo={onDo}
-          onUndo={onUndo}
-          onChangeContent={onContentChange}
-        ></TodoItem>
+        <div className={todoStyle()}>{renderItem()}</div>
       </li>
     );
   }
 );
 
-export interface TodoListProps {
+export type SortableListProps = SortableContainerProps & {
   items: Todo[];
-  onDo: (index: number) => void;
-  onUndo: (index: number) => void;
-  onContentChange: (index: number, content: string) => void;
-}
-export type SortableListProps<T> = SortableContainerProps & T;
+};
 
 export const SortableList: React.ComponentClass<
-  SortableListProps<TodoListProps>
+  SortableListProps & {
+    renderItem: (todo: Todo, index: number) => JSX.Element;
+  }
 > = SortableContainer(
-  ({ items, onDo, onUndo, onContentChange }: TodoListProps) => {
+  ({
+    items,
+    renderItem,
+  }: {
+    items: Todo[];
+    renderItem: (todo: Todo, index: number) => JSX.Element;
+  }) => {
     return (
       <ul>
         {items.map((value, index) => (
@@ -65,11 +66,7 @@ export const SortableList: React.ComponentClass<
             key={`item-${value.id}`}
             index={index}
             value={value}
-            onDo={() => onDo(index)}
-            onUndo={() => onUndo(index)}
-            onContentChange={(content: string) =>
-              onContentChange(index, content)
-            }
+            renderItem={() => renderItem(value, index)}
           ></SortableItem>
         ))}
       </ul>
@@ -77,16 +74,19 @@ export const SortableList: React.ComponentClass<
   }
 );
 
-export const TodoList = ({ initialTodos }: { initialTodos: Todo[] }) => {
-  const { todos, sort, doit, undo, changeContent } = useTodoList(initialTodos);
+interface TodoList2Prop {
+  todos: Todo[];
+  onSortEnd: SortEndHandler;
+  renderTodo: (todo: Todo, index: number) => JSX.Element;
+}
+
+export const TodoList = ({ todos, onSortEnd, renderTodo }: TodoList2Prop) => {
   return (
     <SortableList
       useDragHandle
       items={todos}
-      onSortEnd={sort}
-      onDo={doit}
-      onUndo={undo}
-      onContentChange={changeContent}
+      onSortEnd={onSortEnd}
+      renderItem={renderTodo}
     ></SortableList>
   );
 };

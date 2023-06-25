@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
-import { TodoList } from "..";
+import { useTodoList, type Todo } from "@/hooks";
+import { TodoList, TodoItem } from "..";
 
 const meta = {
   title: "Components/Todo/TodoList",
@@ -9,15 +10,35 @@ const meta = {
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+export const Default = {
+  render: () => <TodoListExample></TodoListExample>,
+};
 
-export const Default: Story = {
-  args: {
-    initialTodos: [
-      { id: "0", content: "Todo A", done: false },
-      { id: "1", content: "Todo B", done: true },
-      { id: "2", content: "Todo C", done: false },
-    ],
-  },
-  render: (args) => <TodoList initialTodos={args.initialTodos}></TodoList>,
+const TodoListExample = () => {
+  const todoList = useTodoList([
+    { id: "0", content: "Todo A", done: false },
+    { id: "1", content: "Todo B", done: true },
+    { id: "2", content: "Todo C", done: false },
+  ]);
+
+  const renderTodo = (todo: Todo, index: number) => {
+    return (
+      <TodoItem
+        todo={todo}
+        onDo={() => todoList.doit(index)}
+        onUndo={() => todoList.undo(index)}
+        onChangeContent={(content: string) =>
+          todoList.changeContent(index, content)
+        }
+      ></TodoItem>
+    );
+  };
+
+  return (
+    <TodoList
+      todos={todoList.todos}
+      renderTodo={renderTodo}
+      onSortEnd={todoList.sort}
+    ></TodoList>
+  );
 };
