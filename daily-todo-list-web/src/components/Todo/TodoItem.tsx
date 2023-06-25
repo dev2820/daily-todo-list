@@ -1,4 +1,10 @@
-import { useState, ChangeEvent, PropsWithChildren } from "react";
+import {
+  useState,
+  ChangeEvent,
+  PropsWithChildren,
+  useEffect,
+  useRef,
+} from "react";
 import { type Todo } from "@/hooks";
 import { cva } from "class-variance-authority";
 import { Checkbox } from "primereact/checkbox";
@@ -20,7 +26,15 @@ export const TodoItem = ({
 }: PropsWithChildren<Props>) => {
   const [content, setContent] = useState(todo.content);
   const [contentInlineStyle, setContentInlineStyle] = useState({});
+  const $textarea = useRef<HTMLTextAreaElement>(null);
 
+  useEffect(() => {
+    if (!$textarea.current) return;
+
+    setContentInlineStyle({
+      height: `${$textarea.current.scrollHeight}px`,
+    });
+  }, []);
   const onDoneChange = () => {
     if (todo.done && onUndo) onUndo();
     else if (!todo.done && onDo) onDo();
@@ -48,6 +62,7 @@ export const TodoItem = ({
         onChange={onEdit}
         value={content}
         style={contentInlineStyle}
+        ref={$textarea}
       >
         {}
       </textarea>
