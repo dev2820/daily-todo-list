@@ -1,24 +1,50 @@
+import { useState } from "react";
 import { type Todo } from "@/hooks";
 import {
   SortableElement,
   SortableContainer,
   type SortableElementProps,
   type SortableContainerProps,
+  arrayMove,
 } from "react-sortable-hoc";
 
-export const TodoItem: React.ComponentClass<
+export const SortableItem: React.ComponentClass<
   SortableElementProps & { value: Todo }
 > = SortableElement(({ value }: { value: Todo }) => <li>{value.content}</li>);
 
-export const TodoList: React.ComponentClass<
+export const SortableList: React.ComponentClass<
   SortableContainerProps & { items: Todo[] },
   { items: Todo[] }
 > = SortableContainer(({ items }: { items: Todo[] }) => {
   return (
     <ul>
       {items.map((value, index) => (
-        <TodoItem key={`item-${index}`} index={index} value={value}></TodoItem>
+        <SortableItem
+          key={`item-${index}`}
+          index={index}
+          value={value}
+        ></SortableItem>
       ))}
     </ul>
   );
 });
+
+export const TodoList = () => {
+  const [items, setItems] = useState<Todo[]>([
+    { content: "Todo A", done: false },
+    { content: "Todo B", done: true },
+    { content: "Todo C", done: false },
+  ]);
+  const onSortEnd = ({
+    oldIndex,
+    newIndex,
+  }: {
+    oldIndex: number;
+    newIndex: number;
+  }) => {
+    setItems((items) => {
+      return arrayMove(items, oldIndex, newIndex);
+    });
+  };
+  return <SortableList items={items} onSortEnd={onSortEnd}></SortableList>;
+};
