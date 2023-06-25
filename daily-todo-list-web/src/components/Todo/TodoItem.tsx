@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, PropsWithChildren } from "react";
+import { useState, ChangeEvent, PropsWithChildren, useEffect } from "react";
 import { type Todo } from "@/hooks";
 import { cva } from "class-variance-authority";
 import { Checkbox } from "primereact/checkbox";
@@ -17,6 +17,9 @@ export const TodoItem = ({
   onChangeContent,
 }: PropsWithChildren<Props>) => {
   const [content, setContent] = useState(todo.content);
+  useEffect(() => {
+    setContent(todo.content);
+  }, [todo.content]);
   const onDoneChange = () => {
     if (todo.done && onUndo) onUndo();
     else if (!todo.done && onDo) onDo();
