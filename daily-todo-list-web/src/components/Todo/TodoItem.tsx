@@ -55,7 +55,7 @@ const style = cva(["w-full flex gap-x-3", "duration-200"]);
 const textStyle = cva([], {
   variants: {
     done: {
-      true: ["line-through", "text-slate-400/50"],
+      true: ["line-through", "text-slate-300"],
     },
   },
 });
