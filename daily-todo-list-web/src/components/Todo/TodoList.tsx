@@ -10,36 +10,57 @@ import {
 import { TodoItem } from ".";
 
 export const SortableItem: React.ComponentClass<
-  SortableElementProps & { value: Todo }
-> = SortableElement(({ value }: { value: Todo }) => (
-  <li>
-    <TodoItem todo={value}></TodoItem>
-  </li>
-));
+  SortableElementProps & { value: Todo; onDo: () => void; onUndo: () => void }
+> = SortableElement(
+  ({
+    value,
+    onDo,
+    onUndo,
+  }: {
+    value: Todo;
+    onDo: () => void;
+    onUndo: () => void;
+  }) => (
+    <li>
+      <TodoItem todo={value} onDo={onDo} onUndo={onUndo}></TodoItem>
+    </li>
+  )
+);
 
 export const SortableList: React.ComponentClass<
-  SortableContainerProps & { items: Todo[] },
-  { items: Todo[] }
-> = SortableContainer(({ items }: { items: Todo[] }) => {
-  return (
-    <ul>
-      {items.map((value, index) => (
-        <SortableItem
-          key={`item-${index}`}
-          index={index}
-          value={value}
-        ></SortableItem>
-      ))}
-    </ul>
-  );
-});
+  SortableContainerProps & {
+    items: Todo[];
+    onDo: (index: number) => void;
+    onUndo: (index: number) => void;
+  }
+> = SortableContainer(
+  ({
+    items,
+    onDo,
+    onUndo,
+  }: {
+    items: Todo[];
+    onDo: (index: number) => void;
+    onUndo: (index: number) => void;
+  }) => {
+    return (
+      <ul>
+        {items.map((value, index) => (
+          <SortableItem
+            key={`item-${index}`}
+            index={index}
+            value={value}
+            onDo={() => onDo(index)}
+            onUndo={() => onUndo(index)}
+          ></SortableItem>
+        ))}
+      </ul>
+    );
+  }
+);
 
-export const TodoList = () => {
-  const [items, setItems] = useState<Todo[]>([
-    { content: "Todo A", done: false },
-    { content: "Todo B", done: true },
-    { content: "Todo C", done: false },
-  ]);
+export const TodoList = ({ todos }: { todos: Todo[] }) => {
+  const [items, setItems] = useState<Todo[]>(todos);
   const onSortEnd = ({
     oldIndex,
     newIndex,
@@ -51,5 +72,26 @@ export const TodoList = () => {
       return arrayMove(items, oldIndex, newIndex);
     });
   };
-  return <SortableList items={items} onSortEnd={onSortEnd}></SortableList>;
+  const doit = (index: number) => {
+    setItems((oldItems) => {
+      const newItems = [...oldItems];
+      newItems[index].done = true;
+      return newItems;
+    });
+  };
+  const undo = (index: number) => {
+    setItems((oldItems) => {
+      const newItems = [...oldItems];
+      newItems[index].done = false;
+      return newItems;
+    });
+  };
+  return (
+    <SortableList
+      items={items}
+      onSortEnd={onSortEnd}
+      onDo={doit}
+      onUndo={undo}
+    ></SortableList>
+  );
 };

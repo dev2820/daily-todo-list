@@ -12,5 +12,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  render: () => <TodoList></TodoList>,
+  args: {
+    todos: [
+      { content: "Todo A", done: false },
+      { content: "Todo B", done: true },
+      { content: "Todo C", done: false },
+    ],
+  },
+  render: (args) => <TodoList todos={args.todos}></TodoList>,
 };
