@@ -9,61 +9,43 @@ import {
 import { TodoItem } from ".";
 import { arrayMoveImmutable } from "array-move";
 
-export type SortableItemProp = SortableElementProps & {
+export interface TodoItemProps {
   value: Todo;
   onDo: () => void;
   onUndo: () => void;
-};
+}
+export type SortableItemProp = SortableElementProps & TodoItemProps;
 
 export const SortableItem: React.ComponentClass<SortableItemProp> =
-  SortableElement(
-    ({
-      value,
-      onDo,
-      onUndo,
-    }: {
-      value: Todo;
-      onDo: () => void;
-      onUndo: () => void;
-    }) => (
-      <li>
-        <TodoItem todo={value} onDo={onDo} onUndo={onUndo}></TodoItem>
-      </li>
-    )
-  );
+  SortableElement(({ value, onDo, onUndo }: TodoItemProps) => (
+    <li>
+      <TodoItem todo={value} onDo={onDo} onUndo={onUndo}></TodoItem>
+    </li>
+  ));
 
-export type SortableListProps = SortableContainerProps & {
+export interface TodoListProps {
   items: Todo[];
   onDo: (index: number) => void;
   onUndo: (index: number) => void;
-};
+}
+export type SortableListProps = SortableContainerProps & TodoListProps;
 
 export const SortableList: React.ComponentClass<SortableListProps> =
-  SortableContainer(
-    ({
-      items,
-      onDo,
-      onUndo,
-    }: {
-      items: Todo[];
-      onDo: (index: number) => void;
-      onUndo: (index: number) => void;
-    }) => {
-      return (
-        <ul>
-          {items.map((value, index) => (
-            <SortableItem
-              key={`item-${index}`}
-              index={index}
-              value={value}
-              onDo={() => onDo(index)}
-              onUndo={() => onUndo(index)}
-            ></SortableItem>
-          ))}
-        </ul>
-      );
-    }
-  );
+  SortableContainer(({ items, onDo, onUndo }: TodoListProps) => {
+    return (
+      <ul>
+        {items.map((value, index) => (
+          <SortableItem
+            key={`item-${index}`}
+            index={index}
+            value={value}
+            onDo={() => onDo(index)}
+            onUndo={() => onUndo(index)}
+          ></SortableItem>
+        ))}
+      </ul>
+    );
+  });
 
 export const TodoList = ({ todos }: { todos: Todo[] }) => {
   const [items, setItems] = useState<Todo[]>(todos);
