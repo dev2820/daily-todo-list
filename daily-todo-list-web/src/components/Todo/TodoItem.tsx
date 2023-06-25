@@ -45,6 +45,7 @@ export const TodoItem = ({
         value={content}
         onChange={onEditContent}
         className={textStyle({ done: todo.done })}
+        placeholder="Just Do It!"
       />
     </div>
   );

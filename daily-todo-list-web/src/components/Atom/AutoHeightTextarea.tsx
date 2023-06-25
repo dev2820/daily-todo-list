@@ -5,8 +5,14 @@ interface Props {
   className?: string;
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   value?: string;
+  placeholder?: string;
 }
-export const AutoHeightTextarea = ({ className, onChange, value }: Props) => {
+export const AutoHeightTextarea = ({
+  className,
+  onChange,
+  value,
+  placeholder,
+}: Props) => {
   const $textarea = useRef<HTMLTextAreaElement>(null);
   const [contentInlineStyle, setContentInlineStyle] = useState({});
 
@@ -36,6 +42,7 @@ export const AutoHeightTextarea = ({ className, onChange, value }: Props) => {
       style={contentInlineStyle}
       ref={$textarea}
       rows={1}
+      placeholder={placeholder ?? ""}
     >
       {}
     </textarea>

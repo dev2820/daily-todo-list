@@ -24,11 +24,20 @@ const Example = () => {
   };
 
   return (
-    <AutoHeightTextarea value={text} onChange={onChange}></AutoHeightTextarea>
+    <AutoHeightTextarea
+      value={text}
+      onChange={onChange}
+      placeholder="Write Something..."
+    ></AutoHeightTextarea>
   );
 };
-export const None: Story = {
-  render: () => <AutoHeightTextarea value=""></AutoHeightTextarea>,
+export const Placeholder: Story = {
+  render: () => (
+    <AutoHeightTextarea
+      value=""
+      placeholder="Write Something..."
+    ></AutoHeightTextarea>
+  ),
 };
 
 export const ShortText: Story = {
