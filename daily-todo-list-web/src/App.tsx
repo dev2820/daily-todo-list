@@ -1,5 +1,5 @@
 import { Button } from "primereact/button";
-import { HelloWorld, TodoList, TodoItem } from "@/components";
+import { TodoList, TodoItem } from "@/components";
 import { useTodoList, type Todo } from "@/hooks";
 
 function App() {
@@ -29,7 +29,6 @@ function App() {
 
   return (
     <>
-      <HelloWorld className={"color-red"}></HelloWorld>
       <TodoList
         renderTodo={renderTodo}
         todos={todoList.todos}
