@@ -4,49 +4,52 @@ import {
   NoteLayout,
   type NoteLayoutProps,
 } from "@/components";
-import { useTodoList, type Todo } from "@/hooks";
+import { TodoListHook, type Todo } from "@/hooks";
 import { Button } from "primereact/button";
 import { cva } from "class-variance-authority";
 
-type Props = NoteLayoutProps;
+interface Props extends NoteLayoutProps {
+  todoListHook: TodoListHook;
+}
 
 export const TodoNote = (props: Props) => {
-  const { className, title } = props;
-  const todoList = useTodoList([
-    { id: "0", content: "Todo A", done: false },
-    { id: "1", content: "Todo B", done: true },
-    { id: "2", content: "Todo C", done: false },
-  ]);
+  const { className, title, style, todoListHook } = props;
 
   const TodoItem = (todo: Todo) => (
     <_TodoItem
       todo={todo}
-      onDo={() => todoList.doit(todo.id)}
-      onUndo={() => todoList.undo(todo.id)}
-      onRemove={() => todoList.removeTodo(todo.id)}
+      onDo={() => todoListHook.doit(todo.id)}
+      onUndo={() => todoListHook.undo(todo.id)}
+      onRemove={() => todoListHook.removeTodo(todo.id)}
       onChangeContent={(content: string) =>
-        todoList.changeContent(todo.id, content)
+        todoListHook.changeContent(todo.id, content)
       }
     ></_TodoItem>
   );
 
   return (
-    <NoteLayout title={title} className={`${style()} ${className}`}>
+    <NoteLayout
+      title={title}
+      style={style}
+      className={`${todoNoteStyle()} ${className}`}
+    >
       <TodoList
         className={todoListStyle()}
-        todos={todoList.todos}
-        onSortEnd={todoList.sort}
+        todos={todoListHook.todos}
+        onSortEnd={todoListHook.sort}
         renderTodo={TodoItem}
       ></TodoList>
+      <div className={spaceStyle()}></div>
       <Button
         className={addTodoStyle()}
         label="Add Todo"
-        onClick={todoList.addTodo}
+        onClick={todoListHook.addTodo}
       ></Button>
     </NoteLayout>
   );
 };
 
-const style = cva("relative");
-const todoListStyle = cva("h-[calc(100%-3rem)] overflow-auto");
-const addTodoStyle = cva("w-full h-[3rem] ");
+const todoNoteStyle = cva("relative");
+const todoListStyle = cva("h-[calc(100%-3.5rem)] overflow-auto");
+const addTodoStyle = cva("w-full h-[3rem]");
+const spaceStyle = cva("h-[0.5rem]");

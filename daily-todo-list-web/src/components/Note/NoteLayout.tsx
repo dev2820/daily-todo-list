@@ -3,14 +3,15 @@ import { cva } from "class-variance-authority";
 
 export interface NoteLayoutProps {
   className?: string;
-  title?: JSX.Element | string;
+  style?: Record<string, string>;
+  title: JSX.Element | string;
 }
 
 export const NoteLayout = (props: PropsWithChildren<NoteLayoutProps>) => {
-  const { title, children, className } = props;
+  const { title, children, className, style } = props;
 
   return (
-    <div className={`${style()} ${className ?? ""}`}>
+    <div className={`${layoutStyle()} ${className ?? ""}`} style={style}>
       <div className={metaStyle()}>{title ? Title(title) : ""}</div>
       <div className={contentStyle()}>{children}</div>
     </div>
@@ -26,7 +27,7 @@ const Title = (title: JSX.Element | string) => {
   );
 };
 
-const style = cva("border p-4 rounded-md");
+const layoutStyle = cva("border p-4 rounded-md");
 const titleStyle = cva("text-2xl font-bold");
 const contentStyle = cva("h-[calc(100%-3rem)]");
 const metaStyle = cva("h-[3rem]");

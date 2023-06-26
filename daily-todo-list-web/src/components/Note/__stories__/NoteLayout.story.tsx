@@ -10,9 +10,5 @@ const meta = {
 export default meta;
 
 export const Default = {
-  render: () => <NoteLayout>Hello World</NoteLayout>,
-};
-
-export const Titled = {
   render: () => <NoteLayout title={"Head"}>Hello World</NoteLayout>,
 };
