@@ -62,7 +62,7 @@ export const TodoItem = ({
   );
 };
 
-const style = cva(["pr-3 w-full flex gap-x-2", "duration-200"]);
+const style = cva(["pr-3 w-full flex gap-x-2", "duration-200 align-top"]);
 const textStyle = cva([], {
   variants: {
     done: {
@@ -70,7 +70,7 @@ const textStyle = cva([], {
     },
   },
 });
-const checkboxStyle = cva(["mt-[2px] items-start"]);
+const checkboxStyle = cva(["items-start mt-[3px]"]);
 const removerStyle = cva(
   [
     "mt-1",

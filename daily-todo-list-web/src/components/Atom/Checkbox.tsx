@@ -1,3 +1,4 @@
+import { cva } from "class-variance-authority";
 import { ChangeEvent } from "react";
 
 interface Props {
@@ -9,11 +10,16 @@ interface Props {
 export const Checkbox = (props: Props) => {
   const { checked = false, className, onChange } = props;
   return (
-    <input
-      className={className}
-      type="checkbox"
-      checked={checked}
-      onChange={onChange}
-    />
+    <span className={style()}>
+      <input
+        className={`${className ?? ""} ${checkboxStyle()}`}
+        type="checkbox"
+        checked={checked}
+        onChange={onChange}
+      />
+    </span>
   );
 };
+
+const style = cva("w-4 h-4 relative");
+const checkboxStyle = cva("w-4 h-4");
