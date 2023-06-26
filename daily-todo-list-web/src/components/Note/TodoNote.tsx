@@ -50,6 +50,8 @@ export const TodoNote = (props: Props) => {
 };
 
 const todoNoteStyle = cva("relative");
-const todoListStyle = cva("h-[calc(100%-3.5rem)] overflow-auto");
+const todoListStyle = cva(
+  "h-[calc(100%-3.5rem)] overflow-y-auto overflow-x-hidden"
+);
 const addTodoStyle = cva("w-full h-[3rem]");
 const spaceStyle = cva("h-[0.5rem]");
