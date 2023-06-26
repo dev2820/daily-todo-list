@@ -14,11 +14,18 @@ interface TodoListProp {
   todos: Todo[];
   onSortEnd: SortEndHandler;
   renderTodo: (todo: Todo) => JSX.Element;
+  className?: string;
 }
 
-export const TodoList = ({ todos, onSortEnd, renderTodo }: TodoListProp) => {
+export const TodoList = ({
+  todos,
+  onSortEnd,
+  renderTodo,
+  className,
+}: TodoListProp) => {
   return (
     <_TodoList
+      className={className ?? ""}
       useDragHandle
       items={todos}
       onSortEnd={onSortEnd}
@@ -29,19 +36,22 @@ export const TodoList = ({ todos, onSortEnd, renderTodo }: TodoListProp) => {
 
 const _TodoList: React.ComponentClass<
   SortableContainerProps & {
+    className?: string;
     items: Todo[];
     renderItem: (todo: Todo) => JSX.Element;
   }
 > = SortableContainer(
   ({
+    className,
     items,
     renderItem,
   }: {
+    className?: string;
     items: Todo[];
     renderItem: (todo: Todo) => JSX.Element;
   }) => {
     return (
-      <ul>
+      <ul className={className ?? ""}>
         {items.map((value: Todo, index: number) => (
           <TodoItem key={`item-${value.id}`} index={index}>
             {renderItem(value)}
