@@ -31,7 +31,7 @@ export const TodoNote = (props: Props) => {
     <NoteLayout
       title={title}
       style={style}
-      className={`${todoNoteStyle()} ${className}`}
+      className={`${todoNoteStyle()} ${className ?? ""}`}
     >
       <TodoList
         className={todoListStyle()}
