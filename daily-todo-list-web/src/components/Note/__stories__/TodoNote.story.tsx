@@ -3,12 +3,12 @@ import type { Meta } from "@storybook/react";
 import { TodoNote } from "..";
 
 const meta = {
-  title: "Components/Todo/TodoNote",
+  title: "Components/Note/TodoNote",
   component: TodoNote,
 } satisfies Meta<typeof TodoNote>;
 
 export default meta;
 
 export const Default = {
-  render: () => <TodoNote className={"h-[500px]"}></TodoNote>,
+  render: () => <TodoNote title={"Todo"} className={"h-[500px]"}></TodoNote>,
 };
