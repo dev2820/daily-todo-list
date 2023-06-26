@@ -19,16 +19,16 @@ export const AutoHeightTextarea = ({
   useEffect(() => {
     if (!$textarea.current) return;
 
-    setContentInlineStyle({
-      height: `${$textarea.current.scrollHeight}px`,
-    });
+    $textarea.current.style.height = "0";
+    $textarea.current.style.height = `${$textarea.current.scrollHeight}px`;
   }, []);
 
   const _onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const $target = event.target;
-    setContentInlineStyle({
-      height: `${$target.scrollHeight}px`,
-    });
+    if (!$target) return;
+
+    $target.style.height = "auto";
+    $target.style.height = $target.scrollHeight + "px";
 
     if (!onChange) return;
     onChange(event);
