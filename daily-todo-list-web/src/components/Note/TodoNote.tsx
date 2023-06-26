@@ -1,6 +1,6 @@
-import { Button } from "primereact/button";
-import { TodoList, TodoItem as _TodoItem } from ".";
+import { TodoList, TodoItem as _TodoItem } from "@/components";
 import { useTodoList, type Todo } from "@/hooks";
+import { Button } from "primereact/button";
 import { cva } from "class-variance-authority";
 
 interface Props {
