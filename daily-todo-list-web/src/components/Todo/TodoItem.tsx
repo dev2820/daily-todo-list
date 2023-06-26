@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, PropsWithChildren } from "react";
 import { type Todo } from "@/hooks";
 import { cva } from "class-variance-authority";
-import { Checkbox } from "primereact/checkbox";
+import { Checkbox } from "@/components";
 import { AutoHeightTextarea } from "..";
 
 interface Props {
