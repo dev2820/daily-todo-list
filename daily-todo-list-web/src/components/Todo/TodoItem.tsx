@@ -62,7 +62,7 @@ export const TodoItem = ({
   );
 };
 
-const style = cva(["pr-3 w-full flex gap-x-3", "duration-200"]);
+const style = cva(["pr-3 w-full flex gap-x-2", "duration-200"]);
 const textStyle = cva([], {
   variants: {
     done: {
