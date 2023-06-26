@@ -51,7 +51,7 @@ export const AutoHeightTextarea = ({
 
 const textareaStyle = cva(["resize-none"]);
 const contentStyle = cva([
-  "m-0 p-0",
+  "w-0 m-0 p-0",
   "bg-transparent",
   "focus:outline-none",
   "grow items-start",
