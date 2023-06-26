@@ -29,9 +29,7 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  min-width: 100vw;
   min-height: 100vh;
 }
 
@@ -74,4 +72,9 @@ button:focus-visible {
 
 li {
   list-style-type: none;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
 }

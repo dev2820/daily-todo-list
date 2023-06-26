@@ -27,8 +27,8 @@ const Title = (title: JSX.Element | string) => {
   );
 };
 
-const layoutStyle = cva("border p-4 rounded-md");
-const titleStyle = cva("text-2xl font-bold");
+const layoutStyle = cva("border px-1 py-2 rounded-md");
+const titleStyle = cva("text-2xl px-2 font-bold");
 const contentStyle = cva("h-[calc(100%-3rem)]");
 const metaStyle = cva("h-[3rem]");
 const hrStyle = cva("my-2");
