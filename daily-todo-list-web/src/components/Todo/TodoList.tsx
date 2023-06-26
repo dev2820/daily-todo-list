@@ -13,7 +13,7 @@ import { DragHandle as _DragHandle } from "@/components";
 interface TodoListProp {
   todos: Todo[];
   onSortEnd: SortEndHandler;
-  renderTodo: (id: string, todo: Todo) => JSX.Element;
+  renderTodo: (todo: Todo) => JSX.Element;
 }
 
 export const TodoList = ({ todos, onSortEnd, renderTodo }: TodoListProp) => {
@@ -30,7 +30,7 @@ export const TodoList = ({ todos, onSortEnd, renderTodo }: TodoListProp) => {
 const _TodoList: React.ComponentClass<
   SortableContainerProps & {
     items: Todo[];
-    renderItem: (id: string, todo: Todo) => JSX.Element;
+    renderItem: (todo: Todo) => JSX.Element;
   }
 > = SortableContainer(
   ({
@@ -38,13 +38,13 @@ const _TodoList: React.ComponentClass<
     renderItem,
   }: {
     items: Todo[];
-    renderItem: (id: string, todo: Todo) => JSX.Element;
+    renderItem: (todo: Todo) => JSX.Element;
   }) => {
     return (
       <ul>
         {items.map((value: Todo, index: number) => (
           <TodoItem key={`item-${value.id}`} index={index}>
-            {renderItem(value.id, value)}
+            {renderItem(value)}
           </TodoItem>
         ))}
       </ul>

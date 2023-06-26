@@ -9,15 +9,15 @@ function App() {
     { id: "2", content: "Todo C", done: false },
   ]);
 
-  const renderTodo = (id: string, todo: Todo) => {
+  const renderTodo = (todo: Todo) => {
     return (
       <TodoItem
         todo={todo}
-        onDo={() => todoList.doit(id)}
-        onUndo={() => todoList.undo(id)}
-        onRemove={() => todoList.removeTodo(id)}
+        onDo={() => todoList.doit(todo.id)}
+        onUndo={() => todoList.undo(todo.id)}
+        onRemove={() => todoList.removeTodo(todo.id)}
         onChangeContent={(content: string) =>
-          todoList.changeContent(id, content)
+          todoList.changeContent(todo.id, content)
         }
       ></TodoItem>
     );
