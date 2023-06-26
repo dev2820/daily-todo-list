@@ -11,7 +11,7 @@ export const NoteLayout = (props: PropsWithChildren<NoteLayoutProps>) => {
 
   return (
     <div className={`${style()} ${className ?? ""}`}>
-      {title ? Title(title) : ""}
+      <div className={metaStyle()}>{title ? Title(title) : ""}</div>
       <div className={contentStyle()}>{children}</div>
     </div>
   );
@@ -29,4 +29,5 @@ const Title = (title: JSX.Element | string) => {
 const style = cva("border p-4 rounded-md");
 const titleStyle = cva("text-2xl font-bold");
 const contentStyle = cva("h-[calc(100%-3rem)]");
+const metaStyle = cva("h-[3rem]");
 const hrStyle = cva("my-2");
