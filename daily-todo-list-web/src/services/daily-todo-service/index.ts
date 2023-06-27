@@ -23,7 +23,7 @@ const setItem = (key: string, data: Todo[]) => {
 
   return true;
 };
-export const dailyTodoService = () => {
+export const useDailyTodoService = () => {
   const read = (day: Day) => getItem(`todo-${day}`);
 
   const readAll = () => ({
