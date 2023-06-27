@@ -1,18 +1,18 @@
-import { Todo } from "@/hooks";
+import { Todo, isTodoList } from "@/hooks";
 import { type Service } from "../types";
 import { DAY, type Day } from "@/constants";
+import { getStorage } from "@/utils";
 
-const getItem = (key: string) => {
-  const item = localStorage.getItem(key);
+const storage = getStorage("local");
 
-  return item ? JSON.parse(item) : null;
+const getItem = (key: string): Todo[] => {
+  const item = storage.getItem(key);
+
+  return isTodoList(item) ? item : [];
 };
-
-const setItem = (key: string, data: Todo[]) => {
-  localStorage.setItem(key, JSON.stringify(data));
-  return true;
+const setItem = (key: string, value: Todo[]) => {
+  return storage.setItem(key, value);
 };
-
 const read = (day: Day) => getItem(`todo-${day}`) ?? [];
 
 const readAll = () => ({

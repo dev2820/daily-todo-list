@@ -1,4 +1,4 @@
 export interface Service<Key, Data> {
   read: (key: Key) => Data;
-  write: (key: Key, value: Data) => boolean;
+  write: (key: Key, value: Data) => void;
 }

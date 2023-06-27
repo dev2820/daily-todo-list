@@ -16,6 +16,21 @@ export interface TodoListHook extends Pick<SortableListHook, "sort"> {
   changeContent: (id: string, content: string) => void;
 }
 
+export const isTodo = (maybeTodo: any): maybeTodo is Todo => {
+  if (typeof maybeTodo !== "object") return false;
+  if (maybeTodo === null) return false;
+  if (typeof maybeTodo.id !== "string") return false;
+  if (typeof maybeTodo.content !== "string") return false;
+  if (typeof maybeTodo.done !== "boolean") return false;
+
+  return true;
+};
+
+export const isTodoList = (maybeTodoList: unknown): maybeTodoList is Todo[] => {
+  if (!Array.isArray(maybeTodoList)) return false;
+  return maybeTodoList.every((todo) => isTodo(todo));
+};
+
 export const useTodoList = (initialTodos: Todo[]): TodoListHook => {
   const {
     list: todos,
