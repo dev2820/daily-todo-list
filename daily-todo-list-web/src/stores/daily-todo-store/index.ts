@@ -26,17 +26,11 @@ export const dailyTodoStore = () => {
   });
 
   const readMon = () => _read("mon");
-
   const readTue = () => _read("tue");
-
   const readWed = () => _read("wed");
-
   const readThr = () => _read("thr");
-
   const readFri = () => _read("fri");
-
   const readSat = () => _read("sat");
-
   const readSun = () => _read("sun");
 
   const _write = (day: Day, newTodoList: Todo[]) => {
@@ -45,33 +39,13 @@ export const dailyTodoStore = () => {
     return true;
   };
 
-  const writeMon = (newTodoList: Todo[]) => {
-    return _write("mon", newTodoList);
-  };
-
-  const writeTue = (newTodoList: Todo[]) => {
-    return _write("tue", newTodoList);
-  };
-
-  const writeWed = (newTodoList: Todo[]) => {
-    return _write("wed", newTodoList);
-  };
-
-  const writeThr = (newTodoList: Todo[]) => {
-    return _write("thr", newTodoList);
-  };
-
-  const writeFri = (newTodoList: Todo[]) => {
-    return _write("fri", newTodoList);
-  };
-
-  const writeSat = (newTodoList: Todo[]) => {
-    return _write("sat", newTodoList);
-  };
-
-  const writeSun = (newTodoList: Todo[]) => {
-    return _write("sun", newTodoList);
-  };
+  const writeMon = (newTodoList: Todo[]) => _write("mon", newTodoList);
+  const writeTue = (newTodoList: Todo[]) => _write("tue", newTodoList);
+  const writeWed = (newTodoList: Todo[]) => _write("wed", newTodoList);
+  const writeThr = (newTodoList: Todo[]) => _write("thr", newTodoList);
+  const writeFri = (newTodoList: Todo[]) => _write("fri", newTodoList);
+  const writeSat = (newTodoList: Todo[]) => _write("sat", newTodoList);
+  const writeSun = (newTodoList: Todo[]) => _write("sun", newTodoList);
 
   return {
     read: _read,
