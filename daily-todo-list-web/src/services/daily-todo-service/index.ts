@@ -24,7 +24,7 @@ const setItem = (key: string, data: Todo[]) => {
   return true;
 };
 
-const read = (day: Day) => getItem(`todo-${day}`);
+const read = (day: Day) => getItem(`todo-${day}`) ?? [];
 
 const readAll = () => ({
   mon: readMon(),
