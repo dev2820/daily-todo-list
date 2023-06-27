@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { useDailyTodoList } from "..";
 import { renderHook } from "@testing-library/react-hooks";
+import { DAY } from "@/services";
 
 describe("useDailyTodoList", () => {
   const monTodoListInit = [{ id: "0", content: "Todo Mon", done: false }];
@@ -21,14 +22,16 @@ describe("useDailyTodoList", () => {
   ];
 
   it("should init from list", () => {
-    const { result: dailyTodoList } = renderHook(() => useDailyTodoList(items));
+    const {
+      result: { current: dailyTodoList },
+    } = renderHook(() => useDailyTodoList(items));
 
-    expect(dailyTodoList.current.mon.todos).toEqual(monTodoListInit);
-    expect(dailyTodoList.current.tue.todos).toEqual(tueTodoListInit);
-    expect(dailyTodoList.current.wed.todos).toEqual(wedTodoListInit);
-    expect(dailyTodoList.current.thr.todos).toEqual(thrTodoListInit);
-    expect(dailyTodoList.current.fri.todos).toEqual(friTodoListInit);
-    expect(dailyTodoList.current.sat.todos).toEqual(satTodoListInit);
-    expect(dailyTodoList.current.sun.todos).toEqual(sunTodoListInit);
+    expect(dailyTodoList[DAY.MON].todos).toEqual(monTodoListInit);
+    expect(dailyTodoList[DAY.TUE].todos).toEqual(tueTodoListInit);
+    expect(dailyTodoList[DAY.WED].todos).toEqual(wedTodoListInit);
+    expect(dailyTodoList[DAY.THR].todos).toEqual(thrTodoListInit);
+    expect(dailyTodoList[DAY.FRI].todos).toEqual(friTodoListInit);
+    expect(dailyTodoList[DAY.SAT].todos).toEqual(satTodoListInit);
+    expect(dailyTodoList[DAY.SUN].todos).toEqual(sunTodoListInit);
   });
 });

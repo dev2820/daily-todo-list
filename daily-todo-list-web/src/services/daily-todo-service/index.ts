@@ -1,4 +1,5 @@
 import { Todo } from "@/hooks";
+import { type Service } from "../types";
 
 export const DAY = {
   MON: "MON",
@@ -36,52 +37,25 @@ const setItem = (key: string, data: Todo[]) => {
 const read = (day: Day) => getItem(`todo-${day}`) ?? [];
 
 const readAll = () => ({
-  mon: readMon(),
-  tue: readTue(),
-  wed: readWed(),
-  thr: readThr(),
-  fri: readFri(),
-  sat: readSat(),
-  sun: readSun(),
+  [DAY.MON]: read(DAY.MON),
+  [DAY.TUE]: read(DAY.TUE),
+  [DAY.WED]: read(DAY.WED),
+  [DAY.THR]: read(DAY.THR),
+  [DAY.FRI]: read(DAY.FRI),
+  [DAY.SAT]: read(DAY.SAT),
+  [DAY.SUN]: read(DAY.SUN),
 });
-
-const readMon = () => read(DAY.MON);
-const readTue = () => read(DAY.TUE);
-const readWed = () => read(DAY.WED);
-const readThr = () => read(DAY.THR);
-const readFri = () => read(DAY.FRI);
-const readSat = () => read(DAY.SAT);
-const readSun = () => read(DAY.SUN);
 
 const write = (day: Day, newTodoList: Todo[]) =>
   setItem(`todo-${day}`, newTodoList);
 
-const writeMon = (newTodoList: Todo[]) => write(DAY.MON, newTodoList);
-const writeTue = (newTodoList: Todo[]) => write(DAY.TUE, newTodoList);
-const writeWed = (newTodoList: Todo[]) => write(DAY.WED, newTodoList);
-const writeThr = (newTodoList: Todo[]) => write(DAY.THR, newTodoList);
-const writeFri = (newTodoList: Todo[]) => write(DAY.FRI, newTodoList);
-const writeSat = (newTodoList: Todo[]) => write(DAY.SAT, newTodoList);
-const writeSun = (newTodoList: Todo[]) => write(DAY.SUN, newTodoList);
-
-export const useDailyTodoService = () => {
+export interface DailyTodoService extends Service<Day, Todo[]> {
+  readAll: () => Record<Day, Todo[]>;
+}
+export const useDailyTodoService = (): DailyTodoService => {
   return {
     read,
     readAll,
-    readMon,
-    readTue,
-    readWed,
-    readThr,
-    readFri,
-    readSat,
-    readSun,
     write,
-    writeMon,
-    writeTue,
-    writeWed,
-    writeThr,
-    writeFri,
-    writeSat,
-    writeSun,
   };
 };

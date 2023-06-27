@@ -1,4 +1,5 @@
-import { useTodoList, type Todo } from "@/hooks";
+import { useTodoList, type Todo, type TodoListHook } from "@/hooks";
+import { DAY, type Day } from "@/services";
 
 const DAY_OF_WEEK = {
   MON: 0,
@@ -9,9 +10,12 @@ const DAY_OF_WEEK = {
   SAT: 5,
   SUN: 6,
 } as const;
+
+export type DailyTodoList = Record<Day, TodoListHook>;
+
 export const useDailyTodoList = (
   initialTodos: Todo[][] = [[], [], [], [], [], [], []]
-) => {
+): DailyTodoList => {
   const monTodoList = useTodoList(initialTodos[DAY_OF_WEEK.MON]);
   const tueTodoList = useTodoList(initialTodos[DAY_OF_WEEK.TUE]);
   const wedTodoList = useTodoList(initialTodos[DAY_OF_WEEK.WED]);
@@ -21,12 +25,12 @@ export const useDailyTodoList = (
   const sunTodoList = useTodoList(initialTodos[DAY_OF_WEEK.SUN]);
 
   return {
-    mon: monTodoList,
-    tue: tueTodoList,
-    wed: wedTodoList,
-    thr: thrTodoList,
-    fri: friTodoList,
-    sat: satTodoList,
-    sun: sunTodoList,
+    [DAY.MON]: monTodoList,
+    [DAY.TUE]: tueTodoList,
+    [DAY.WED]: wedTodoList,
+    [DAY.THR]: thrTodoList,
+    [DAY.FRI]: friTodoList,
+    [DAY.SAT]: satTodoList,
+    [DAY.SUN]: sunTodoList,
   };
 };
