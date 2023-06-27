@@ -28,7 +28,7 @@ const Example = () => {
 
   return (
     <div className="flex">
-      <TodoNote style={style} title="월요일" todoListHook={todoList}></TodoNote>
+      <TodoNote style={style} title="월요일" {...todoList}></TodoNote>
     </div>
   );
 };
