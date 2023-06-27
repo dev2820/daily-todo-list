@@ -5,7 +5,6 @@ type Day = "mon" | "tue" | "wed" | "thr" | "fri" | "sat" | "sun";
 const getItem = (key: string) => {
   const item = localStorage.getItem(key);
 
-  console.log(item, typeof item);
   return item ? JSON.parse(item) : null;
 };
 
