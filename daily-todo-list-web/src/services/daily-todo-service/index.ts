@@ -10,6 +10,16 @@ export const DAY = {
   SUN: "SUN",
 } as const;
 
+export const DAYS = [
+  DAY.MON,
+  DAY.TUE,
+  DAY.WED,
+  DAY.THR,
+  DAY.FRI,
+  DAY.SAT,
+  DAY.SUN,
+];
+
 export type Day = keyof typeof DAY;
 
 const getItem = (key: string) => {
