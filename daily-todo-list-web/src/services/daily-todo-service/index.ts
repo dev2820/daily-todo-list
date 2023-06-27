@@ -1,25 +1,6 @@
 import { Todo } from "@/hooks";
 import { type Service } from "../types";
-
-export const DAY = {
-  MON: "MON",
-  TUE: "TUE",
-  WED: "WED",
-  THR: "THR",
-  FRI: "FRI",
-  SAT: "SAT",
-  SUN: "SUN",
-} as const;
-
-export const DAYS = [
-  DAY.MON,
-  DAY.TUE,
-  DAY.WED,
-  DAY.THR,
-  DAY.FRI,
-  DAY.SAT,
-  DAY.SUN,
-];
+import { DAY } from "@/constants";
 
 export type Day = keyof typeof DAY;
 

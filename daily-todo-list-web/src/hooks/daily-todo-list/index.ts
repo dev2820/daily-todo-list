@@ -1,5 +1,6 @@
 import { useTodoList, type Todo, type TodoListHook } from "@/hooks";
-import { DAY, type Day } from "@/services";
+import { type Day } from "@/services";
+import { DAY } from "@/constants";
 
 const DAY_OF_WEEK = {
   MON: 0,

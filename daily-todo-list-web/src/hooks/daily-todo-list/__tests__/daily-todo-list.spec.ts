@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { useDailyTodoList } from "..";
 import { renderHook } from "@testing-library/react-hooks";
-import { DAY } from "@/services";
+import { DAY } from "@/constants";
 
 describe("useDailyTodoList", () => {
   const monTodoListInit = [{ id: "0", content: "Todo Mon", done: false }];

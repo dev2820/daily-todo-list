@@ -5,10 +5,9 @@ import { useDailyTodoList, type DailyTodoList } from "@/hooks";
 import {
   useDailyTodoService,
   type DailyTodoService,
-  DAYS,
-  DAY,
   type Day,
 } from "@/services";
+import { DAY, DAYS } from "@/constants";
 
 function App() {
   const dailyTodoService = useDailyTodoService();

@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { useDailyTodoService, DAY } from "..";
+import { useDailyTodoService } from "..";
+import { DAY } from "@/constants";
 
 describe("useDailyTodoService", () => {
   const mockTodoList = {
