@@ -1,8 +1,6 @@
 import { Todo } from "@/hooks";
 import { type Service } from "../types";
-import { DAY } from "@/constants";
-
-export type Day = keyof typeof DAY;
+import { DAY, type Day } from "@/constants";
 
 const getItem = (key: string) => {
   const item = localStorage.getItem(key);

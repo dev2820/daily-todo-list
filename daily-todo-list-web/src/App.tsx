@@ -2,12 +2,8 @@ import { useEffect } from "react";
 import { cva } from "class-variance-authority";
 import { TodoNote } from "@/components";
 import { useDailyTodoList, type DailyTodoList } from "@/hooks";
-import {
-  useDailyTodoService,
-  type DailyTodoService,
-  type Day,
-} from "@/services";
-import { DAY, DAYS } from "@/constants";
+import { useDailyTodoService, type DailyTodoService } from "@/services";
+import { DAY, DAYS, type Day } from "@/constants";
 
 function App() {
   const dailyTodoService = useDailyTodoService();

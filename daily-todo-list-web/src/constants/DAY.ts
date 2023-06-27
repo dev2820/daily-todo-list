@@ -17,3 +17,5 @@ export const DAYS = [
   DAY.SAT,
   DAY.SUN,
 ] as const;
+
+export type Day = keyof typeof DAY;
