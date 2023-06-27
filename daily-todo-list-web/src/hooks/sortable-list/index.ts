@@ -13,6 +13,8 @@ export const useSortableList = <T>(items?: T[]) => {
     setList((items) => {
       return arrayMoveImmutable(items, oldIndex, newIndex);
     });
+
+    return;
   };
   return {
     sort,
@@ -20,3 +22,5 @@ export const useSortableList = <T>(items?: T[]) => {
     setList,
   };
 };
+
+export type SortableListHook = ReturnType<typeof useSortableList>;

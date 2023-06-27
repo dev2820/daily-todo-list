@@ -1,5 +1,4 @@
-import { useSortableList } from "@/hooks/sortable-list";
-import { SortEndHandler } from "react-sortable-hoc";
+import { useSortableList, type SortableListHook } from "@/hooks/sortable-list";
 import { uid } from "@/utils";
 
 export type Todo = {
@@ -8,9 +7,8 @@ export type Todo = {
   done: boolean;
 };
 
-export interface TodoListHook {
+export interface TodoListHook extends Pick<SortableListHook, "sort"> {
   todos: Todo[];
-  sort: SortEndHandler;
   doit: (id: string) => void;
   undo: (id: string) => void;
   removeTodo: (id: string) => void;
