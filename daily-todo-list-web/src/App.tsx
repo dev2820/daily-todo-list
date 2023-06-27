@@ -17,7 +17,7 @@ function App() {
     initialTodoMap.sun,
   ]);
 
-  const saveTodos = () => {
+  useEffect(() => {
     DAYS.forEach((key: Day) => {
       if (key === DAY.MON) dailyTodoService.write(key, dailyTodoList.mon.todos);
       if (key === DAY.TUE) dailyTodoService.write(key, dailyTodoList.tue.todos);
@@ -27,13 +27,7 @@ function App() {
       if (key === DAY.SAT) dailyTodoService.write(key, dailyTodoList.sat.todos);
       if (key === DAY.SUN) dailyTodoService.write(key, dailyTodoList.sun.todos);
     });
-  };
-
-  useEffect(() => {
-    return () => {
-      saveTodos();
-    };
-  }, []);
+  }, [dailyTodoList, dailyTodoService]);
 
   const todoNotes = [
     { title: "월요일", todoList: dailyTodoList.mon },

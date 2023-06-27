@@ -30,7 +30,6 @@ const getItem = (key: string) => {
 
 const setItem = (key: string, data: Todo[]) => {
   localStorage.setItem(key, JSON.stringify(data));
-
   return true;
 };
 
