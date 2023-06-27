@@ -13,37 +13,31 @@ export const dailyTodoStore = () => {
     sun: [],
   };
 
-  const readAll = () => {
-    return mockTodoList;
-  };
+  const _read = (day: Day) => mockTodoList[day];
 
-  const readMon = () => {
-    return mockTodoList.mon;
-  };
+  const readAll = () => ({
+    mon: readMon(),
+    tue: readTue(),
+    wed: readWed(),
+    thr: readThr(),
+    fri: readFri(),
+    sat: readSat(),
+    sun: readSun(),
+  });
 
-  const readTue = () => {
-    return mockTodoList.tue;
-  };
+  const readMon = () => _read("mon");
 
-  const readWed = () => {
-    return mockTodoList.wed;
-  };
+  const readTue = () => _read("tue");
 
-  const readThr = () => {
-    return mockTodoList.thr;
-  };
+  const readWed = () => _read("wed");
 
-  const readFri = () => {
-    return mockTodoList.fri;
-  };
+  const readThr = () => _read("thr");
 
-  const readSat = () => {
-    return mockTodoList.sat;
-  };
+  const readFri = () => _read("fri");
 
-  const readSun = () => {
-    return mockTodoList.sun;
-  };
+  const readSat = () => _read("sat");
+
+  const readSun = () => _read("sun");
 
   const _write = (day: Day, newTodoList: Todo[]) => {
     mockTodoList[day] = newTodoList;
@@ -80,6 +74,7 @@ export const dailyTodoStore = () => {
   };
 
   return {
+    read: _read,
     readAll,
     readMon,
     readTue,
@@ -88,6 +83,7 @@ export const dailyTodoStore = () => {
     readFri,
     readSat,
     readSun,
+    write: _write,
     writeMon,
     writeTue,
     writeWed,

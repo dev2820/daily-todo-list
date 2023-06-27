@@ -11,10 +11,16 @@ describe("dailyTodoStore", () => {
     sat: [],
     sun: [],
   };
-  it("should write all todo list", () => {
+  it("should read all todo list", () => {
     const store = dailyTodoStore();
     expect(store.readAll()).toEqual(mockTodoList);
   });
+
+  it("should read one todo list", () => {
+    const store = dailyTodoStore();
+    expect(store.read("mon")).toEqual(mockTodoList.mon);
+  });
+
   it("should read todo list each day of week", () => {
     const store = dailyTodoStore();
 
@@ -26,6 +32,19 @@ describe("dailyTodoStore", () => {
     expect(store.readSat()).toEqual(mockTodoList.sat);
     expect(store.readSun()).toEqual(mockTodoList.sun);
   });
+  it("should write one day todo list", () => {
+    const store = dailyTodoStore();
+    store.write("mon", [
+      { id: "0", content: "Updated Todo A in Monday", done: false },
+      { id: "2", content: "New Todo B in Monday", done: true },
+    ]);
+
+    expect(store.readMon()).toEqual([
+      { id: "0", content: "Updated Todo A in Monday", done: false },
+      { id: "2", content: "New Todo B in Monday", done: true },
+    ]);
+  });
+
   it("should write todo list each day of week", () => {
     const store = dailyTodoStore();
     store.writeMon([
