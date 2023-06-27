@@ -11,7 +11,7 @@ describe("useSortableList", () => {
 
     expect(sortableList.current.list).toEqual(["A", "B", "C"]);
   });
-  it("should init with list", () => {
+  it("should change list", () => {
     const { result: sortableList } = renderHook(() =>
       useSortableList<string>()
     );
