@@ -2,18 +2,20 @@ import { Todo } from "@/hooks";
 
 type Day = "mon" | "tue" | "wed" | "thr" | "fri" | "sat" | "sun";
 
-export const dailyTodoService = () => {
-  const mockTodoList: Record<Day, Todo[]> = {
-    mon: [{ id: "0", content: "Todo A in Monday", done: false }],
-    tue: [],
-    wed: [],
-    thr: [],
-    fri: [{ id: "1", content: "Todo B in Friday", done: false }],
-    sat: [],
-    sun: [],
-  };
+const getItem = (key: string) => {
+  const item = localStorage.getItem(key);
 
-  const read = (day: Day) => mockTodoList[day];
+  console.log(item, typeof item);
+  return item ? JSON.parse(item) : null;
+};
+
+const setItem = (key: string, data: Todo[]) => {
+  localStorage.setItem(key, JSON.stringify(data));
+
+  return true;
+};
+export const dailyTodoService = () => {
+  const read = (day: Day) => getItem(`todo-${day}`);
 
   const readAll = () => ({
     mon: readMon(),
@@ -33,11 +35,8 @@ export const dailyTodoService = () => {
   const readSat = () => read("sat");
   const readSun = () => read("sun");
 
-  const write = (day: Day, newTodoList: Todo[]) => {
-    mockTodoList[day] = newTodoList;
-
-    return true;
-  };
+  const write = (day: Day, newTodoList: Todo[]) =>
+    setItem(`todo-${day}`, newTodoList);
 
   const writeMon = (newTodoList: Todo[]) => write("mon", newTodoList);
   const writeTue = (newTodoList: Todo[]) => write("tue", newTodoList);

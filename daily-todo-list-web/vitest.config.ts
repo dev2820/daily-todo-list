@@ -4,6 +4,7 @@ import path from "path";
 export default defineConfig({
   test: {
     environment: "jsdom",
+    setupFiles: ["./__mocks__/localStorage.ts"],
   },
   resolve: {
     alias: {

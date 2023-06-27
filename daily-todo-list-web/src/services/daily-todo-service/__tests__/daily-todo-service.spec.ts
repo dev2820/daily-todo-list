@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { dailyTodoService } from "..";
 
 describe("dailyTodoService", () => {
@@ -11,6 +11,21 @@ describe("dailyTodoService", () => {
     sat: [],
     sun: [],
   };
+  beforeEach(() => {
+    localStorage.$setup({
+      "todo-mon": JSON.stringify([
+        { id: "0", content: "Todo A in Monday", done: false },
+      ]),
+      "todo-tue": JSON.stringify([]),
+      "todo-wed": JSON.stringify([]),
+      "todo-thr": JSON.stringify([]),
+      "todo-fri": JSON.stringify([
+        { id: "1", content: "Todo B in Friday", done: false },
+      ]),
+      "todo-sat": JSON.stringify([]),
+      "todo-sun": JSON.stringify([]),
+    });
+  });
   it("should read all todo list", () => {
     const service = dailyTodoService();
     expect(service.readAll()).toEqual(mockTodoList);
