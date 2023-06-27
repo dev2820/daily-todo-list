@@ -1,7 +1,9 @@
 import { Todo } from "@/hooks";
 
+type Day = "mon" | "tue" | "wed" | "thr" | "fri" | "sat" | "sun";
+
 export const dailyTodoStore = () => {
-  const mockTodoList: Record<string, Todo[]> = {
+  const mockTodoList: Record<Day, Todo[]> = {
     mon: [{ id: "0", content: "Todo A in Monday", done: false }],
     tue: [],
     wed: [],
@@ -43,46 +45,38 @@ export const dailyTodoStore = () => {
     return mockTodoList.sun;
   };
 
-  const writeMon = (newTodoList: Todo[]) => {
-    mockTodoList.mon = newTodoList;
+  const _write = (day: Day, newTodoList: Todo[]) => {
+    mockTodoList[day] = newTodoList;
 
     return true;
+  };
+
+  const writeMon = (newTodoList: Todo[]) => {
+    return _write("mon", newTodoList);
   };
 
   const writeTue = (newTodoList: Todo[]) => {
-    mockTodoList.tue = newTodoList;
-
-    return true;
+    return _write("tue", newTodoList);
   };
 
   const writeWed = (newTodoList: Todo[]) => {
-    mockTodoList.wed = newTodoList;
-
-    return true;
+    return _write("wed", newTodoList);
   };
 
   const writeThr = (newTodoList: Todo[]) => {
-    mockTodoList.thr = newTodoList;
-
-    return true;
+    return _write("thr", newTodoList);
   };
 
   const writeFri = (newTodoList: Todo[]) => {
-    mockTodoList.fri = newTodoList;
-
-    return true;
+    return _write("fri", newTodoList);
   };
 
   const writeSat = (newTodoList: Todo[]) => {
-    mockTodoList.sat = newTodoList;
-
-    return true;
+    return _write("sat", newTodoList);
   };
 
   const writeSun = (newTodoList: Todo[]) => {
-    mockTodoList.sun = newTodoList;
-
-    return true;
+    return _write("sun", newTodoList);
   };
 
   return {
