@@ -13,7 +13,7 @@ export const dailyTodoStore = () => {
     sun: [],
   };
 
-  const _read = (day: Day) => mockTodoList[day];
+  const read = (day: Day) => mockTodoList[day];
 
   const readAll = () => ({
     mon: readMon(),
@@ -25,30 +25,30 @@ export const dailyTodoStore = () => {
     sun: readSun(),
   });
 
-  const readMon = () => _read("mon");
-  const readTue = () => _read("tue");
-  const readWed = () => _read("wed");
-  const readThr = () => _read("thr");
-  const readFri = () => _read("fri");
-  const readSat = () => _read("sat");
-  const readSun = () => _read("sun");
+  const readMon = () => read("mon");
+  const readTue = () => read("tue");
+  const readWed = () => read("wed");
+  const readThr = () => read("thr");
+  const readFri = () => read("fri");
+  const readSat = () => read("sat");
+  const readSun = () => read("sun");
 
-  const _write = (day: Day, newTodoList: Todo[]) => {
+  const write = (day: Day, newTodoList: Todo[]) => {
     mockTodoList[day] = newTodoList;
 
     return true;
   };
 
-  const writeMon = (newTodoList: Todo[]) => _write("mon", newTodoList);
-  const writeTue = (newTodoList: Todo[]) => _write("tue", newTodoList);
-  const writeWed = (newTodoList: Todo[]) => _write("wed", newTodoList);
-  const writeThr = (newTodoList: Todo[]) => _write("thr", newTodoList);
-  const writeFri = (newTodoList: Todo[]) => _write("fri", newTodoList);
-  const writeSat = (newTodoList: Todo[]) => _write("sat", newTodoList);
-  const writeSun = (newTodoList: Todo[]) => _write("sun", newTodoList);
+  const writeMon = (newTodoList: Todo[]) => write("mon", newTodoList);
+  const writeTue = (newTodoList: Todo[]) => write("tue", newTodoList);
+  const writeWed = (newTodoList: Todo[]) => write("wed", newTodoList);
+  const writeThr = (newTodoList: Todo[]) => write("thr", newTodoList);
+  const writeFri = (newTodoList: Todo[]) => write("fri", newTodoList);
+  const writeSat = (newTodoList: Todo[]) => write("sat", newTodoList);
+  const writeSun = (newTodoList: Todo[]) => write("sun", newTodoList);
 
   return {
-    read: _read,
+    read,
     readAll,
     readMon,
     readTue,
@@ -57,7 +57,7 @@ export const dailyTodoStore = () => {
     readFri,
     readSat,
     readSun,
-    write: _write,
+    write,
     writeMon,
     writeTue,
     writeWed,
