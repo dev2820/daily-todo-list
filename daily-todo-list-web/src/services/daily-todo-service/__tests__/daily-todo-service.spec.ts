@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
-import { dailyTodoStore } from "..";
+import { dailyTodoService } from "..";
 
-describe("dailyTodoStore", () => {
+describe("dailyTodoService", () => {
   const mockTodoList = {
     mon: [{ id: "0", content: "Todo A in Monday", done: false }],
     tue: [],
@@ -12,47 +12,47 @@ describe("dailyTodoStore", () => {
     sun: [],
   };
   it("should read all todo list", () => {
-    const store = dailyTodoStore();
-    expect(store.readAll()).toEqual(mockTodoList);
+    const service = dailyTodoService();
+    expect(service.readAll()).toEqual(mockTodoList);
   });
 
   it("should read one todo list", () => {
-    const store = dailyTodoStore();
-    expect(store.read("mon")).toEqual(mockTodoList.mon);
+    const service = dailyTodoService();
+    expect(service.read("mon")).toEqual(mockTodoList.mon);
   });
 
   it("should read todo list each day of week", () => {
-    const store = dailyTodoStore();
+    const service = dailyTodoService();
 
-    expect(store.readMon()).toEqual(mockTodoList.mon);
-    expect(store.readTue()).toEqual(mockTodoList.tue);
-    expect(store.readWed()).toEqual(mockTodoList.wed);
-    expect(store.readThr()).toEqual(mockTodoList.thr);
-    expect(store.readFri()).toEqual(mockTodoList.fri);
-    expect(store.readSat()).toEqual(mockTodoList.sat);
-    expect(store.readSun()).toEqual(mockTodoList.sun);
+    expect(service.readMon()).toEqual(mockTodoList.mon);
+    expect(service.readTue()).toEqual(mockTodoList.tue);
+    expect(service.readWed()).toEqual(mockTodoList.wed);
+    expect(service.readThr()).toEqual(mockTodoList.thr);
+    expect(service.readFri()).toEqual(mockTodoList.fri);
+    expect(service.readSat()).toEqual(mockTodoList.sat);
+    expect(service.readSun()).toEqual(mockTodoList.sun);
   });
   it("should write one day todo list", () => {
-    const store = dailyTodoStore();
-    store.write("mon", [
+    const service = dailyTodoService();
+    service.write("mon", [
       { id: "0", content: "Updated Todo A in Monday", done: false },
       { id: "2", content: "New Todo B in Monday", done: true },
     ]);
 
-    expect(store.readMon()).toEqual([
+    expect(service.readMon()).toEqual([
       { id: "0", content: "Updated Todo A in Monday", done: false },
       { id: "2", content: "New Todo B in Monday", done: true },
     ]);
   });
 
   it("should write todo list each day of week", () => {
-    const store = dailyTodoStore();
-    store.writeMon([
+    const service = dailyTodoService();
+    service.writeMon([
       { id: "0", content: "Updated Todo A in Monday", done: false },
       { id: "2", content: "New Todo B in Monday", done: true },
     ]);
 
-    expect(store.readMon()).toEqual([
+    expect(service.readMon()).toEqual([
       { id: "0", content: "Updated Todo A in Monday", done: false },
       { id: "2", content: "New Todo B in Monday", done: true },
     ]);

@@ -2,7 +2,7 @@ import { Todo } from "@/hooks";
 
 type Day = "mon" | "tue" | "wed" | "thr" | "fri" | "sat" | "sun";
 
-export const dailyTodoStore = () => {
+export const dailyTodoService = () => {
   const mockTodoList: Record<Day, Todo[]> = {
     mon: [{ id: "0", content: "Todo A in Monday", done: false }],
     tue: [],
