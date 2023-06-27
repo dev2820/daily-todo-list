@@ -3,8 +3,8 @@ import type { Json, Storage } from "./types";
 export const getLocalStorage = (): Storage => {
   const getItem = (key: string) => {
     const item = localStorage.getItem(key);
-    if (item === null) return null;
-    return JSON.parse(item);
+
+    return item ? JSON.parse(item) : null;
   };
 
   const setItem = (key: string, value: Json) =>
