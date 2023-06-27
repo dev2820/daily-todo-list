@@ -1,6 +1,16 @@
 import { Todo } from "@/hooks";
 
-type Day = "mon" | "tue" | "wed" | "thr" | "fri" | "sat" | "sun";
+export const DAY = {
+  MON: "MON",
+  TUE: "TUE",
+  WED: "WED",
+  THR: "THR",
+  FRI: "FRI",
+  SAT: "SAT",
+  SUN: "SUN",
+} as const;
+
+export type Day = keyof typeof DAY;
 
 const getItem = (key: string) => {
   const item = localStorage.getItem(key);
@@ -26,24 +36,24 @@ export const dailyTodoService = () => {
     sun: readSun(),
   });
 
-  const readMon = () => read("mon");
-  const readTue = () => read("tue");
-  const readWed = () => read("wed");
-  const readThr = () => read("thr");
-  const readFri = () => read("fri");
-  const readSat = () => read("sat");
-  const readSun = () => read("sun");
+  const readMon = () => read(DAY.MON);
+  const readTue = () => read(DAY.TUE);
+  const readWed = () => read(DAY.WED);
+  const readThr = () => read(DAY.THR);
+  const readFri = () => read(DAY.FRI);
+  const readSat = () => read(DAY.SAT);
+  const readSun = () => read(DAY.SUN);
 
   const write = (day: Day, newTodoList: Todo[]) =>
     setItem(`todo-${day}`, newTodoList);
 
-  const writeMon = (newTodoList: Todo[]) => write("mon", newTodoList);
-  const writeTue = (newTodoList: Todo[]) => write("tue", newTodoList);
-  const writeWed = (newTodoList: Todo[]) => write("wed", newTodoList);
-  const writeThr = (newTodoList: Todo[]) => write("thr", newTodoList);
-  const writeFri = (newTodoList: Todo[]) => write("fri", newTodoList);
-  const writeSat = (newTodoList: Todo[]) => write("sat", newTodoList);
-  const writeSun = (newTodoList: Todo[]) => write("sun", newTodoList);
+  const writeMon = (newTodoList: Todo[]) => write(DAY.MON, newTodoList);
+  const writeTue = (newTodoList: Todo[]) => write(DAY.TUE, newTodoList);
+  const writeWed = (newTodoList: Todo[]) => write(DAY.WED, newTodoList);
+  const writeThr = (newTodoList: Todo[]) => write(DAY.THR, newTodoList);
+  const writeFri = (newTodoList: Todo[]) => write(DAY.FRI, newTodoList);
+  const writeSat = (newTodoList: Todo[]) => write(DAY.SAT, newTodoList);
+  const writeSun = (newTodoList: Todo[]) => write(DAY.SUN, newTodoList);
 
   return {
     read,

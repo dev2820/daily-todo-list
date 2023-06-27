@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { dailyTodoService } from "..";
+import { dailyTodoService, DAY } from "..";
 
 describe("dailyTodoService", () => {
   const mockTodoList = {
@@ -13,17 +13,17 @@ describe("dailyTodoService", () => {
   };
   beforeEach(() => {
     localStorage.$setup({
-      "todo-mon": JSON.stringify([
+      "todo-MON": JSON.stringify([
         { id: "0", content: "Todo A in Monday", done: false },
       ]),
-      "todo-tue": JSON.stringify([]),
-      "todo-wed": JSON.stringify([]),
-      "todo-thr": JSON.stringify([]),
-      "todo-fri": JSON.stringify([
+      "todo-TUE": JSON.stringify([]),
+      "todo-WED": JSON.stringify([]),
+      "todo-THR": JSON.stringify([]),
+      "todo-FRI": JSON.stringify([
         { id: "1", content: "Todo B in Friday", done: false },
       ]),
-      "todo-sat": JSON.stringify([]),
-      "todo-sun": JSON.stringify([]),
+      "todo-SAT": JSON.stringify([]),
+      "todo-SUN": JSON.stringify([]),
     });
   });
   it("should read all todo list", () => {
@@ -33,7 +33,7 @@ describe("dailyTodoService", () => {
 
   it("should read one todo list", () => {
     const service = dailyTodoService();
-    expect(service.read("mon")).toEqual(mockTodoList.mon);
+    expect(service.read(DAY.MON)).toEqual(mockTodoList.mon);
   });
 
   it("should read todo list each day of week", () => {
@@ -49,7 +49,7 @@ describe("dailyTodoService", () => {
   });
   it("should write one day todo list", () => {
     const service = dailyTodoService();
-    service.write("mon", [
+    service.write(DAY.MON, [
       { id: "0", content: "Updated Todo A in Monday", done: false },
       { id: "2", content: "New Todo B in Monday", done: true },
     ]);
