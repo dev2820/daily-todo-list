@@ -8,22 +8,29 @@ import { TodoListHook, type Todo } from "@/hooks";
 import { Button } from "primereact/button";
 import { cva } from "class-variance-authority";
 
-interface Props extends NoteLayoutProps {
-  todoListHook: TodoListHook;
-}
+interface Props extends NoteLayoutProps, TodoListHook {}
 
 export const TodoNote = (props: Props) => {
-  const { className, title, style, todoListHook } = props;
+  const {
+    className,
+    title,
+    style,
+    todos,
+    sort,
+    addTodo,
+    doit,
+    undo,
+    removeTodo,
+    changeContent,
+  } = props;
 
   const TodoItem = (todo: Todo) => (
     <_TodoItem
       todo={todo}
-      onDo={() => todoListHook.doit(todo.id)}
-      onUndo={() => todoListHook.undo(todo.id)}
-      onRemove={() => todoListHook.removeTodo(todo.id)}
-      onChangeContent={(content: string) =>
-        todoListHook.changeContent(todo.id, content)
-      }
+      onDo={() => doit(todo.id)}
+      onUndo={() => undo(todo.id)}
+      onRemove={() => removeTodo(todo.id)}
+      onChangeContent={(content: string) => changeContent(todo.id, content)}
     ></_TodoItem>
   );
 
@@ -35,15 +42,15 @@ export const TodoNote = (props: Props) => {
     >
       <TodoList
         className={todoListStyle()}
-        todos={todoListHook.todos}
-        onSortEnd={todoListHook.sort}
+        todos={todos}
+        onSortEnd={sort}
         renderTodo={TodoItem}
       ></TodoList>
       <div className={spaceStyle()}></div>
       <Button
         className={addTodoStyle()}
         label="Add Todo"
-        onClick={todoListHook.addTodo}
+        onClick={addTodo}
       ></Button>
     </NoteLayout>
   );

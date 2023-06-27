@@ -24,7 +24,7 @@ function App() {
           className={todoNoteStyle()}
           style={style}
           title={todoNote.title}
-          todoListHook={todoNote.todoListHook}
+          {...todoNote.todoListHook}
         ></TodoNote>
       ))}
     </div>
