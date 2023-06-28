@@ -5,7 +5,6 @@ import {
   type NoteLayoutProps,
 } from "@/components";
 import { TodoListHook, type Todo } from "@/hooks";
-import { Button } from "primereact/button";
 import { cva } from "class-variance-authority";
 
 interface Props extends NoteLayoutProps, TodoListHook {}
