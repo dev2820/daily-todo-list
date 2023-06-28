@@ -1,5 +1,5 @@
 import { cva } from "class-variance-authority";
-import { useState, useRef, useEffect, ChangeEvent } from "react";
+import { useRef, useEffect, ChangeEvent } from "react";
 
 interface Props {
   className?: string;
@@ -14,7 +14,6 @@ export const AutoHeightTextarea = ({
   placeholder,
 }: Props) => {
   const $textarea = useRef<HTMLTextAreaElement>(null);
-  const [contentInlineStyle, setContentInlineStyle] = useState({});
 
   useEffect(() => {
     if (!$textarea.current) return;
@@ -39,7 +38,6 @@ export const AutoHeightTextarea = ({
       className={`${contentStyle()} ${className ?? ""}`}
       onChange={_onChange}
       value={value}
-      style={contentInlineStyle}
       ref={$textarea}
       rows={1}
       placeholder={placeholder ?? ""}
