@@ -34,9 +34,14 @@ export const TodoNote = (props: Props) => {
     ></_TodoItem>
   );
 
+  const AddTodoButton = () => {
+    return <i className={`pi pi-plus ${addTodoStyle()}`} onClick={addTodo}></i>;
+  };
+
   return (
     <NoteLayout
       title={title}
+      trailing={AddTodoButton()}
       style={style}
       className={`${todoNoteStyle()} ${className ?? ""}`}
     >
@@ -47,11 +52,6 @@ export const TodoNote = (props: Props) => {
         renderTodo={TodoItem}
       ></TodoList>
       <div className={spaceStyle()}></div>
-      <Button
-        className={addTodoStyle()}
-        label="Add Todo"
-        onClick={addTodo}
-      ></Button>
     </NoteLayout>
   );
 };
@@ -60,5 +60,10 @@ const todoNoteStyle = cva("relative");
 const todoListStyle = cva(
   "h-[calc(100%-3.5rem)] overflow-y-auto overflow-x-hidden"
 );
-const addTodoStyle = cva("w-full h-[3rem]");
+const addTodoStyle = cva([
+  "duration-200",
+  "cursor-pointer",
+  "text-slate-300",
+  "hover:text-slate-400",
+]);
 const spaceStyle = cva("h-[0.5rem]");
