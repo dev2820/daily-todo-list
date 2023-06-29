@@ -51,7 +51,6 @@ const textareaStyle = cva(["resize-none"]);
 const contentStyle = cva([
   "text-sm",
   "w-0 m-0 p-0",
-  "bg-transparent",
   "focus:outline-none",
   "grow items-start",
   "placeholder:text-slate-300",
