@@ -59,6 +59,14 @@ describe("useTodoList", () => {
     expect(todoList.current.todos.length).toBe(4);
   });
 
+  it("should add new Todo next to another todo", () => {
+    const { result: todoList } = renderHook(() => useTodoList(items));
+    todoList.current.addTodo({ nextTo: "1" });
+
+    expect(todoList.current.todos.length).toBe(4);
+    expect(todoList.current.todos[2].content).toBe("");
+  });
+
   it("should remove Todo", () => {
     const { result: todoList } = renderHook(() => useTodoList(items));
     todoList.current.removeTodo("1");

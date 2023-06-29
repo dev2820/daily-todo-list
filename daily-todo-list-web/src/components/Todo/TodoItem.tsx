@@ -10,7 +10,7 @@ interface Props {
   onUndo?: () => void;
   onRemove?: () => void;
   onChangeContent?: (content: string) => void;
-  onKeyPress?: (event: KeyboardEvent) => void;
+  onKeyPress?: (event: KeyboardEvent, todo?: Todo) => void;
   className?: string;
 }
 
@@ -41,7 +41,7 @@ export const TodoItem = ({
 
   const _onKeyPress = (event: KeyboardEvent) => {
     if (onKeyPress) {
-      onKeyPress(event as KeyboardEvent);
+      onKeyPress(event as KeyboardEvent, todo);
     }
   };
 

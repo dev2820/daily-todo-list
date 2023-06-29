@@ -12,7 +12,7 @@ export interface TodoListHook extends Pick<SortableListHook, "sort"> {
   doit: (id: string) => void;
   undo: (id: string) => void;
   removeTodo: (id: string) => void;
-  addTodo: () => void;
+  addTodo: ({ nextTo }?: { nextTo?: string }) => void;
   changeContent: (id: string, content: string) => void;
 }
 
@@ -70,10 +70,15 @@ export const useTodoList = (initialTodos: Todo[]): TodoListHook => {
     });
   };
 
-  const addTodo = () => {
+  const addTodo = (option?: { nextTo?: string }) => {
     setTodos((todos: Todo[]) => {
       const newTodo = { id: uid(), content: "", done: false };
-      return [...todos, newTodo];
+
+      if (!option || !option.nextTo) return [...todos, newTodo];
+      const index = todos.findIndex((todo) => todo.id === option.nextTo);
+
+      if (index < 0) return [...todos, newTodo];
+      return [...todos.slice(0, index + 1), newTodo, ...todos.slice(index + 1)];
     });
   };
 

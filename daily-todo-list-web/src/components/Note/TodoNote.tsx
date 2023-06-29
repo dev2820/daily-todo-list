@@ -35,18 +35,22 @@ export const TodoNote = (props: Props) => {
     ></_TodoItem>
   );
 
-  const onKeyPress = (event: KeyboardEvent) => {
+  const onKeyPress = (event: KeyboardEvent, todo?: Todo) => {
     if (isShiftEnter(event)) {
       event.preventDefault();
-      addTodo();
+      if (todo) addTodo({ nextTo: todo.id });
+      else addTodo();
     }
   };
+
   const isShiftEnter = (event: KeyboardEvent) => {
     if (event.shiftKey && event.key === "Enter") return true;
   };
 
   const AddTodoButton = () => {
-    return <i className={`pi pi-plus ${addTodoStyle()}`} onClick={addTodo}></i>;
+    return (
+      <i className={`pi pi-plus ${addTodoStyle()}`} onClick={() => addTodo}></i>
+    );
   };
 
   return (
