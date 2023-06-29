@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, PropsWithChildren } from "react";
+import { useState, ChangeEvent, KeyboardEvent, PropsWithChildren } from "react";
 import { type Todo } from "@/hooks";
 import { cva } from "class-variance-authority";
 import { Checkbox } from "@/components";
@@ -10,6 +10,7 @@ interface Props {
   onUndo?: () => void;
   onRemove?: () => void;
   onChangeContent?: (content: string) => void;
+  onShiftEnterPress?: () => void;
   className?: string;
 }
 
@@ -19,6 +20,7 @@ export const TodoItem = ({
   onUndo,
   onRemove,
   onChangeContent,
+  onShiftEnterPress,
   className,
 }: PropsWithChildren<Props>) => {
   const [content, setContent] = useState(todo.content);
@@ -37,6 +39,13 @@ export const TodoItem = ({
     onChangeContent($target.value);
   };
 
+  const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.shiftKey && event.key === "Enter" && onShiftEnterPress) {
+      event.preventDefault();
+      onShiftEnterPress();
+    }
+  };
+
   return (
     <div
       className={`${style()} ${className ?? ""}`}
@@ -51,6 +60,7 @@ export const TodoItem = ({
       <AutoHeightTextarea
         value={content}
         onChange={onEditContent}
+        onKeyPress={onKeyPress}
         className={textStyle({ done: todo.done })}
         placeholder="Just Do It!"
       />

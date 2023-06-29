@@ -30,6 +30,7 @@ export const TodoNote = (props: Props) => {
       onUndo={() => undo(todo.id)}
       onRemove={() => removeTodo(todo.id)}
       onChangeContent={(content: string) => changeContent(todo.id, content)}
+      onShiftEnterPress={() => addTodo()}
     ></_TodoItem>
   );
 

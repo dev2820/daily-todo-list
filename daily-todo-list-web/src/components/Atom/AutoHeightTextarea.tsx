@@ -1,15 +1,17 @@
 import { cva } from "class-variance-authority";
-import { useRef, useEffect, ChangeEvent } from "react";
+import { useRef, useEffect, ChangeEvent, KeyboardEvent } from "react";
 
 interface Props {
   className?: string;
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onKeyPress?: (event: KeyboardEvent<HTMLTextAreaElement>) => void;
   value?: string;
   placeholder?: string;
 }
 export const AutoHeightTextarea = ({
   className,
   onChange,
+  onKeyPress,
   value,
   placeholder,
 }: Props) => {
@@ -33,10 +35,16 @@ export const AutoHeightTextarea = ({
     onChange(event);
   };
 
+  const _onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (!onKeyPress) return;
+    onKeyPress(event);
+  };
+
   return (
     <textarea
       className={`${contentStyle()} ${className ?? ""}`}
       onChange={_onChange}
+      onKeyDown={_onKeyPress}
       value={value}
       ref={$textarea}
       rows={1}
