@@ -64,7 +64,6 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
   }
   a:hover {
     color: #747bff;
@@ -79,10 +78,15 @@ li {
 }
 
 #root {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 
 textarea {
   background: transparent;
+}
+
+header {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
 }

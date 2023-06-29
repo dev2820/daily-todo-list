@@ -42,24 +42,24 @@ function App() {
     { title: "토요일", todoList: dailyTodoList[DAY.SAT] },
     { title: "일요일", todoList: dailyTodoList[DAY.SUN] },
   ];
-  const style = {
-    height: "500px",
-  };
 
   return (
-    <div className={todoNoteListStyle()}>
-      {todoNotes.map((todoNote) => (
-        <TodoNote
-          className={todoNoteStyle()}
-          style={style}
-          title={todoNote.title}
-          {...todoNote.todoList}
-        ></TodoNote>
-      ))}
+    <div className="h-full">
+      <header className={headerStyle()}>Todo</header>
+      <div className={todoNoteListStyle()}>
+        {todoNotes.map((todoNote) => (
+          <TodoNote
+            className={todoNoteStyle()}
+            title={todoNote.title}
+            {...todoNote.todoList}
+          ></TodoNote>
+        ))}
+      </div>
     </div>
   );
 }
 
 const todoNoteStyle = cva("grow");
-const todoNoteListStyle = cva("flex w-full gap-x-2");
+const todoNoteListStyle = cva("h-[calc(100%-2rem)] flex w-full gap-x-2");
+const headerStyle = cva("h-[2rem] text-on-surface");
 export default App;
