@@ -63,10 +63,10 @@ export const TodoItem = ({
 };
 
 const style = cva(["pr-3 w-full flex gap-x-2", "duration-200 align-top"]);
-const textStyle = cva(["placeholder:text-gray-100/25"], {
+const textStyle = cva(["placeholder:text-on-surface/25"], {
   variants: {
     done: {
-      true: ["line-through", "text-gray-100/50"],
+      true: ["line-through", "text-on-surface/50"],
       false: ["text-gray-100"],
     },
   },
