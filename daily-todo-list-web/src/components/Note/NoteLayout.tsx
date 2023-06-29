@@ -38,5 +38,5 @@ const Header = ({
 
 const layoutStyle = cva("border rounded-md bg-surface text-on-surface");
 const titleStyle = cva("w-full flex text-xl p-2 font-bold");
-const contentStyle = cva("h-full");
+const contentStyle = cva("h-[calc(100%-3rem)]");
 const metaStyle = cva("h-[3rem] border-b flex");
