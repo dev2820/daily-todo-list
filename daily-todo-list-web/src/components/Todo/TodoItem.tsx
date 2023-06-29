@@ -10,7 +10,7 @@ interface Props {
   onUndo?: () => void;
   onRemove?: () => void;
   onChangeContent?: (content: string) => void;
-  onShiftEnterPress?: () => void;
+  onKeyPress?: (event: KeyboardEvent) => void;
   className?: string;
 }
 
@@ -20,7 +20,7 @@ export const TodoItem = ({
   onUndo,
   onRemove,
   onChangeContent,
-  onShiftEnterPress,
+  onKeyPress,
   className,
 }: PropsWithChildren<Props>) => {
   const [content, setContent] = useState(todo.content);
@@ -39,10 +39,9 @@ export const TodoItem = ({
     onChangeContent($target.value);
   };
 
-  const onKeyPress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.shiftKey && event.key === "Enter" && onShiftEnterPress) {
-      event.preventDefault();
-      onShiftEnterPress();
+  const _onKeyPress = (event: KeyboardEvent) => {
+    if (onKeyPress) {
+      onKeyPress(event as KeyboardEvent);
     }
   };
 
@@ -60,7 +59,7 @@ export const TodoItem = ({
       <AutoHeightTextarea
         value={content}
         onChange={onEditContent}
-        onKeyPress={onKeyPress}
+        onKeyPress={_onKeyPress}
         className={textStyle({ done: todo.done })}
         placeholder="Just Do It!"
       />

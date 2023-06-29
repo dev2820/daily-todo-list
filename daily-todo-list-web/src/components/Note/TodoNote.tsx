@@ -6,6 +6,7 @@ import {
 } from "@/components";
 import { TodoListHook, type Todo } from "@/hooks";
 import { cva } from "class-variance-authority";
+import { KeyboardEvent } from "react";
 
 interface Props extends NoteLayoutProps, TodoListHook {}
 
@@ -30,9 +31,19 @@ export const TodoNote = (props: Props) => {
       onUndo={() => undo(todo.id)}
       onRemove={() => removeTodo(todo.id)}
       onChangeContent={(content: string) => changeContent(todo.id, content)}
-      onShiftEnterPress={() => addTodo()}
+      onKeyPress={onKeyPress}
     ></_TodoItem>
   );
+
+  const onKeyPress = (event: KeyboardEvent) => {
+    if (isShiftEnter(event)) {
+      event.preventDefault();
+      addTodo();
+    }
+  };
+  const isShiftEnter = (event: KeyboardEvent) => {
+    if (event.shiftKey && event.key === "Enter") return true;
+  };
 
   const AddTodoButton = () => {
     return <i className={`pi pi-plus ${addTodoStyle()}`} onClick={addTodo}></i>;
