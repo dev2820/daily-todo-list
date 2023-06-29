@@ -53,6 +53,5 @@ const contentStyle = cva([
   "w-0 m-0 p-0",
   "focus:outline-none",
   "grow items-start",
-  "placeholder:text-slate-300",
   textareaStyle(),
 ]);

@@ -63,10 +63,11 @@ export const TodoItem = ({
 };
 
 const style = cva(["pr-3 w-full flex gap-x-2", "duration-200 align-top"]);
-const textStyle = cva([], {
+const textStyle = cva(["placeholder:text-gray-600"], {
   variants: {
     done: {
-      true: ["line-through", "text-slate-300"],
+      true: ["line-through", "text-gray-300"],
+      false: ["text-gray-100"],
     },
   },
 });
@@ -74,8 +75,8 @@ const checkboxStyle = cva(["items-start mt-[3px]"]);
 const removerStyle = cva(
   [
     "mt-1",
-    "text-slate-300",
-    "hover:text-slate-400",
+    "text-gray-300",
+    "hover:text-gray-400",
     "duration-300",
     "cursor-pointer",
   ],
