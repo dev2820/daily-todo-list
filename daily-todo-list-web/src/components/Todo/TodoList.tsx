@@ -78,6 +78,6 @@ const DragHandle = SortableHandle(() => <_DragHandle></_DragHandle>);
 const style = cva([
   "py-2 rounded-md",
   "flex",
-  "hover:bg-slate-200/50",
+  "hover:bg-surface-light",
   "duration-200",
 ]);

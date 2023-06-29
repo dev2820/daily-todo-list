@@ -75,8 +75,8 @@ const checkboxStyle = cva(["items-start mt-[3px]"]);
 const removerStyle = cva(
   [
     "mt-1",
-    "text-gray-600",
-    "hover:text-gray-100",
+    "text-on-surface-dark",
+    "hover:text-on-surface",
     "duration-300",
     "cursor-pointer",
   ],
