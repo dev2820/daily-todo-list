@@ -5,5 +5,5 @@ export const DragHandle = () => {
 };
 
 const style = cva(
-  "px-2 leading-[16px] text-lg font-bold hover:cursor-pointer text-slate-400 select-none"
+  "px-2 leading-[16px] text-lg font-bold hover:cursor-pointer text-on-surface select-none"
 );
