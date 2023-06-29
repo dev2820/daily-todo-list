@@ -10,7 +10,7 @@ export default {
           light: "#363636",
         },
         "on-surface": {
-          DEFAULT: "#eeeeee",
+          DEFAULT: "#dddddd",
           dark: "#999999",
         },
       },
