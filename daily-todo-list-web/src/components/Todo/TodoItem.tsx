@@ -67,7 +67,7 @@ const textStyle = cva(["placeholder:text-on-surface/25"], {
   variants: {
     done: {
       true: ["line-through", "text-on-surface/50"],
-      false: ["text-gray-100"],
+      false: ["text-on-surface"],
     },
   },
 });
