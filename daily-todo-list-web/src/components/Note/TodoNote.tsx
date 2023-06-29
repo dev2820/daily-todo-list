@@ -49,7 +49,10 @@ export const TodoNote = (props: Props) => {
 
   const AddTodoButton = () => {
     return (
-      <i className={`pi pi-plus ${addTodoStyle()}`} onClick={() => addTodo}></i>
+      <i
+        className={`pi pi-plus ${addTodoStyle()}`}
+        onClick={() => addTodo()}
+      ></i>
     );
   };
 
