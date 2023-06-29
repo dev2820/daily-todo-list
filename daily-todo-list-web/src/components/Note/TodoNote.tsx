@@ -62,7 +62,7 @@ const todoListStyle = cva(
 const addTodoStyle = cva([
   "duration-200",
   "cursor-pointer",
-  "text-slate-300",
-  "hover:text-slate-400",
+  "text-on-surface-dark",
+  "hover:text-on-surface",
 ]);
 const spaceStyle = cva("h-[0.5rem]");
