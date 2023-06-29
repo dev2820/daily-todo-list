@@ -58,6 +58,7 @@ export const TodoItem = ({
       ></Checkbox>
       <AutoHeightTextarea
         value={content}
+        spellcheck={false}
         onChange={onEditContent}
         onKeyPress={_onKeyPress}
         className={textStyle({ done: todo.done })}

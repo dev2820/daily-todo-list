@@ -5,6 +5,7 @@ interface Props {
   className?: string;
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   onKeyPress?: (event: KeyboardEvent<HTMLTextAreaElement>) => void;
+  spellcheck?: boolean;
   value?: string;
   placeholder?: string;
 }
@@ -12,6 +13,7 @@ export const AutoHeightTextarea = ({
   className,
   onChange,
   onKeyPress,
+  spellcheck = true,
   value,
   placeholder,
 }: Props) => {
@@ -43,6 +45,7 @@ export const AutoHeightTextarea = ({
   return (
     <textarea
       className={`${contentStyle()} ${className ?? ""}`}
+      spellCheck={spellcheck}
       onChange={_onChange}
       onKeyDown={_onKeyPress}
       value={value}
