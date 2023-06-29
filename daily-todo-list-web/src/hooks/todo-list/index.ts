@@ -12,7 +12,7 @@ export interface TodoListHook extends Pick<SortableListHook, "sort"> {
   doit: (id: string) => void;
   undo: (id: string) => void;
   removeTodo: (id: string) => void;
-  addTodo: ({ nextTo }?: { nextTo?: string }) => void;
+  addTodo: (option?: { nextTo: string }) => void;
   changeContent: (id: string, content: string) => void;
 }
 
