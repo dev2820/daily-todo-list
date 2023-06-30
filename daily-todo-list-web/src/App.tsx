@@ -4,7 +4,7 @@ import { TodoNote } from "@/components";
 import { useDailyTodoList, type DailyTodoList } from "@/hooks";
 import { useDailyTodoService, type DailyTodoService } from "@/services";
 import { DAY, DAYS, type Day } from "@/constants";
-import { dateFormat, ONE_DAY_MS } from "@/utils";
+import { ONE_DAY_MS } from "@/utils";
 
 function App() {
   const dailyTodoService = useDailyTodoService();
