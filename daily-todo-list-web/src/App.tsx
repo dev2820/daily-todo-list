@@ -84,7 +84,11 @@ const Title = ({ title, date }: { title: string; date: Date }) => {
     </div>
   );
 };
+
 const todoNoteStyle = cva("grow");
-const todoNoteListStyle = cva("h-[calc(100%-2rem)] flex w-full gap-x-2");
+const todoNoteListStyle = cva(
+  "h-[calc(100%-2rem)] grid grid-cols-4 grid-rows-2 w-full gap-x-2 gap-y-2"
+);
 const headerStyle = cva("h-[2rem] text-on-surface");
+
 export default App;
