@@ -73,7 +73,7 @@ export const TodoNote = (props: Props) => {
   );
 };
 
-const todoNoteStyle = cva("relative");
+const todoNoteStyle = cva("relative overflow-hidden");
 const todoListStyle = cva("h-full overflow-y-auto overflow-x-hidden");
 const addTodoStyle = cva([
   "duration-200",
