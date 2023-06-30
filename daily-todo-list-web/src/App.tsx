@@ -4,6 +4,7 @@ import { TodoNote } from "@/components";
 import { useDailyTodoList, type DailyTodoList } from "@/hooks";
 import { useDailyTodoService, type DailyTodoService } from "@/services";
 import { DAY, DAYS, type Day } from "@/constants";
+import { dateFormat, ONE_DAY_MS } from "@/utils";
 
 function App() {
   const dailyTodoService = useDailyTodoService();
@@ -45,12 +46,15 @@ function App() {
 
   return (
     <div className="h-full">
-      <header className={headerStyle()}>Todo {}</header>
+      <header className={headerStyle()}>Todo</header>
       <div className={todoNoteListStyle()}>
-        {todoNotes.map((todoNote) => (
+        {todoNotes.map((todoNote, index) => (
           <TodoNote
             className={todoNoteStyle()}
-            title={todoNote.title}
+            title={Title({
+              title: todoNote.title,
+              date: new Date(Date.now() + ONE_DAY_MS * index),
+            })}
             {...todoNote.todoList}
           ></TodoNote>
         ))}
@@ -59,6 +63,13 @@ function App() {
   );
 }
 
+const Title = ({ title, date }: { title: string; date: Date }) => {
+  return (
+    <>
+      {title} <span className={"text-xs"}>{dateFormat(date, "mm/dd")}</span>
+    </>
+  );
+};
 const todoNoteStyle = cva("grow");
 const todoNoteListStyle = cva("h-[calc(100%-2rem)] flex w-full gap-x-2");
 const headerStyle = cva("h-[2rem] text-on-surface");
