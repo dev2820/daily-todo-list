@@ -81,7 +81,7 @@ const textStyle = cva(["placeholder:text-on-surface/25"], {
     },
   },
 });
-const checkboxStyle = cva(["items-start mt-[3px]"]);
+const checkboxStyle = cva(["items-start mt-[4px]"]);
 const removerStyle = cva(
   [
     "mt-1",
