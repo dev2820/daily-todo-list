@@ -5,12 +5,18 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@types/dateformat':
+    specifier: ^5.0.0
+    version: 5.0.0
   array-move:
     specifier: ^4.0.0
     version: 4.0.0
   class-variance-authority:
     specifier: ^0.6.0
     version: 0.6.0(typescript@5.0.2)
+  dateformat:
+    specifier: ^5.0.3
+    version: 5.0.3
   primeicons:
     specifier: ^6.0.1
     version: 6.0.1
@@ -4151,6 +4157,10 @@ packages:
       '@types/node': 20.3.1
     dev: true
 
+  /@types/dateformat@5.0.0:
+    resolution: {integrity: sha512-SZg4JdHIWHQGEokbYGZSDvo5wA4TLYPXaqhigs/wH+REDOejcJzgH+qyY+HtEUtWOZxEUkbhbdYPqQDiEgrXeA==}
+    dev: false
+
   /@types/detect-port@1.3.3:
     resolution: {integrity: sha512-bV/jQlAJ/nPY3XqSatkGpu+nGzou+uSwrH1cROhn+jBFg47yaNH+blW4C7p9KhopC7QxCv/6M86s37k8dMk0Yg==}
     dev: true
@@ -5618,6 +5628,11 @@ packages:
     dependencies:
       time-zone: 1.0.0
     dev: true
+
+  /dateformat@5.0.3:
+    resolution: {integrity: sha512-Kvr6HmPXUMerlLcLF+Pwq3K7apHpYmGDVqrxcDasBg86UcKeTSNWbEzU8bwdXnxnR44FtMhJAxI4Bov6Y/KUfA==}
+    engines: {node: '>=12.20'}
+    dev: false
 
   /debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}

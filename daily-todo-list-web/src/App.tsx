@@ -45,7 +45,7 @@ function App() {
 
   return (
     <div className="h-full">
-      <header className={headerStyle()}>Todo</header>
+      <header className={headerStyle()}>Todo {}</header>
       <div className={todoNoteListStyle()}>
         {todoNotes.map((todoNote) => (
           <TodoNote
