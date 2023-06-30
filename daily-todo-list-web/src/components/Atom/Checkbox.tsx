@@ -18,11 +18,7 @@ export const Checkbox = (props: Props) => {
           onChange={onChange}
           className={inputStyle()}
         />
-        <span
-          className={`${className ?? ""} ${checkboxStyle({
-            checked,
-          })}`}
-        >
+        <span className={checkboxStyle({ className, checked })}>
           <CheckIcon checked={checked}></CheckIcon>
         </span>
       </label>
@@ -34,6 +30,7 @@ const CheckIcon = ({ checked = false }) => {
   const checkIconStyle = cva(
     "my-auto absolute left-1/2 translate-x-[-54%] top-1/2 translate-y-[-46%]"
   );
+
   if (!checked) return <></>;
   else
     return (
