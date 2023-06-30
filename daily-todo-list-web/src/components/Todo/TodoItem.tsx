@@ -1,7 +1,6 @@
 import { useState, ChangeEvent, KeyboardEvent, PropsWithChildren } from "react";
 import { type Todo } from "@/hooks";
 import { cva } from "class-variance-authority";
-import { Checkbox } from "@/components";
 import { AutoHeightTextarea } from "..";
 
 interface Props {
@@ -16,8 +15,6 @@ interface Props {
 
 export const TodoItem = ({
   todo,
-  onDo,
-  onUndo,
   onRemove,
   onChangeContent,
   onKeyPress,
@@ -26,9 +23,10 @@ export const TodoItem = ({
   const [content, setContent] = useState(todo.content);
   const [isHover, setHover] = useState(false);
 
-  const onDoneChange = () => {
-    if (todo.done && onUndo) onUndo();
-    else if (!todo.done && onDo) onDo();
+  const onDone = () => {
+    if (!onRemove) return;
+
+    onRemove();
   };
 
   const onEditContent = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -51,11 +49,6 @@ export const TodoItem = ({
       onMouseOver={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <Checkbox
-        checked={todo.done}
-        className={checkboxStyle()}
-        onChange={onDoneChange}
-      ></Checkbox>
       <AutoHeightTextarea
         value={content}
         spellcheck={false}
@@ -64,11 +57,46 @@ export const TodoItem = ({
         className={textStyle({ done: todo.done })}
         placeholder="Just Do It!"
       />
-      <i
-        onClick={onRemove}
-        className={`pi pi-trash ${removerStyle({ visible: isHover })}`}
-      ></i>
+      <DoneButton onClick={onDone} visible={isHover}></DoneButton>
     </div>
+  );
+};
+
+const DoneButton = ({
+  onClick,
+  visible = true,
+}: {
+  onClick?: () => void;
+  visible?: boolean;
+}) => {
+  const style = cva(
+    [
+      "bg-transparent w-5 h-5 bg-transparent rounded-full",
+      "text-on-surface-dark border border-on-surface-dark",
+      "duration-300",
+      "hover:text-gray-600 hover:bg-emerald-300 hover:border-emerald-300",
+      "relative",
+    ],
+    {
+      variants: {
+        visible: {
+          true: "opacity-1",
+          false: "opacity-0",
+        },
+      },
+    }
+  );
+  const checkIconStyle = cva([
+    "duration-300",
+    "cursor-pointer absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-40%]",
+  ]);
+  return (
+    <button className={style({ visible })} onClick={onClick}>
+      <i
+        className={`pi pi-check ${checkIconStyle()}`}
+        style={{ fontSize: "0.8rem" }}
+      ></i>
+    </button>
   );
 };
 
@@ -81,21 +109,3 @@ const textStyle = cva(["placeholder:text-on-surface/25"], {
     },
   },
 });
-const checkboxStyle = cva(["items-start"]);
-const removerStyle = cva(
-  [
-    "mt-1",
-    "text-on-surface-dark",
-    "hover:text-on-surface",
-    "duration-300",
-    "cursor-pointer",
-  ],
-  {
-    variants: {
-      visible: {
-        true: "opacity-1",
-        false: "opacity-0",
-      },
-    },
-  }
-);
