@@ -65,9 +65,11 @@ function App() {
 
 const Title = ({ title, date }: { title: string; date: Date }) => {
   const dateStyle = cva("text-xs");
+  const titleStyle = cva("text-lg");
+
   return (
     <>
-      <span>{title} </span>
+      <span className={titleStyle()}>{title} </span>
       <span className={dateStyle()}>{dateFormat(date, "mm/dd")}</span>
     </>
   );
