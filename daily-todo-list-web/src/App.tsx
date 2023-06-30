@@ -35,25 +35,27 @@ function App() {
     });
   };
   const todoNotes = [
+    { title: "일요일", todoList: dailyTodoList[DAY.SUN] },
     { title: "월요일", todoList: dailyTodoList[DAY.MON] },
     { title: "화요일", todoList: dailyTodoList[DAY.TUE] },
     { title: "수요일", todoList: dailyTodoList[DAY.WED] },
     { title: "목요일", todoList: dailyTodoList[DAY.THR] },
     { title: "금요일", todoList: dailyTodoList[DAY.FRI] },
     { title: "토요일", todoList: dailyTodoList[DAY.SAT] },
-    { title: "일요일", todoList: dailyTodoList[DAY.SUN] },
   ];
 
   return (
     <div className="h-full">
       <header className={headerStyle()}>Todo</header>
       <div className={todoNoteListStyle()}>
-        {todoNotes.map((todoNote, index) => (
+        {todoNotes.map((todoNote, day) => (
           <TodoNote
             className={todoNoteStyle()}
             title={Title({
               title: todoNote.title,
-              date: new Date(Date.now() + ONE_DAY_MS * index),
+              date: new Date(
+                Date.now() + ONE_DAY_MS * (day - new Date().getDay())
+              ),
             })}
             {...todoNote.todoList}
           ></TodoNote>
@@ -64,7 +66,6 @@ function App() {
 }
 
 const Title = ({ title, date }: { title: string; date: Date }) => {
-  const dateStyle = cva("text-xs");
   const leadingStyle = cva("text-lg");
   const titleStyle = cva("", {
     variants: {
@@ -80,7 +81,6 @@ const Title = ({ title, date }: { title: string; date: Date }) => {
       className={titleStyle({ today: date.getDay() === new Date().getDay() })}
     >
       <span className={leadingStyle()}>{title} </span>
-      <span className={dateStyle()}>{dateFormat(date, "mm/dd")}</span>
     </div>
   );
 };
