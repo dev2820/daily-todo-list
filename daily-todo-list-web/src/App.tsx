@@ -65,13 +65,23 @@ function App() {
 
 const Title = ({ title, date }: { title: string; date: Date }) => {
   const dateStyle = cva("text-xs");
-  const titleStyle = cva("text-lg");
+  const leadingStyle = cva("text-lg");
+  const titleStyle = cva("", {
+    variants: {
+      today: {
+        true: "text-emerald-500",
+        false: "",
+      },
+    },
+  });
 
   return (
-    <>
-      <span className={titleStyle()}>{title} </span>
+    <div
+      className={titleStyle({ today: date.getDay() === new Date().getDay() })}
+    >
+      <span className={leadingStyle()}>{title} </span>
       <span className={dateStyle()}>{dateFormat(date, "mm/dd")}</span>
-    </>
+    </div>
   );
 };
 const todoNoteStyle = cva("grow");
