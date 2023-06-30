@@ -69,19 +69,15 @@ export const TodoNote = (props: Props) => {
         onSortEnd={sort}
         renderTodo={TodoItem}
       ></TodoList>
-      <div className={spaceStyle()}></div>
     </NoteLayout>
   );
 };
 
 const todoNoteStyle = cva("relative");
-const todoListStyle = cva(
-  "h-[calc(100%-3.5rem)] overflow-y-auto overflow-x-hidden"
-);
+const todoListStyle = cva("h-full overflow-y-auto overflow-x-hidden");
 const addTodoStyle = cva([
   "duration-200",
   "cursor-pointer",
   "text-on-surface-dark",
   "hover:text-on-surface",
 ]);
-const spaceStyle = cva("h-[0.5rem]");
