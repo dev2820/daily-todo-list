@@ -23,9 +23,11 @@ export const TodoList = ({
   renderTodo,
   className,
 }: TodoListProp) => {
+  const todoListStyle = cva();
+
   return (
     <_TodoList
-      className={className ?? ""}
+      className={todoListStyle({ className })}
       useDragHandle
       items={todos}
       onSortEnd={onSortEnd}
@@ -66,7 +68,7 @@ const TodoItem: React.ComponentClass<
   SortableElementProps & { children: JSX.Element }
 > = SortableElement(({ children }: { children: JSX.Element }) => {
   return (
-    <li className={style()}>
+    <li className={todoItemStyle()}>
       <DragHandle></DragHandle>
       {children}
     </li>
@@ -75,8 +77,8 @@ const TodoItem: React.ComponentClass<
 
 const DragHandle = SortableHandle(() => <_DragHandle></_DragHandle>);
 
-const style = cva([
-  "py-2 rounded-md",
+const todoItemStyle = cva([
+  "py-2",
   "flex",
   "hover:bg-surface-light",
   "duration-200",
