@@ -7,6 +7,7 @@ import {
 import { TodoListHook, type Todo } from "@/hooks";
 import { cva } from "class-variance-authority";
 import { KeyboardEvent } from "react";
+import { Button } from "@/components";
 
 interface Props extends NoteLayoutProps, TodoListHook {}
 
@@ -49,10 +50,9 @@ export const TodoNote = (props: Props) => {
 
   const AddTodoButton = () => {
     return (
-      <i
-        className={`pi pi-plus ${addTodoStyle()}`}
-        onClick={() => addTodo()}
-      ></i>
+      <Button className={addTodoStyle()}>
+        <i className="pi pi-plus" onClick={() => addTodo()}></i>
+      </Button>
     );
   };
 
@@ -76,8 +76,8 @@ export const TodoNote = (props: Props) => {
 const todoNoteStyle = cva("relative overflow-hidden");
 const todoListStyle = cva("h-full overflow-y-auto overflow-x-hidden");
 const addTodoStyle = cva([
+  "py-1 px-2",
   "duration-200",
-  "cursor-pointer",
   "text-on-surface-dark",
   "hover:text-on-surface",
 ]);
