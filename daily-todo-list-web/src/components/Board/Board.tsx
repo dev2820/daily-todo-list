@@ -58,7 +58,6 @@ const Droppable = ({
 }) => {
   return (
     <div>
-      {droppableId}
       <_Droppable droppableId={droppableId}>
         {(provided, snapshot) => (
           <div
