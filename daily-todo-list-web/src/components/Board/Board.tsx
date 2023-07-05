@@ -1,8 +1,8 @@
 import { cva } from "class-variance-authority";
 import {
-  DragDropContext,
-  Droppable,
-  Draggable,
+  DragDropContext as _DragDropContext,
+  Droppable as _Droppable,
+  Draggable as _Draggable,
   type DropResult,
 } from "react-beautiful-dnd";
 import { type Todo, useTodoListGroup } from "./board-hook";
@@ -25,7 +25,7 @@ export const Board = () => {
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
+    <_DragDropContext onDragEnd={onDragEnd}>
       <div className={laneGroupStyle()}>
         <Lane
           droppableId={MON_KEY}
@@ -38,7 +38,7 @@ export const Board = () => {
           key="2"
         ></Lane>
       </div>
-    </DragDropContext>
+    </_DragDropContext>
   );
 };
 
@@ -53,7 +53,7 @@ const Lane = ({
   return (
     <div>
       {droppableId}
-      <Droppable droppableId={droppableId}>
+      <_Droppable droppableId={droppableId}>
         {(provided, snapshot) => (
           <div
             ref={provided.innerRef}
@@ -65,14 +65,14 @@ const Lane = ({
             {provided.placeholder}
           </div>
         )}
-      </Droppable>
+      </_Droppable>
     </div>
   );
 };
 
 const Item = ({ item, index }: { item: Todo; index: number }) => {
   return (
-    <Draggable key={item.id} draggableId={item.id} index={index}>
+    <_Draggable key={item.id} draggableId={item.id} index={index}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
@@ -85,7 +85,7 @@ const Item = ({ item, index }: { item: Todo; index: number }) => {
           {item.content}
         </div>
       )}
-    </Draggable>
+    </_Draggable>
   );
 };
 
