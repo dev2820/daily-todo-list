@@ -10,6 +10,7 @@ export const useGroup = (initialItems: Identifiable[] = []) => {
   const [items, setItems] = useState(initialItems);
 
   const findById = (id: Id) => items.find((item) => item.id === id);
+  const findByIndex = (index: number) => items[index];
   const removeItem = (index: number) => {
     setItems((items: Identifiable[]) => [
       ...items.slice(0, index),
@@ -25,8 +26,11 @@ export const useGroup = (initialItems: Identifiable[] = []) => {
   };
   return {
     items: items,
+    findByIndex,
     findById,
     removeItem,
     insertItem,
   };
 };
+
+export type GroupHook = ReturnType<typeof useGroup>;

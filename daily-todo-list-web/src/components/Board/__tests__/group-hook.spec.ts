@@ -19,6 +19,12 @@ describe("useGroup", () => {
     expect(result.current.findById("1")?.id).toBe("1");
   });
 
+  it("should be able to find item by index", () => {
+    const { result } = renderHook(() => useGroup([item1, item2, item3]));
+
+    expect(result.current.findByIndex(1)?.id).toBe("2");
+  });
+
   it("should be able to insert item", () => {
     const { result } = renderHook(() => useGroup([item1, item2, item3]));
     const newItem = { id: "4" };
