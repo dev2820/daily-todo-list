@@ -6,19 +6,19 @@ export type Identifiable = {
   [key: string]: unknown;
 };
 
-export const useGroup = (initialItems: Identifiable[] = []) => {
+export const useGroup = <T extends Identifiable>(initialItems: T[] = []) => {
   const [items, setItems] = useState(initialItems);
 
   const findById = (id: Id) => items.find((item) => item.id === id);
   const findByIndex = (index: number) => items[index];
   const removeItem = (index: number) => {
-    setItems((items: Identifiable[]) => [
+    setItems((items: T[]) => [
       ...items.slice(0, index),
       ...items.slice(index + 1),
     ]);
   };
-  const insertItem = (index: number, newItem: Identifiable) => {
-    setItems((items: Identifiable[]) => [
+  const insertItem = (index: number, newItem: T) => {
+    setItems((items: T[]) => [
       ...items.slice(0, index),
       newItem,
       ...items.slice(index),
@@ -33,4 +33,4 @@ export const useGroup = (initialItems: Identifiable[] = []) => {
   };
 };
 
-export type GroupHook = ReturnType<typeof useGroup>;
+export type GroupHook<T extends Identifiable> = ReturnType<typeof useGroup<T>>;
