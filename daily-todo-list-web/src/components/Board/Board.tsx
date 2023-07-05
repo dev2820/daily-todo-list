@@ -1,28 +1,52 @@
 import { type DropResult, type OnDragEndResponder } from "react-beautiful-dnd";
-import { type Todo, useTodoListGroup } from "./todo-list-group";
 import { Draggable, Droppable, DragDropContext } from "@/components";
 import { PropsWithChildren } from "react";
 import { BoardLayout } from ".";
 import { cva } from "class-variance-authority";
+import { type GroupHook, useGroup } from "./group-hook";
+import { uid } from "@/utils/uid";
+
+const MON_KEY = "월";
+const TUE_KEY = "화";
+const WED_KEY = "수";
+export type Todo = {
+  id: string;
+  content: string;
+};
 
 export const Board = () => {
-  const { todoListTable, removeItem, insertItem, findItem, KEYS } =
-    useTodoListGroup();
-
+  // const { todoListTable, removeItem, insertItem, findItem, KEYS } =
+  //   useTodoListGroup();
+  const KEYS = [MON_KEY, TUE_KEY, WED_KEY];
+  const todoListTable: Record<string, GroupHook<Todo>> = {
+    [MON_KEY]: useGroup<Todo>([
+      { id: uid(), content: "A" },
+      { id: uid(), content: "B" },
+    ]),
+    [TUE_KEY]: useGroup<Todo>([
+      { id: uid(), content: "C" },
+      { id: uid(), content: "D" },
+    ]),
+    [WED_KEY]: useGroup<Todo>([
+      { id: uid(), content: "E" },
+      { id: uid(), content: "F" },
+    ]),
+  };
   const onDragEnd = (dropResult: DropResult) => {
     const { destination, source } = dropResult;
     if (!destination || !source) return;
     const sourceId = source.droppableId;
-    const destinationId = destination.droppableId;
 
-    const targetItem = findItem(sourceId, source.index);
+    const todoList = todoListTable[sourceId];
+    if (!todoList) return;
+    const targetItem = todoList.findByIndex(source.index);
     if (!targetItem) return;
 
-    removeItem(sourceId, source.index);
-    insertItem(destinationId, destination.index, targetItem);
+    todoList.removeItem(source.index);
+    todoList.insertItem(destination.index, targetItem);
   };
 
-  const getTodoList = (key: string) => todoListTable.get(key)?.items ?? [];
+  const getTodoList = (key: string) => todoListTable[key]?.items ?? [];
 
   return (
     <GroupContext onDragEnd={onDragEnd}>
