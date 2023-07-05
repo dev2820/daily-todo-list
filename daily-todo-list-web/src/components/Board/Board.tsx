@@ -2,11 +2,11 @@ import { cva } from "class-variance-authority";
 import {
   DragDropContext as _DragDropContext,
   Droppable as _Droppable,
-  Draggable as _Draggable,
   type DropResult,
   type OnDragEndResponder,
 } from "react-beautiful-dnd";
-import { type Todo, useTodoListGroup } from "./board-hook";
+import { useTodoListGroup } from "./board-hook";
+import { Draggable } from "@/components";
 import { PropsWithChildren } from "react";
 
 export const Board = () => {
@@ -69,25 +69,6 @@ const Droppable = ({
         )}
       </_Droppable>
     </div>
-  );
-};
-
-const Draggable = ({ item, index }: { item: Todo; index: number }) => {
-  return (
-    <_Draggable key={item.id} draggableId={item.id} index={index}>
-      {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          className={listStyle({
-            isDraggingOver: snapshot.isDragging,
-          })}
-        >
-          {item.content}
-        </div>
-      )}
-    </_Draggable>
   );
 };
 
