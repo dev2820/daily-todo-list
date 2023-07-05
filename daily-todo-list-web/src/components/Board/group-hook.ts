@@ -25,7 +25,7 @@ export const useGroup = <T extends Identifiable>(initialItems: T[] = []) => {
     ]);
   };
   return {
-    items: items,
+    items,
     findByIndex,
     findById,
     removeItem,
