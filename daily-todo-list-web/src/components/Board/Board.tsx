@@ -28,7 +28,7 @@ export const Board = () => {
       {KEYS.map((key) => (
         <BoardLane laneId={key} key={key}>
           {getTodoList(key).map((item, index) => (
-            <BoardItem item={item} index={index}></BoardItem>
+            <BoardItem itemId={item.id} item={item} index={index}></BoardItem>
           ))}
         </BoardLane>
       ))}
@@ -58,9 +58,17 @@ const BoardLane = ({
   );
 };
 
-const BoardItem = ({ item, index }: { item: Todo; index: number }) => {
+const BoardItem = ({
+  itemId,
+  item,
+  index,
+}: {
+  itemId: string;
+  item: Todo;
+  index: number;
+}) => {
   return (
-    <Draggable draggableId={item.id} index={index} key={item.id}>
+    <Draggable draggableId={itemId} index={index} key={itemId}>
       <div>{item.content}</div>
     </Draggable>
   );
