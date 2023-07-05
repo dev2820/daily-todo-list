@@ -30,11 +30,11 @@ export const Board = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <div className={laneGroupStyle()}>
         {KEYS.map((key) => (
-          <Droppable
-            droppableId={key}
-            items={todoListTable.get(key)?.items ?? []}
-            key={key}
-          ></Droppable>
+          <Droppable droppableId={key} key={key}>
+            {(todoListTable.get(key)?.items ?? []).map((item, index) => (
+              <Draggable item={item} index={index} key={item.id}></Draggable>
+            ))}
+          </Droppable>
         ))}
       </div>
     </DragDropContext>
@@ -50,12 +50,11 @@ const DragDropContext = ({
 
 const Droppable = ({
   droppableId,
-  items,
-}: {
+  children,
+}: PropsWithChildren<{
   key: string;
   droppableId: string;
-  items: Todo[];
-}) => {
+}>) => {
   return (
     <div>
       <_Droppable droppableId={droppableId}>
@@ -64,9 +63,7 @@ const Droppable = ({
             ref={provided.innerRef}
             className={listStyle({ isDraggingOver: snapshot.isDraggingOver })}
           >
-            {items.map((item, index) => (
-              <Draggable item={item} index={index} key={item.id}></Draggable>
-            ))}
+            {children}
             {provided.placeholder}
           </div>
         )}
