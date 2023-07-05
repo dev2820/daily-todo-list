@@ -20,16 +20,20 @@ export const Board = () => {
     insertItem(destinationId, destination.index, targetItem);
   };
 
+  const renderDraggables = (items: Todo[] = []) => {
+    return items.map((item, index) => (
+      <Draggable draggableId={item.id} index={index} key={item.id}>
+        <Item item={item}></Item>
+      </Draggable>
+    ));
+  };
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className={laneGroupStyle()}>
         {KEYS.map((key) => (
           <Droppable droppableId={key} key={key}>
-            {(todoListTable.get(key)?.items ?? []).map((item, index) => (
-              <Draggable draggableId={item.id} index={index} key={item.id}>
-                <Item item={item}></Item>
-              </Draggable>
-            ))}
+            {renderDraggables(todoListTable.get(key)?.items)}
           </Droppable>
         ))}
       </div>
