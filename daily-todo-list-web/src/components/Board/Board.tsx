@@ -21,19 +21,15 @@ export const Board = () => {
     insertItem(destinationId, destination.index, targetItem);
   };
 
-  const renderDraggables = (items: Todo[] = []) => {
-    return items.map((item, index) => (
-      <Draggable draggableId={item.id} index={index} key={item.id}>
-        <Item item={item}></Item>
-      </Draggable>
-    ));
-  };
+  const getTodoList = (key: string) => todoListTable.get(key)?.items ?? [];
 
   return (
     <BoardContext onDragEnd={onDragEnd}>
       {KEYS.map((key) => (
         <BoardLane laneId={key} key={key}>
-          {renderDraggables(todoListTable.get(key)?.items)}
+          {getTodoList(key).map((item, index) => (
+            <BoardItem item={item} index={index}></BoardItem>
+          ))}
         </BoardLane>
       ))}
     </BoardContext>
@@ -62,8 +58,12 @@ const BoardLane = ({
   );
 };
 
-const Item = ({ item }: { item: Todo }) => {
-  return <div>{item.content}</div>;
+const BoardItem = ({ item, index }: { item: Todo; index: number }) => {
+  return (
+    <Draggable draggableId={item.id} index={index} key={item.id}>
+      <div>{item.content}</div>
+    </Draggable>
+  );
 };
 
 const laneGroupStyle = cva("grid grid-rows-4 grid-cols-2");
