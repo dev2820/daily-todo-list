@@ -101,4 +101,3 @@ const listStyle = cva("grid w-[250px]", {
 });
 
 const laneGroupStyle = cva("grid grid-rows-4 grid-cols-2");
-const laneStyle = cva("");
