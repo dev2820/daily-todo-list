@@ -1,7 +1,8 @@
 import { cva } from "class-variance-authority";
-import { type DropResult } from "react-beautiful-dnd";
+import { type DropResult, type OnDragEndResponder } from "react-beautiful-dnd";
 import { type Todo, useTodoListGroup } from "./board-hook";
 import { Draggable, Droppable, DragDropContext } from "@/components";
+import { PropsWithChildren } from "react";
 
 export const Board = () => {
   const { todoListTable, removeItem, insertItem, findItem, KEYS } =
@@ -29,14 +30,23 @@ export const Board = () => {
   };
 
   return (
+    <BoardContext onDragEnd={onDragEnd}>
+      {KEYS.map((key) => (
+        <Droppable droppableId={key} key={key}>
+          {renderDraggables(todoListTable.get(key)?.items)}
+        </Droppable>
+      ))}
+    </BoardContext>
+  );
+};
+
+const BoardContext = ({
+  children,
+  onDragEnd,
+}: PropsWithChildren<{ onDragEnd: OnDragEndResponder }>) => {
+  return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className={laneGroupStyle()}>
-        {KEYS.map((key) => (
-          <Droppable droppableId={key} key={key}>
-            {renderDraggables(todoListTable.get(key)?.items)}
-          </Droppable>
-        ))}
-      </div>
+      <div className={laneGroupStyle()}>{children}</div>
     </DragDropContext>
   );
 };
