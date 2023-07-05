@@ -17,7 +17,7 @@ export const Draggable = ({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={listStyle({
+          className={itemStyle({
             isDraggingOver: snapshot.isDragging,
           })}
         >
@@ -28,7 +28,7 @@ export const Draggable = ({
   );
 };
 
-const listStyle = cva("", {
+const itemStyle = cva("", {
   variants: {
     isDraggingOver: {
       true: "bg-red-400",
