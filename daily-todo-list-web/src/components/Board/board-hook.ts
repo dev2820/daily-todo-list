@@ -69,7 +69,6 @@ export const useTodoListGroup = () => {
     removeItem,
     insertItem,
     findItem,
-    MON_KEY,
-    TUE_KEY,
+    KEYS: [MON_KEY, TUE_KEY],
   };
 };

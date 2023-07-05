@@ -10,7 +10,7 @@ import { type Todo, useTodoListGroup } from "./board-hook";
 import { PropsWithChildren } from "react";
 
 export const Board = () => {
-  const { todoListTable, removeItem, insertItem, findItem, MON_KEY, TUE_KEY } =
+  const { todoListTable, removeItem, insertItem, findItem, KEYS } =
     useTodoListGroup();
 
   const onDragEnd = (dropResult: DropResult) => {
@@ -25,7 +25,6 @@ export const Board = () => {
     removeItem(sourceId, source.index);
     insertItem(destinationId, destination.index, targetItem);
   };
-  const KEYS = [MON_KEY, TUE_KEY];
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
