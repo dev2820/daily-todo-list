@@ -25,20 +25,18 @@ export const Board = () => {
     removeItem(sourceId, source.index);
     insertItem(destinationId, destination.index, targetItem);
   };
+  const KEYS = [MON_KEY, TUE_KEY];
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className={laneGroupStyle()}>
-        <Droppable
-          droppableId={MON_KEY}
-          items={todoListTable.get(MON_KEY)?.items ?? []}
-          key="1"
-        ></Droppable>
-        <Droppable
-          droppableId={TUE_KEY}
-          items={todoListTable.get(TUE_KEY)?.items ?? []}
-          key="2"
-        ></Droppable>
+        {KEYS.map((key) => (
+          <Droppable
+            droppableId={key}
+            items={todoListTable.get(key)?.items ?? []}
+            key={key}
+          ></Droppable>
+        ))}
       </div>
     </DragDropContext>
   );
