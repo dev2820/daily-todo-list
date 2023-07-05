@@ -9,15 +9,14 @@ import { uid } from "@/utils/uid";
 const MON_KEY = "월";
 const TUE_KEY = "화";
 const WED_KEY = "수";
+const KEYS = [MON_KEY, TUE_KEY, WED_KEY];
+
 export type Todo = {
   id: string;
   content: string;
 };
 
 export const Board = () => {
-  // const { todoListTable, removeItem, insertItem, findItem, KEYS } =
-  //   useTodoListGroup();
-  const KEYS = [MON_KEY, TUE_KEY, WED_KEY];
   const todoListTable: Record<string, GroupHook<Todo>> = {
     [MON_KEY]: useGroup<Todo>([
       { id: uid(), content: "A" },
