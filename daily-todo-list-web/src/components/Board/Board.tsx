@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 import { type DropResult, type OnDragEndResponder } from "react-beautiful-dnd";
-import { type Todo, useTodoListGroup } from "./board-hook";
+import { type Todo, useTodoListGroup } from "./todo-list-group";
 import { Draggable, Droppable, DragDropContext } from "@/components";
 import { PropsWithChildren } from "react";
 
@@ -24,19 +24,19 @@ export const Board = () => {
   const getTodoList = (key: string) => todoListTable.get(key)?.items ?? [];
 
   return (
-    <BoardContext onDragEnd={onDragEnd}>
+    <GroupContext onDragEnd={onDragEnd}>
       {KEYS.map((key) => (
-        <BoardLane laneId={key} key={key}>
+        <Group groupId={key} key={key}>
           {getTodoList(key).map((item, index) => (
-            <BoardItem itemId={item.id} item={item} index={index}></BoardItem>
+            <GroupItem itemId={item.id} item={item} index={index}></GroupItem>
           ))}
-        </BoardLane>
+        </Group>
       ))}
-    </BoardContext>
+    </GroupContext>
   );
 };
 
-const BoardContext = ({
+const GroupContext = ({
   children,
   onDragEnd,
 }: PropsWithChildren<{ onDragEnd: OnDragEndResponder }>) => {
@@ -47,18 +47,18 @@ const BoardContext = ({
   );
 };
 
-const BoardLane = ({
+const Group = ({
   children,
-  laneId,
-}: PropsWithChildren<{ laneId: string }>) => {
+  groupId,
+}: PropsWithChildren<{ groupId: string }>) => {
   return (
-    <Droppable droppableId={laneId} key={laneId}>
+    <Droppable droppableId={groupId} key={groupId}>
       {children}
     </Droppable>
   );
 };
 
-const BoardItem = ({
+const GroupItem = ({
   itemId,
   item,
   index,
