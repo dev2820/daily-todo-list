@@ -1,8 +1,8 @@
-import { cva } from "class-variance-authority";
 import { type DropResult, type OnDragEndResponder } from "react-beautiful-dnd";
 import { type Todo, useTodoListGroup } from "./todo-list-group";
 import { Draggable, Droppable, DragDropContext } from "@/components";
 import { PropsWithChildren } from "react";
+import { BoardLayout } from ".";
 
 export const Board = () => {
   const { todoListTable, removeItem, insertItem, findItem, KEYS } =
@@ -25,13 +25,15 @@ export const Board = () => {
 
   return (
     <GroupContext onDragEnd={onDragEnd}>
-      {KEYS.map((key) => (
-        <Group groupId={key} key={key}>
-          {getTodoList(key).map((item, index) => (
-            <GroupItem itemId={item.id} item={item} index={index}></GroupItem>
-          ))}
-        </Group>
-      ))}
+      <BoardLayout>
+        {KEYS.map((key) => (
+          <Group groupId={key} key={key}>
+            {getTodoList(key).map((item, index) => (
+              <GroupItem itemId={item.id} item={item} index={index}></GroupItem>
+            ))}
+          </Group>
+        ))}
+      </BoardLayout>
     </GroupContext>
   );
 };
@@ -40,11 +42,7 @@ const GroupContext = ({
   children,
   onDragEnd,
 }: PropsWithChildren<{ onDragEnd: OnDragEndResponder }>) => {
-  return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div className={laneGroupStyle()}>{children}</div>
-    </DragDropContext>
-  );
+  return <DragDropContext onDragEnd={onDragEnd}>{children}</DragDropContext>;
 };
 
 const Group = ({
@@ -73,5 +71,3 @@ const GroupItem = ({
     </Draggable>
   );
 };
-
-const laneGroupStyle = cva("grid grid-rows-4 grid-cols-2");
