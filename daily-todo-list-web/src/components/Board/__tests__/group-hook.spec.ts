@@ -13,7 +13,7 @@ describe("useGroup", () => {
     expect(result.current.items).toStrictEqual([item1, item2, item3]);
   });
 
-  it("should be able to import groups for a particular key", () => {
+  it("should be able to find item by id", () => {
     const { result } = renderHook(() => useGroup([item1, item2, item3]));
 
     expect(result.current.findById("1")?.id).toBe("1");
