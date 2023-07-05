@@ -3,6 +3,7 @@ import { type Todo, useTodoListGroup } from "./todo-list-group";
 import { Draggable, Droppable, DragDropContext } from "@/components";
 import { PropsWithChildren } from "react";
 import { BoardLayout } from ".";
+import { cva } from "class-variance-authority";
 
 export const Board = () => {
   const { todoListTable, removeItem, insertItem, findItem, KEYS } =
@@ -27,7 +28,7 @@ export const Board = () => {
     <GroupContext onDragEnd={onDragEnd}>
       <BoardLayout>
         {KEYS.map((key) => (
-          <Group groupId={key} key={key}>
+          <Group groupId={key} key={key} className={GroupStyle()}>
             {getTodoList(key).map((item, index) => (
               <GroupItem itemId={item.id} item={item} index={index}></GroupItem>
             ))}
@@ -48,9 +49,10 @@ const GroupContext = ({
 const Group = ({
   children,
   groupId,
-}: PropsWithChildren<{ groupId: string }>) => {
+  className,
+}: PropsWithChildren<{ className?: string; groupId: string }>) => {
   return (
-    <Droppable droppableId={groupId} key={groupId}>
+    <Droppable droppableId={groupId} key={groupId} className={className}>
       {children}
     </Droppable>
   );
@@ -71,3 +73,5 @@ const GroupItem = ({
     </Draggable>
   );
 };
+
+const GroupStyle = cva("h-40");

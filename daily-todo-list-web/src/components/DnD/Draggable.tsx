@@ -28,7 +28,7 @@ export const Draggable = ({
   );
 };
 
-const listStyle = cva("grid w-[250px]", {
+const listStyle = cva("", {
   variants: {
     isDraggingOver: {
       true: "bg-red-400",
