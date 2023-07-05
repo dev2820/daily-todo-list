@@ -3,6 +3,7 @@ import { uid } from "@/utils/uid";
 
 const MON_KEY = "월";
 const TUE_KEY = "화";
+const WED_KEY = "수";
 
 export type Todo = {
   id: string;
@@ -37,6 +38,16 @@ export const useTodoListGroup = () => {
     setter: setItems2,
   });
 
+  const [items3, setItems3] = useState<Todo[]>([
+    { id: uid(), content: "E" },
+    { id: uid(), content: "F" },
+  ]);
+
+  todoListTable.set(WED_KEY, {
+    items: items3,
+    setter: setItems3,
+  });
+
   const removeItem = (targetListId: string, targetItemIndex: number) => {
     todoListTable
       .get(targetListId)
@@ -69,6 +80,6 @@ export const useTodoListGroup = () => {
     removeItem,
     insertItem,
     findItem,
-    KEYS: [MON_KEY, TUE_KEY],
+    KEYS: [MON_KEY, TUE_KEY, WED_KEY],
   };
 };
