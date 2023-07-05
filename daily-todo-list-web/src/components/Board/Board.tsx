@@ -32,9 +32,9 @@ export const Board = () => {
   return (
     <BoardContext onDragEnd={onDragEnd}>
       {KEYS.map((key) => (
-        <Droppable droppableId={key} key={key}>
+        <BoardLane laneId={key} key={key}>
           {renderDraggables(todoListTable.get(key)?.items)}
-        </Droppable>
+        </BoardLane>
       ))}
     </BoardContext>
   );
@@ -48,6 +48,17 @@ const BoardContext = ({
     <DragDropContext onDragEnd={onDragEnd}>
       <div className={laneGroupStyle()}>{children}</div>
     </DragDropContext>
+  );
+};
+
+const BoardLane = ({
+  children,
+  laneId,
+}: PropsWithChildren<{ laneId: string }>) => {
+  return (
+    <Droppable droppableId={laneId} key={laneId}>
+      {children}
+    </Droppable>
   );
 };
 
