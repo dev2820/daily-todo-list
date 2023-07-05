@@ -1,20 +1,17 @@
 import { cva } from "class-variance-authority";
 import { Draggable as _Draggable } from "react-beautiful-dnd";
+import { type PropsWithChildren } from "react";
 
-interface Identifiable {
-  id: string;
-  content: string;
-  [key: string]: unknown;
-}
 export const Draggable = ({
-  item,
+  draggableId,
   index,
-}: {
-  item: Identifiable;
+  children,
+}: PropsWithChildren<{
+  draggableId: string;
   index: number;
-}) => {
+}>) => {
   return (
-    <_Draggable key={item.id} draggableId={item.id} index={index}>
+    <_Draggable draggableId={draggableId} index={index}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
@@ -24,7 +21,7 @@ export const Draggable = ({
             isDraggingOver: snapshot.isDragging,
           })}
         >
-          {item.content}
+          {children}
         </div>
       )}
     </_Draggable>

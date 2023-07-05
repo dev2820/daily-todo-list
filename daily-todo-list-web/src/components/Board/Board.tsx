@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 import { type DropResult } from "react-beautiful-dnd";
-import { useTodoListGroup } from "./board-hook";
+import { type Todo, useTodoListGroup } from "./board-hook";
 import { Draggable, Droppable, DragDropContext } from "@/components";
 
 export const Board = () => {
@@ -26,13 +26,19 @@ export const Board = () => {
         {KEYS.map((key) => (
           <Droppable droppableId={key} key={key}>
             {(todoListTable.get(key)?.items ?? []).map((item, index) => (
-              <Draggable item={item} index={index} key={item.id}></Draggable>
+              <Draggable draggableId={item.id} index={index} key={item.id}>
+                <Item item={item}></Item>
+              </Draggable>
             ))}
           </Droppable>
         ))}
       </div>
     </DragDropContext>
   );
+};
+
+const Item = ({ item }: { item: Todo }) => {
+  return <div>{item.content}</div>;
 };
 
 const laneGroupStyle = cva("grid grid-rows-4 grid-cols-2");
