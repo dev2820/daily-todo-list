@@ -26,7 +26,7 @@ export const Board = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div>
+      <div className={laneGroupStyle()}>
         <Lane
           droppableId={MON_KEY}
           items={todoListTable.get(MON_KEY)?.items ?? []}
@@ -97,3 +97,6 @@ const listStyle = cva("grid w-[250px]", {
     },
   },
 });
+
+const laneGroupStyle = cva("grid grid-rows-4 grid-cols-2");
+const laneStyle = cva("");
