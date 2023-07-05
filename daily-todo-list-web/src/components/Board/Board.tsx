@@ -1,59 +1,43 @@
-import { type DropResult, type OnDragEndResponder } from "react-beautiful-dnd";
+import { type OnDragEndResponder } from "react-beautiful-dnd";
 import { Draggable, Droppable, DragDropContext } from "@/components";
 import { PropsWithChildren } from "react";
 import { BoardLayout } from ".";
 import { cva } from "class-variance-authority";
-import { type GroupHook, useGroup } from "./group-hook";
-import { uid } from "@/utils/uid";
-
-const MON_KEY = "월";
-const TUE_KEY = "화";
-const WED_KEY = "수";
-const KEYS = [MON_KEY, TUE_KEY, WED_KEY];
+import { type GroupHook } from "./group-hook";
 
 export type Todo = {
   id: string;
   content: string;
 };
 
-export const Board = () => {
-  const todoListTable: Record<string, GroupHook<Todo>> = {
-    [MON_KEY]: useGroup<Todo>([
-      { id: uid(), content: "A" },
-      { id: uid(), content: "B" },
-    ]),
-    [TUE_KEY]: useGroup<Todo>([
-      { id: uid(), content: "C" },
-      { id: uid(), content: "D" },
-    ]),
-    [WED_KEY]: useGroup<Todo>([
-      { id: uid(), content: "E" },
-      { id: uid(), content: "F" },
-    ]),
-  };
-  const onDragEnd = (dropResult: DropResult) => {
-    const { destination, source } = dropResult;
-    if (!destination || !source) return;
-    const sourceId = source.droppableId;
+type GroupInput = {
+  groupName: string;
+  group: GroupHook<Todo>;
+};
 
-    const todoList = todoListTable[sourceId];
-    if (!todoList) return;
-    const targetItem = todoList.findByIndex(source.index);
-    if (!targetItem) return;
-
-    todoList.removeItem(source.index);
-    todoList.insertItem(destination.index, targetItem);
-  };
-
-  const getTodoList = (key: string) => todoListTable[key]?.items ?? [];
-
+export const Board = ({
+  groups,
+  onDragEnd,
+}: {
+  groups: GroupInput[];
+  onDragEnd: OnDragEndResponder;
+}) => {
   return (
     <GroupContext onDragEnd={onDragEnd}>
       <BoardLayout>
-        {KEYS.map((key) => (
-          <Group groupId={key} key={key} className={GroupStyle()}>
-            {getTodoList(key).map((item, index) => (
-              <GroupItem itemId={item.id} item={item} index={index}></GroupItem>
+        {groups.map((group) => (
+          <Group
+            groupId={group.groupName}
+            key={group.groupName}
+            className={GroupStyle()}
+          >
+            {group.group.items.map((item, index) => (
+              <GroupItem
+                itemId={item.id}
+                item={item}
+                index={index}
+                key={item.id}
+              ></GroupItem>
             ))}
           </Group>
         ))}
