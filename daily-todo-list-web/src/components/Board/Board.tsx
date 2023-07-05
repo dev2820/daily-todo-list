@@ -4,8 +4,10 @@ import {
   Droppable as _Droppable,
   Draggable as _Draggable,
   type DropResult,
+  type OnDragEndResponder,
 } from "react-beautiful-dnd";
 import { type Todo, useTodoListGroup } from "./board-hook";
+import { PropsWithChildren } from "react";
 
 export const Board = () => {
   const { todoListTable, removeItem, insertItem, findItem, MON_KEY, TUE_KEY } =
@@ -25,24 +27,31 @@ export const Board = () => {
   };
 
   return (
-    <_DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <div className={laneGroupStyle()}>
-        <Lane
+        <Droppable
           droppableId={MON_KEY}
           items={todoListTable.get(MON_KEY)?.items ?? []}
           key="1"
-        ></Lane>
-        <Lane
+        ></Droppable>
+        <Droppable
           droppableId={TUE_KEY}
           items={todoListTable.get(TUE_KEY)?.items ?? []}
           key="2"
-        ></Lane>
+        ></Droppable>
       </div>
-    </_DragDropContext>
+    </DragDropContext>
   );
 };
 
-const Lane = ({
+const DragDropContext = ({
+  onDragEnd,
+  children,
+}: PropsWithChildren<{ onDragEnd: OnDragEndResponder }>) => {
+  return <_DragDropContext onDragEnd={onDragEnd}>{children}</_DragDropContext>;
+};
+
+const Droppable = ({
   droppableId,
   items,
 }: {
@@ -60,7 +69,7 @@ const Lane = ({
             className={listStyle({ isDraggingOver: snapshot.isDraggingOver })}
           >
             {items.map((item, index) => (
-              <Item item={item} index={index} key={item.id}></Item>
+              <Draggable item={item} index={index} key={item.id}></Draggable>
             ))}
             {provided.placeholder}
           </div>
@@ -70,7 +79,7 @@ const Lane = ({
   );
 };
 
-const Item = ({ item, index }: { item: Todo; index: number }) => {
+const Draggable = ({ item, index }: { item: Todo; index: number }) => {
   return (
     <_Draggable key={item.id} draggableId={item.id} index={index}>
       {(provided, snapshot) => (
