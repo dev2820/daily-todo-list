@@ -36,13 +36,11 @@ const Example = () => {
   const onDragEnd: OnDragEnd = (dropResult) => {
     const { destination, source } = dropResult;
     if (!destination || !source) return;
-    const sourceGroupName = source.droppableId;
-    const destGroupName = destination.droppableId;
+    const sourceGrouId = source.droppableId;
+    const destGroupId = destination.droppableId;
 
-    const sourceGroup = groups.find((group) => group.name === sourceGroupName);
-    const destinationGroup = groups.find(
-      (group) => group.name === destGroupName
-    );
+    const sourceGroup = groups.find((group) => group.id === sourceGrouId);
+    const destinationGroup = groups.find((group) => group.id === destGroupId);
 
     if (sourceGroup === undefined || destinationGroup === undefined) return;
 

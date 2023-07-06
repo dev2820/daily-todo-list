@@ -25,7 +25,7 @@ export const GroupBoard = <T extends Identifiable>({
     <GroupContext onDragEnd={onDragEnd}>
       <BoardLayout>
         {groups.map((group) => (
-          <Group groupId={group.name} key={group.name} className={GroupStyle()}>
+          <Group groupId={group.id} key={group.id} className={GroupStyle()}>
             {group.items.map((item, index) => (
               <GroupItem itemId={item.id} index={index} key={item.id}>
                 {renderItem(item)}
