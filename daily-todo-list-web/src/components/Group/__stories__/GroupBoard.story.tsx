@@ -1,5 +1,5 @@
 import type { Meta } from "@storybook/react";
-import { GroupBoard, type OnDragEnd } from "..";
+import { GroupBoard } from "..";
 import { useGroup } from "../group-hook";
 import { uid } from "@/utils";
 import { type Identifiable } from "@/components/types";
