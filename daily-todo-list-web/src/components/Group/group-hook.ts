@@ -3,7 +3,6 @@ import { useState } from "react";
 export type Id = string;
 export type Identifiable = {
   id: Id;
-  [key: string]: unknown;
 };
 
 export const useGroup = <T extends Identifiable>(initialItems: T[] = []) => {

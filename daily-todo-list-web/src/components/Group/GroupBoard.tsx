@@ -7,26 +7,26 @@ import {
 } from "@/components";
 import { PropsWithChildren } from "react";
 import { cva } from "class-variance-authority";
-import { type GroupHook } from "./group-hook";
+import { type Identifiable, type GroupHook } from "./group-hook";
 
 export type Todo = {
   id: string;
   content: string;
 };
 
-type GroupInput = {
+type GroupInput<T extends Identifiable> = {
   groupName: string;
-  group: GroupHook<Todo>;
+  group: GroupHook<T>;
 };
 
-export const GroupBoard = ({
+export const GroupBoard = <T extends Identifiable>({
   groups,
   onDragEnd,
   renderItem,
 }: {
-  groups: GroupInput[];
+  groups: GroupInput<T>[];
   onDragEnd: OnDragEndResponder;
-  renderItem: (item: Todo) => JSX.Element;
+  renderItem: (item: T) => JSX.Element;
 }) => {
   return (
     <GroupContext onDragEnd={onDragEnd}>
