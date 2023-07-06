@@ -56,5 +56,13 @@ const Example = () => {
     destinationGroup.group.insertItem(destination.index, targetItem);
   };
 
-  return <GroupBoard groups={groups} onDragEnd={onDragEnd}></GroupBoard>;
+  const renderItem = (item: Todo) => <div>{item.content}</div>;
+
+  return (
+    <GroupBoard
+      groups={groups}
+      onDragEnd={onDragEnd}
+      renderItem={renderItem}
+    ></GroupBoard>
+  );
 };

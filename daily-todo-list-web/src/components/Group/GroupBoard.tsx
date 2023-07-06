@@ -22,9 +22,11 @@ type GroupInput = {
 export const GroupBoard = ({
   groups,
   onDragEnd,
+  renderItem,
 }: {
   groups: GroupInput[];
   onDragEnd: OnDragEndResponder;
+  renderItem: (item: Todo) => JSX.Element;
 }) => {
   return (
     <GroupContext onDragEnd={onDragEnd}>
@@ -36,12 +38,9 @@ export const GroupBoard = ({
             className={GroupStyle()}
           >
             {group.group.items.map((item, index) => (
-              <GroupItem
-                itemId={item.id}
-                item={item}
-                index={index}
-                key={item.id}
-              ></GroupItem>
+              <GroupItem itemId={item.id} index={index} key={item.id}>
+                {renderItem(item)}
+              </GroupItem>
             ))}
           </Group>
         ))}
@@ -71,16 +70,15 @@ const Group = ({
 
 const GroupItem = ({
   itemId,
-  item,
+  children,
   index,
-}: {
+}: PropsWithChildren<{
   itemId: string;
-  item: Todo;
   index: number;
-}) => {
+}>) => {
   return (
     <Draggable draggableId={itemId} index={index} key={itemId}>
-      <div>{item.content}</div>
+      {children}
     </Draggable>
   );
 };
