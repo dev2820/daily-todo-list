@@ -14,17 +14,12 @@ export type Todo = {
   content: string;
 };
 
-type GroupInput<T extends Identifiable> = {
-  groupName: string;
-  group: GroupHook<T>;
-};
-
 export const GroupBoard = <T extends Identifiable>({
   groups,
   onDragEnd,
   renderItem,
 }: {
-  groups: GroupInput<T>[];
+  groups: GroupHook<T>[];
   onDragEnd: OnDragEndResponder;
   renderItem: (item: T) => JSX.Element;
 }) => {
@@ -37,7 +32,7 @@ export const GroupBoard = <T extends Identifiable>({
             key={group.groupName}
             className={GroupStyle()}
           >
-            {group.group.items.map((item, index) => (
+            {group.items.map((item, index) => (
               <GroupItem itemId={item.id} index={index} key={item.id}>
                 {renderItem(item)}
               </GroupItem>

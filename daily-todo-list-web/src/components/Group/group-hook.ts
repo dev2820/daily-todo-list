@@ -5,7 +5,10 @@ export type Identifiable = {
   id: Id;
 };
 
-export const useGroup = <T extends Identifiable>(initialItems: T[] = []) => {
+export const useGroup = <T extends Identifiable>(
+  groupName: string,
+  initialItems: T[] = []
+) => {
   const [items, setItems] = useState(initialItems);
 
   const findById = (id: Id) => items.find((item) => item.id === id);
@@ -25,6 +28,7 @@ export const useGroup = <T extends Identifiable>(initialItems: T[] = []) => {
   };
   return {
     items,
+    groupName,
     findByIndex,
     findById,
     removeItem,

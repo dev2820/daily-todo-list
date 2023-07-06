@@ -17,23 +17,19 @@ export const Default = {
 };
 
 const Example = () => {
-  const group1 = useGroup<Todo>([
+  const group1 = useGroup<Todo>("월", [
     { id: uid(), content: "A" },
     { id: uid(), content: "B" },
   ]);
-  const group2 = useGroup<Todo>([
+  const group2 = useGroup<Todo>("화", [
     { id: uid(), content: "C" },
     { id: uid(), content: "D" },
   ]);
-  const group3 = useGroup<Todo>([
+  const group3 = useGroup<Todo>("수", [
     { id: uid(), content: "E" },
     { id: uid(), content: "F" },
   ]);
-  const groups = [
-    { groupName: "월", group: group1 },
-    { groupName: "화", group: group2 },
-    { groupName: "수", group: group3 },
-  ];
+  const groups = [group1, group2, group3];
 
   const onDragEnd = (dropResult: DropResult) => {
     const { destination, source } = dropResult;
@@ -50,10 +46,10 @@ const Example = () => {
 
     if (sourceGroup === undefined || destinationGroup === undefined) return;
 
-    const targetItem = sourceGroup.group.findByIndex(source.index);
+    const targetItem = sourceGroup.findByIndex(source.index);
 
-    sourceGroup.group.removeItem(source.index);
-    destinationGroup.group.insertItem(destination.index, targetItem);
+    sourceGroup.removeItem(source.index);
+    destinationGroup.insertItem(destination.index, targetItem);
   };
 
   const renderItem = (item: Todo) => <div>{item.content}</div>;
