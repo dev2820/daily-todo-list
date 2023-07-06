@@ -1,4 +1,4 @@
-import { type OnDragEndResponder } from "react-beautiful-dnd";
+import { DropResult } from "react-beautiful-dnd";
 import {
   Draggable,
   Droppable,
@@ -10,13 +10,14 @@ import { cva } from "class-variance-authority";
 import { type GroupHook } from "./group-hook";
 import { type Identifiable } from "@/components/types";
 
+type OnDragEnd = (result: DropResult) => void;
 export const GroupBoard = <T extends Identifiable>({
   groups,
   onDragEnd,
   renderItem,
 }: {
   groups: GroupHook<T>[];
-  onDragEnd: OnDragEndResponder;
+  onDragEnd: OnDragEnd;
   renderItem: (item: T) => JSX.Element;
 }) => {
   return (
@@ -43,7 +44,7 @@ export const GroupBoard = <T extends Identifiable>({
 const GroupContext = ({
   children,
   onDragEnd,
-}: PropsWithChildren<{ onDragEnd: OnDragEndResponder }>) => {
+}: PropsWithChildren<{ onDragEnd: OnDragEnd }>) => {
   return <DragDropContext onDragEnd={onDragEnd}>{children}</DragDropContext>;
 };
 
