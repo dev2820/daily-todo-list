@@ -1,7 +1,11 @@
 import { type OnDragEndResponder } from "react-beautiful-dnd";
-import { Draggable, Droppable, DragDropContext } from "@/components";
+import {
+  Draggable,
+  Droppable,
+  DragDropContext,
+  BoardLayout,
+} from "@/components";
 import { PropsWithChildren } from "react";
-import { BoardLayout } from "@/components";
 import { cva } from "class-variance-authority";
 import { type GroupHook } from "./group-hook";
 
