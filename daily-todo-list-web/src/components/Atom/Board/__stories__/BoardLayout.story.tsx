@@ -3,7 +3,7 @@ import type { Meta } from "@storybook/react";
 import { BoardLayout } from "../BoardLayout";
 
 const meta = {
-  title: "Components/Board/BoardLayout",
+  title: "Components/Atoms/Board/BoardLayout",
   component: BoardLayout,
 } satisfies Meta<typeof BoardLayout>;
 
