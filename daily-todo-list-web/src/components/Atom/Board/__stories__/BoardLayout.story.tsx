@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/react";
 
-import { BoardLayout } from "..";
+import { BoardLayout } from "../BoardLayout";
 
 const meta = {
   title: "Components/Board/BoardLayout",
