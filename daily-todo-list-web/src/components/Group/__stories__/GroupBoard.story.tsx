@@ -1,7 +1,5 @@
 import type { Meta } from "@storybook/react";
-import { type DropResult } from "react-beautiful-dnd";
-
-import { GroupBoard } from "..";
+import { GroupBoard, type OnDragEnd } from "..";
 import { useGroup } from "../group-hook";
 import { uid } from "@/utils";
 import { type Identifiable } from "@/components/types";
@@ -35,7 +33,7 @@ const Example = () => {
   ]);
   const groups = [group1, group2, group3];
 
-  const onDragEnd = (dropResult: DropResult) => {
+  const onDragEnd: OnDragEnd = (dropResult) => {
     const { destination, source } = dropResult;
     if (!destination || !source) return;
     const sourceGroupName = source.droppableId;

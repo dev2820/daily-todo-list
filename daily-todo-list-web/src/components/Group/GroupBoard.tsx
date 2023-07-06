@@ -10,7 +10,8 @@ import { cva } from "class-variance-authority";
 import { type GroupHook } from "./group-hook";
 import { type Identifiable } from "@/components/types";
 
-type OnDragEnd = (result: DropResult) => void;
+export type OnDragEnd = (result: DropResult) => void;
+
 export const GroupBoard = <T extends Identifiable>({
   groups,
   onDragEnd,
