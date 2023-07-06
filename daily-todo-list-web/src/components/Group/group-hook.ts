@@ -1,9 +1,5 @@
 import { useState } from "react";
-
-export type Id = string;
-export type Identifiable = {
-  id: Id;
-};
+import { type Identifiable, type Id } from "@/components/types";
 
 export const useGroup = <T extends Identifiable>(
   groupName: string,

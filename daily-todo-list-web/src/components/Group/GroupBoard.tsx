@@ -7,7 +7,8 @@ import {
 } from "@/components";
 import { PropsWithChildren } from "react";
 import { cva } from "class-variance-authority";
-import { type Identifiable, type GroupHook } from "./group-hook";
+import { type GroupHook } from "./group-hook";
+import { type Identifiable } from "@/components/types";
 
 export const GroupBoard = <T extends Identifiable>({
   groups,

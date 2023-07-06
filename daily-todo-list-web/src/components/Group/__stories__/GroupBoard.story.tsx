@@ -2,8 +2,9 @@ import type { Meta } from "@storybook/react";
 import { type DropResult } from "react-beautiful-dnd";
 
 import { GroupBoard } from "..";
-import { useGroup, type Identifiable } from "../group-hook";
+import { useGroup } from "../group-hook";
 import { uid } from "@/utils";
+import { type Identifiable } from "@/components/types";
 
 const meta = {
   title: "Components/Group/GroupBoard",
