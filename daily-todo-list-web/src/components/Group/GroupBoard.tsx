@@ -8,19 +8,41 @@ import {
 import { PropsWithChildren } from "react";
 import { cva } from "class-variance-authority";
 import { type GroupHook } from "./group-hook";
-import { type Identifiable } from "@/components/types";
+import { type Id, type Identifiable } from "@/components/types";
 
 export type OnDragEnd = (result: DropResult) => void;
+export type OnMove = (
+  fromId: Id,
+  fromIndex: number,
+  toId: Id,
+  toIndex: number
+) => void;
 
 export const GroupBoard = <T extends Identifiable>({
   groups,
-  onDragEnd,
   renderItem,
 }: {
   groups: GroupHook<T>[];
-  onDragEnd: OnDragEnd;
   renderItem: (item: T) => JSX.Element;
 }) => {
+  const onDragEnd: OnDragEnd = (dropResult) => {
+    const { destination, source } = dropResult;
+    if (!destination || !source) return;
+    const sourceGrouId = source.droppableId;
+    const destGroupId = destination.droppableId;
+
+    const sourceGroup = groups.find((group) => group.id === sourceGrouId);
+    const destinationGroup = groups.find((group) => group.id === destGroupId);
+
+    if (sourceGroup === undefined || destinationGroup === undefined) return;
+
+    const targetItem = sourceGroup.findByIndex(source.index);
+    if (!targetItem) return;
+
+    sourceGroup.removeItem(source.index);
+    destinationGroup.insertItem(destination.index, targetItem);
+  };
+
   return (
     <GroupContext onDragEnd={onDragEnd}>
       <BoardLayout>

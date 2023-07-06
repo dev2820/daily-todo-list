@@ -33,31 +33,7 @@ const Example = () => {
   ]);
   const groups = [group1, group2, group3];
 
-  const onDragEnd: OnDragEnd = (dropResult) => {
-    const { destination, source } = dropResult;
-    if (!destination || !source) return;
-    const sourceGrouId = source.droppableId;
-    const destGroupId = destination.droppableId;
-
-    const sourceGroup = groups.find((group) => group.id === sourceGrouId);
-    const destinationGroup = groups.find((group) => group.id === destGroupId);
-
-    if (sourceGroup === undefined || destinationGroup === undefined) return;
-
-    const targetItem = sourceGroup.findByIndex(source.index);
-    if (!targetItem) return;
-
-    sourceGroup.removeItem(source.index);
-    destinationGroup.insertItem(destination.index, targetItem);
-  };
-
   const renderItem = (item: Item) => <div>{item.content}</div>;
 
-  return (
-    <GroupBoard
-      groups={groups}
-      onDragEnd={onDragEnd}
-      renderItem={renderItem}
-    ></GroupBoard>
-  );
+  return <GroupBoard groups={groups} renderItem={renderItem}></GroupBoard>;
 };
