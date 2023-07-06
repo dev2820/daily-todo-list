@@ -8,7 +8,7 @@ export const useGroup = <T extends Identifiable>(
   const [items, setItems] = useState(initialItems);
 
   const findById = (id: Id) => items.find((item) => item.id === id);
-  const findByIndex = (index: number) => items[index];
+  const findByIndex = (index: number) => items.at(index);
   const removeItem = (index: number) => {
     setItems((items: T[]) => [
       ...items.slice(0, index),

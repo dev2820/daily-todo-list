@@ -47,6 +47,7 @@ const Example = () => {
     if (sourceGroup === undefined || destinationGroup === undefined) return;
 
     const targetItem = sourceGroup.findByIndex(source.index);
+    if (!targetItem) return;
 
     sourceGroup.removeItem(source.index);
     destinationGroup.insertItem(destination.index, targetItem);
