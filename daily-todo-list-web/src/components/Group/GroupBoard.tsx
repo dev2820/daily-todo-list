@@ -11,12 +11,12 @@ import { type GroupHook } from "./group-hook";
 import { type Id, type Identifiable } from "@/components/types";
 
 export type OnDragEnd = (result: DropResult) => void;
-export type OnMove = (
-  fromId: Id,
-  fromIndex: number,
-  toId: Id,
-  toIndex: number
-) => void;
+export type OnMove = (result: {
+  fromGroupId: Id;
+  fromIndex: number;
+  toGroupId: Id;
+  toIndex: number;
+}) => void;
 
 export const GroupBoard = <T extends Identifiable>({
   groups,
@@ -25,26 +25,21 @@ export const GroupBoard = <T extends Identifiable>({
   groups: GroupHook<T>[];
   renderItem: (item: T) => JSX.Element;
 }) => {
-  const onDragEnd: OnDragEnd = (dropResult) => {
-    const { destination, source } = dropResult;
-    if (!destination || !source) return;
-    const sourceGrouId = source.droppableId;
-    const destGroupId = destination.droppableId;
+  const onMove: OnMove = ({ fromGroupId, fromIndex, toGroupId, toIndex }) => {
+    const fromGroup = groups.find((group) => group.id === fromGroupId);
+    const toGroup = groups.find((group) => group.id === toGroupId);
 
-    const sourceGroup = groups.find((group) => group.id === sourceGrouId);
-    const destinationGroup = groups.find((group) => group.id === destGroupId);
+    if (fromGroup === undefined || toGroup === undefined) return;
 
-    if (sourceGroup === undefined || destinationGroup === undefined) return;
-
-    const targetItem = sourceGroup.findByIndex(source.index);
+    const targetItem = fromGroup.findByIndex(fromIndex);
     if (!targetItem) return;
 
-    sourceGroup.removeItem(source.index);
-    destinationGroup.insertItem(destination.index, targetItem);
+    fromGroup.removeItem(fromIndex);
+    toGroup.insertItem(toIndex, targetItem);
   };
 
   return (
-    <GroupContext onDragEnd={onDragEnd}>
+    <GroupContext onMove={onMove}>
       <BoardLayout>
         {groups.map((group) => (
           <Group groupId={group.id} key={group.id} className={GroupStyle()}>
@@ -62,8 +57,21 @@ export const GroupBoard = <T extends Identifiable>({
 
 const GroupContext = ({
   children,
-  onDragEnd,
-}: PropsWithChildren<{ onDragEnd: OnDragEnd }>) => {
+  onMove,
+}: PropsWithChildren<{ onMove: OnMove }>) => {
+  const onDragEnd: OnDragEnd = (result) => {
+    const { destination, source } = result;
+    if (!destination || !source) return;
+    const fromGroupId = source.droppableId;
+    const toGroupId = destination.droppableId;
+    const fromIndex = source.index;
+    const toIndex = destination.index;
+
+    if (!fromGroupId || !toGroupId) return;
+
+    onMove({ fromGroupId, fromIndex, toGroupId, toIndex });
+  };
+
   return <DragDropContext onDragEnd={onDragEnd}>{children}</DragDropContext>;
 };
 
