@@ -1,14 +1,14 @@
 import type { Meta } from "@storybook/react";
 import { type DropResult } from "react-beautiful-dnd";
 
-import { Board, Todo } from "..";
+import { GroupBoard, Todo } from "..";
 import { useGroup } from "../group-hook";
 import { uid } from "@/utils";
 
 const meta = {
-  title: "Components/Board/Board",
-  component: Board,
-} satisfies Meta<typeof Board>;
+  title: "Components/Group/GroupBoard",
+  component: GroupBoard,
+} satisfies Meta<typeof GroupBoard>;
 
 export default meta;
 
@@ -56,5 +56,5 @@ const Example = () => {
     destinationGroup.group.insertItem(destination.index, targetItem);
   };
 
-  return <Board groups={groups} onDragEnd={onDragEnd}></Board>;
+  return <GroupBoard groups={groups} onDragEnd={onDragEnd}></GroupBoard>;
 };

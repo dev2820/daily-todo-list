@@ -1,2 +1,2 @@
-export * from "./Board";
+export * from "./GroupBoard";
 export * from "./BoardLayout";

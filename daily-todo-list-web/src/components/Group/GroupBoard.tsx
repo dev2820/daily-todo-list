@@ -15,7 +15,7 @@ type GroupInput = {
   group: GroupHook<Todo>;
 };
 
-export const Board = ({
+export const GroupBoard = ({
   groups,
   onDragEnd,
 }: {
