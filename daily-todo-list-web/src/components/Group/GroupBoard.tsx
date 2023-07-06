@@ -8,15 +8,10 @@ import {
 import { PropsWithChildren } from "react";
 import { cva } from "class-variance-authority";
 import { type GroupHook } from "./group-hook";
-import { type Id, type Identifiable } from "@/components/types";
+import { useGroupBoard, type OnMove } from "./group-board-hook";
+import { type Identifiable } from "@/components/types";
 
 export type OnDragEnd = (result: DropResult) => void;
-export type OnMove = (result: {
-  fromGroupId: Id;
-  fromIndex: number;
-  toGroupId: Id;
-  toIndex: number;
-}) => void;
 
 export const GroupBoard = <T extends Identifiable>({
   groups,
@@ -25,21 +20,10 @@ export const GroupBoard = <T extends Identifiable>({
   groups: GroupHook<T>[];
   renderItem: (item: T) => JSX.Element;
 }) => {
-  const onMove: OnMove = ({ fromGroupId, fromIndex, toGroupId, toIndex }) => {
-    const fromGroup = groups.find((group) => group.id === fromGroupId);
-    const toGroup = groups.find((group) => group.id === toGroupId);
-
-    if (fromGroup === undefined || toGroup === undefined) return;
-
-    const targetItem = fromGroup.findByIndex(fromIndex);
-    if (!targetItem) return;
-
-    fromGroup.removeItem(fromIndex);
-    toGroup.insertItem(toIndex, targetItem);
-  };
+  const groupBoard = useGroupBoard(groups);
 
   return (
-    <GroupContext onMove={onMove}>
+    <GroupContext onMove={groupBoard.move}>
       <BoardLayout>
         {groups.map((group) => (
           <Group groupId={group.id} key={group.id} className={GroupStyle()}>
