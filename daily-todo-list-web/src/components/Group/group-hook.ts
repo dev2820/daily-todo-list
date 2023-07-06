@@ -2,7 +2,7 @@ import { useState } from "react";
 import { type Identifiable, type Id } from "@/components/types";
 
 export const useGroup = <T extends Identifiable>(
-  groupName: string,
+  name: string,
   initialItems: T[] = []
 ) => {
   const [items, setItems] = useState(initialItems);
@@ -24,7 +24,7 @@ export const useGroup = <T extends Identifiable>(
   };
   return {
     items,
-    groupName,
+    name,
     findByIndex,
     findById,
     removeItem,

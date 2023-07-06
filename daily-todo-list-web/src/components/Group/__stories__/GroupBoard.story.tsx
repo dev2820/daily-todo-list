@@ -39,11 +39,9 @@ const Example = () => {
     const sourceGroupName = source.droppableId;
     const destGroupName = destination.droppableId;
 
-    const sourceGroup = groups.find(
-      (group) => group.groupName === sourceGroupName
-    );
+    const sourceGroup = groups.find((group) => group.name === sourceGroupName);
     const destinationGroup = groups.find(
-      (group) => group.groupName === destGroupName
+      (group) => group.name === destGroupName
     );
 
     if (sourceGroup === undefined || destinationGroup === undefined) return;
