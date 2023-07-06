@@ -1,8 +1,8 @@
 import type { Meta } from "@storybook/react";
 import { type DropResult } from "react-beautiful-dnd";
 
-import { GroupBoard, Todo } from "..";
-import { useGroup } from "../group-hook";
+import { GroupBoard } from "..";
+import { useGroup, type Identifiable } from "../group-hook";
 import { uid } from "@/utils";
 
 const meta = {
@@ -12,20 +12,23 @@ const meta = {
 
 export default meta;
 
+type Item = Identifiable & {
+  content: string;
+};
 export const Default = {
   render: () => <Example></Example>,
 };
 
 const Example = () => {
-  const group1 = useGroup<Todo>("월", [
+  const group1 = useGroup<Item>("월", [
     { id: uid(), content: "A" },
     { id: uid(), content: "B" },
   ]);
-  const group2 = useGroup<Todo>("화", [
+  const group2 = useGroup<Item>("화", [
     { id: uid(), content: "C" },
     { id: uid(), content: "D" },
   ]);
-  const group3 = useGroup<Todo>("수", [
+  const group3 = useGroup<Item>("수", [
     { id: uid(), content: "E" },
     { id: uid(), content: "F" },
   ]);
@@ -52,7 +55,7 @@ const Example = () => {
     destinationGroup.insertItem(destination.index, targetItem);
   };
 
-  const renderItem = (item: Todo) => <div>{item.content}</div>;
+  const renderItem = (item: Item) => <div>{item.content}</div>;
 
   return (
     <GroupBoard

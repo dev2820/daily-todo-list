@@ -9,11 +9,6 @@ import { PropsWithChildren } from "react";
 import { cva } from "class-variance-authority";
 import { type Identifiable, type GroupHook } from "./group-hook";
 
-export type Todo = {
-  id: string;
-  content: string;
-};
-
 export const GroupBoard = <T extends Identifiable>({
   groups,
   onDragEnd,
