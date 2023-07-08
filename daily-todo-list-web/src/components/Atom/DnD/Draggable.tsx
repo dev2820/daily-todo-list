@@ -28,11 +28,11 @@ export const Draggable = ({
   );
 };
 
-const itemStyle = cva("", {
+const itemStyle = cva("rounded-md overflow-hidden", {
   variants: {
     isDraggingOver: {
-      true: "bg-red-400",
-      false: "bg-slate-600",
+      true: "bg-surface-light drop-shadow-lg",
+      false: "bg-surface",
     },
   },
 });

@@ -8,6 +8,7 @@ export default {
         surface: {
           DEFAULT: "#242424",
           light: "#363636",
+          dark: "#121212",
         },
         "on-surface": {
           DEFAULT: "#dddddd",

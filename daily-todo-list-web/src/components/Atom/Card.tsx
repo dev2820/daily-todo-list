@@ -7,4 +7,4 @@ export const Card = ({ ...props }: Props) => {
   return <div className={cardStyle()}>{props.children}</div>;
 };
 
-const cardStyle = cva("border p-2 rounded-md");
+const cardStyle = cva("p-2 rounded-md overflow-hidden");

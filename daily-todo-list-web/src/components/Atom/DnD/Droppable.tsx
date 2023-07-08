@@ -32,8 +32,8 @@ export const Droppable = ({
 const listStyle = cva("", {
   variants: {
     isDraggingOver: {
-      true: "bg-red-400",
-      false: "bg-slate-600",
+      true: "bg-surface-dark",
+      false: "bg-surface",
     },
   },
 });
