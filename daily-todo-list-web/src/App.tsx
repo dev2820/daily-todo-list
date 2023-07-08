@@ -32,13 +32,7 @@ function App() {
 
   const saveTodos = (service: DailyTodoService, dailyTodos: DailyTodoList) => {
     DAYS.forEach((key: Day) => {
-      if (key === DAY.MON) service.write(key, dailyTodos[DAY.MON].todos);
-      if (key === DAY.TUE) service.write(key, dailyTodos[DAY.TUE].todos);
-      if (key === DAY.WED) service.write(key, dailyTodos[DAY.WED].todos);
-      if (key === DAY.THR) service.write(key, dailyTodos[DAY.THR].todos);
-      if (key === DAY.FRI) service.write(key, dailyTodos[DAY.FRI].todos);
-      if (key === DAY.SAT) service.write(key, dailyTodos[DAY.SAT].todos);
-      if (key === DAY.SUN) service.write(key, dailyTodos[DAY.SUN].todos);
+      service.write(key, dailyTodos[key].todos);
     });
   };
 
