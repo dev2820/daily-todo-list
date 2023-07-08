@@ -23,17 +23,11 @@ export const useGroup = <T extends Identifiable>(
     ]);
   };
   const changeItem = (index: number, newItem: Partial<T>) => {
-    setItems((items: T[]) => {
-      return items.map((item, _index) => {
-        if (_index === index) {
-          return {
-            ...item,
-            ...newItem,
-          };
-        }
-        return item;
-      });
-    });
+    setItems((items: T[]) =>
+      items.map((item, _index) =>
+        _index === index ? { ...item, ...newItem } : item
+      )
+    );
   };
   const findIndex = (id: Id) => items.findIndex((item) => item.id === id);
   return {
