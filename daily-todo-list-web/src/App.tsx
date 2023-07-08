@@ -1,13 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, type MouseEvent } from "react";
 import { cva } from "class-variance-authority";
-import { useDailyTodoList, type DailyTodoList, Todo } from "@/hooks";
+import { useDailyTodoList, type DailyTodoList, type Todo } from "@/hooks";
 import { useDailyTodoService, type DailyTodoService } from "@/services";
 import { DAY, DAYS, type Day } from "@/constants";
 import { ONE_DAY_MS } from "@/utils";
 import {
-  type GroupHook,
   useGroup,
-  useGroupBoard,
   GroupContext,
   BoardLayout,
   Group,
@@ -15,7 +13,6 @@ import {
   NoteLayout,
   Button,
 } from "@/components";
-import { type Identifiable } from "@/components/types";
 
 function App() {
   const dailyTodoService = useDailyTodoService();
@@ -29,7 +26,6 @@ function App() {
     initialTodoMap[DAY.SAT],
     initialTodoMap[DAY.SUN],
   ]);
-  const TodoBoard = GroupBoard<Todo>;
 
   useEffect(() => {
     saveTodos(dailyTodoService, dailyTodoList);
@@ -62,33 +58,31 @@ function App() {
     <div className="h-full">
       <header className={headerStyle()}>Todo</header>
       <TodoBoard
-        groups={todoNotesGroup}
+        groups={dailyTodoList}
         ItemComponent={TodoComponent}
       ></TodoBoard>
     </div>
   );
 }
 
-const GroupBoard = <T extends Identifiable>({
+const TodoBoard = ({
   groups,
   ItemComponent,
 }: {
-  groups: GroupHook<T>[];
-  ItemComponent: React.ComponentType<{ item: T }>;
+  groups: DailyTodoList;
+  ItemComponent: React.ComponentType<{ item: Todo }>;
 }) => {
-  const groupBoard = useGroupBoard(groups);
-
   const calcDayOfWeek = (day: number) =>
     new Date(Date.now() + ONE_DAY_MS * (day - new Date().getDay()));
 
   return (
-    <GroupContext onMove={groupBoard.move}>
+    <GroupContext onMove={groups.move}>
       <BoardLayout>
-        {groups.map((group, index) => (
-          <div>
+        {groups.all.map((group, index) => (
+          <div key={index}>
             <NoteLayout
               title={Title({ title: group.id, date: calcDayOfWeek(index) })}
-              trailing={AddTodoButton()}
+              trailing={AddTodoButton({ onClick: group.addTodo })}
             >
               <Group groupId={group.id} key={group.id} className={GroupStyle()}>
                 {group.items.map((item, index) => (
@@ -128,9 +122,13 @@ const Title = ({ title, date }: { title: string; date: Date }) => {
   );
 };
 
-const AddTodoButton = () => {
+const AddTodoButton = ({
+  onClick,
+}: {
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+}) => {
   return (
-    <Button className={addTodoStyle()}>
+    <Button className={addTodoStyle()} onClick={onClick}>
       <i className="pi pi-plus"></i>
     </Button>
   );
