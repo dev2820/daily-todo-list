@@ -1,4 +1,5 @@
 export * from "./GroupContext";
 export * from "./GroupItem";
 export * from "./Group";
-export * from "./GroupBoard";
+export * from "./group-hook";
+export * from "./group-board-hook";

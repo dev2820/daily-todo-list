@@ -1,10 +1,19 @@
 import { useEffect } from "react";
 import { cva } from "class-variance-authority";
-import { TodoNote } from "@/components";
-import { useDailyTodoList, type DailyTodoList } from "@/hooks";
+import { useDailyTodoList, type DailyTodoList, Todo } from "@/hooks";
 import { useDailyTodoService, type DailyTodoService } from "@/services";
 import { DAY, DAYS, type Day } from "@/constants";
 import { ONE_DAY_MS } from "@/utils";
+import {
+  type GroupHook,
+  useGroup,
+  useGroupBoard,
+  GroupContext,
+  BoardLayout,
+  Group,
+  GroupItem,
+} from "@/components";
+import { type Identifiable } from "@/components/types";
 
 function App() {
   const dailyTodoService = useDailyTodoService();
@@ -18,6 +27,7 @@ function App() {
     initialTodoMap[DAY.SAT],
     initialTodoMap[DAY.SUN],
   ]);
+  const TodoBoard = GroupBoard<Todo>;
 
   useEffect(() => {
     saveTodos(dailyTodoService, dailyTodoList);
@@ -34,36 +44,63 @@ function App() {
       if (key === DAY.SUN) service.write(key, dailyTodos[DAY.SUN].todos);
     });
   };
-  const todoNotes = [
-    { title: "일요일", todoList: dailyTodoList[DAY.SUN] },
-    { title: "월요일", todoList: dailyTodoList[DAY.MON] },
-    { title: "화요일", todoList: dailyTodoList[DAY.TUE] },
-    { title: "수요일", todoList: dailyTodoList[DAY.WED] },
-    { title: "목요일", todoList: dailyTodoList[DAY.THR] },
-    { title: "금요일", todoList: dailyTodoList[DAY.FRI] },
-    { title: "토요일", todoList: dailyTodoList[DAY.SAT] },
+
+  const todoNotesGroup = [
+    useGroup<Todo>("월요일", initialTodoMap[DAY.MON]),
+    useGroup<Todo>("화요일", initialTodoMap[DAY.TUE]),
+    useGroup<Todo>("수요일", initialTodoMap[DAY.WED]),
+    useGroup<Todo>("목요일", initialTodoMap[DAY.THR]),
+    useGroup<Todo>("금요일", initialTodoMap[DAY.FRI]),
+    useGroup<Todo>("토요일", initialTodoMap[DAY.SAT]),
+    useGroup<Todo>("일요일", initialTodoMap[DAY.SUN]),
   ];
+  console.log(initialTodoMap[DAY.MON], todoNotesGroup);
 
   return (
     <div className="h-full">
       <header className={headerStyle()}>Todo</header>
-      <div className={todoNoteListStyle()}>
-        {todoNotes.map((todoNote, day) => (
-          <TodoNote
-            className={todoNoteStyle()}
-            title={Title({
-              title: todoNote.title,
-              date: new Date(
-                Date.now() + ONE_DAY_MS * (day - new Date().getDay())
-              ),
-            })}
-            {...todoNote.todoList}
-          ></TodoNote>
-        ))}
-      </div>
+      <TodoBoard
+        groups={todoNotesGroup}
+        ItemComponent={TodoComponent}
+      ></TodoBoard>
     </div>
   );
 }
+
+const GroupBoard = <T extends Identifiable>({
+  groups,
+  ItemComponent,
+}: {
+  groups: GroupHook<T>[];
+  ItemComponent: React.ComponentType<{ item: T }>;
+}) => {
+  const groupBoard = useGroupBoard(groups);
+
+  const calcDayOfWeek = (day: number) =>
+    new Date(Date.now() + ONE_DAY_MS * (day - new Date().getDay()));
+
+  return (
+    <GroupContext onMove={groupBoard.move}>
+      <BoardLayout>
+        {groups.map((group, index) => (
+          <div>
+            <Title title={group.id} date={calcDayOfWeek(index)}></Title>
+            <Group groupId={group.id} key={group.id} className={GroupStyle()}>
+              {group.items.map((item, index) => (
+                <GroupItem itemId={item.id} index={index} key={item.id}>
+                  <ItemComponent item={item}></ItemComponent>
+                </GroupItem>
+              ))}
+            </Group>
+          </div>
+        ))}
+      </BoardLayout>
+    </GroupContext>
+  );
+};
+const TodoComponent = ({ item }: { item: Todo }) => {
+  return <div>{item.content}</div>;
+};
 
 const Title = ({ title, date }: { title: string; date: Date }) => {
   const leadingStyle = cva("text-lg");
@@ -85,10 +122,7 @@ const Title = ({ title, date }: { title: string; date: Date }) => {
   );
 };
 
-const todoNoteStyle = cva("grow");
-const todoNoteListStyle = cva(
-  "h-[calc(100%-2rem)] grid grid-cols-4 grid-rows-2 w-full gap-x-2 gap-y-2"
-);
+const GroupStyle = cva("h-40");
 const headerStyle = cva("h-[2rem] text-gray-800");
 
 export default App;
