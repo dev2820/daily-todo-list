@@ -1,4 +1,4 @@
-import { useGroup } from "@/components";
+import { type GroupHook, useGroup } from "@/components";
 import { uid } from "@/utils";
 
 export type Todo = {
@@ -7,12 +7,12 @@ export type Todo = {
   done: boolean;
 };
 
-export interface TodoListHook {
+export interface TodoListHook extends GroupHook<Todo> {
   todos: Todo[];
   doit: (id: string) => void;
   undo: (id: string) => void;
   removeTodo: (id: string) => void;
-  addTodo: (option?: { nextTo: string }) => void;
+  addTodo: () => void;
   changeContent: (id: string, content: string) => void;
 }
 
@@ -53,7 +53,7 @@ export const useTodoList = (
   };
 
   const addTodo = () => {
-    const newTodo = { id: uid(), content: "", done: false };
+    const newTodo = { id: uid(), content: "Test Code", done: false };
     todoGroup.insertItem(0, newTodo);
   };
 
@@ -64,6 +64,7 @@ export const useTodoList = (
 
   return {
     todos: todoGroup.items,
+    ...todoGroup,
     doit,
     undo,
     changeContent,

@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { type OnMove } from "./group-board-hook";
+import { type OnMove } from "@/hooks";
 import { DropResult } from "react-beautiful-dnd";
 import { DragDropContext } from "@/components";
 
