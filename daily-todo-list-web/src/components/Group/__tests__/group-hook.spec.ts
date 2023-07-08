@@ -50,6 +50,16 @@ describe("useGroup", () => {
     expect(result.current.items).toStrictEqual([item1, newItem, item2, item3]);
   });
 
+  it("should be able to push item", () => {
+    const { result } = renderHook(() =>
+      useGroup("group1", [item1, item2, item3])
+    );
+    const newItem = { id: "4", content: "A" };
+    act(() => result.current.pushItem(newItem));
+
+    expect(result.current.items).toStrictEqual([item1, item2, item3, newItem]);
+  });
+
   it("should be able to remove item", () => {
     const { result } = renderHook(() =>
       useGroup("group1", [item1, item2, item3])

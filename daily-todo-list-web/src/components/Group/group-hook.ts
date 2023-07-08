@@ -22,6 +22,11 @@ export const useGroup = <T extends Identifiable>(
       ...items.slice(index),
     ]);
   };
+
+  const pushItem = (newItem: T) => {
+    setItems((items: T[]) => [...items, newItem]);
+  };
+
   const changeItem = (index: number, newItem: Partial<T>) => {
     setItems((items: T[]) =>
       items.map((item, _index) =>
@@ -39,6 +44,7 @@ export const useGroup = <T extends Identifiable>(
     findById,
     removeItem,
     insertItem,
+    pushItem,
   };
 };
 
