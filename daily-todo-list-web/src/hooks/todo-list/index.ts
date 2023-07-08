@@ -1,4 +1,4 @@
-import { useSortableList, type SortableListHook } from "@/hooks/sortable-list";
+import { useGroup } from "@/components";
 import { uid } from "@/utils";
 
 export type Todo = {
@@ -7,7 +7,7 @@ export type Todo = {
   done: boolean;
 };
 
-export interface TodoListHook extends Pick<SortableListHook, "sort"> {
+export interface TodoListHook {
   todos: Todo[];
   doit: (id: string) => void;
   undo: (id: string) => void;
@@ -31,66 +31,39 @@ export const isTodoList = (maybeTodoList: unknown): maybeTodoList is Todo[] => {
   return maybeTodoList.every((todo) => isTodo(todo));
 };
 
-export const useTodoList = (initialTodos: Todo[]): TodoListHook => {
-  const {
-    list: todos,
-    sort,
-    setList: setTodos,
-  } = useSortableList<Todo>(initialTodos);
+export const useTodoList = (
+  listName: string,
+  initialTodos: Todo[]
+): TodoListHook => {
+  const todoGroup = useGroup<Todo>(listName, initialTodos);
 
   const doit = (id: string) => {
-    setTodos((todos: Todo[]) => {
-      const newTodos = [...todos];
-      const targetIndex = newTodos.findIndex((todo) => todo.id === id);
-      if (targetIndex < 0) return newTodos;
-      newTodos[targetIndex] = { ...newTodos[targetIndex], done: true };
-
-      return newTodos;
-    });
+    const index = todoGroup.findIndex(id);
+    todoGroup.changeItem(index, { done: true });
   };
-  const undo = (id: string) => {
-    setTodos((todos: Todo[]) => {
-      const newTodos = [...todos];
-      const targetIndex = newTodos.findIndex((todo) => todo.id === id);
-      if (targetIndex < 0) return newTodos;
-      newTodos[targetIndex] = { ...newTodos[targetIndex], done: false };
 
-      return newTodos;
-    });
+  const undo = (id: string) => {
+    const index = todoGroup.findIndex(id);
+    todoGroup.changeItem(index, { done: false });
   };
 
   const changeContent = (id: string, content: string) => {
-    setTodos((todos: Todo[]) => {
-      const newTodos = [...todos];
-      const targetIndex = newTodos.findIndex((todo) => todo.id === id);
-      if (targetIndex < 0) return newTodos;
-      newTodos[targetIndex] = { ...newTodos[targetIndex], content };
-
-      return newTodos;
-    });
+    const index = todoGroup.findIndex(id);
+    todoGroup.changeItem(index, { content });
   };
 
-  const addTodo = (option?: { nextTo?: string }) => {
-    setTodos((todos: Todo[]) => {
-      const newTodo = { id: uid(), content: "", done: false };
-
-      if (!option || !option.nextTo) return [...todos, newTodo];
-      const index = todos.findIndex((todo) => todo.id === option.nextTo);
-
-      if (index < 0) return [...todos, newTodo];
-      return [...todos.slice(0, index + 1), newTodo, ...todos.slice(index + 1)];
-    });
+  const addTodo = () => {
+    const newTodo = { id: uid(), content: "", done: false };
+    todoGroup.insertItem(0, newTodo);
   };
 
   const removeTodo = (id: string) => {
-    setTodos((todos: Todo[]) => {
-      return todos.filter((todo) => todo.id !== id);
-    });
+    const index = todoGroup.findIndex(id);
+    todoGroup.removeItem(index);
   };
 
   return {
-    todos,
-    sort,
+    todos: todoGroup.items,
     doit,
     undo,
     changeContent,
