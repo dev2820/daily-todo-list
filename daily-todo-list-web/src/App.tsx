@@ -48,7 +48,7 @@ function App() {
 
 const TodoBoard = ({ groups }: { groups: DailyTodoList }) => {
   const calcDayOfWeek = (day: number) =>
-    new Date(Date.now() + ONE_DAY_MS * (day - new Date().getDay()));
+    new Date(Date.now() + ONE_DAY_MS * (day - new Date().getDay() + 1));
 
   return (
     <GroupContext onMove={groups.move}>
@@ -93,7 +93,7 @@ const Title = ({ title, date }: { title: string; date: Date }) => {
       },
     },
   });
-
+  console.log(date.getDay(), new Date().getDay());
   return (
     <div
       className={titleStyle({ today: date.getDay() === new Date().getDay() })}
