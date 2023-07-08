@@ -5,3 +5,4 @@ export * from "./DoneButton";
 export * from "./Button";
 export * from "./Board";
 export * from "./DnD";
+export * from "./Card";
