@@ -12,6 +12,8 @@ import {
   NoteLayout,
   Button,
   TodoItem,
+  Card,
+  DragHandle,
 } from "@/components";
 
 function App() {
@@ -61,13 +63,18 @@ const TodoBoard = ({ groups }: { groups: DailyTodoList }) => {
             <Group groupId={group.id} key={group.id} className={GroupStyle()}>
               {group.items.map((item, index) => (
                 <GroupItem itemId={item.id} index={index} key={item.id}>
-                  <TodoItem
-                    todo={item}
-                    onRemove={() => group.removeTodo(item.id)}
-                    onChangeContent={(newContent: string) =>
-                      group.changeContent(item.id, newContent)
-                    }
-                  ></TodoItem>
+                  <Card>
+                    <div className="flex flex-row">
+                      <DragHandle></DragHandle>
+                      <TodoItem
+                        todo={item}
+                        onRemove={() => group.removeTodo(item.id)}
+                        onChangeContent={(newContent: string) =>
+                          group.changeContent(item.id, newContent)
+                        }
+                      ></TodoItem>
+                    </div>
+                  </Card>
                 </GroupItem>
               ))}
             </Group>
