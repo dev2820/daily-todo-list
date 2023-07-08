@@ -53,12 +53,13 @@ const TodoBoard = ({ groups }: { groups: DailyTodoList }) => {
 
   return (
     <GroupContext onMove={groups.move}>
-      <BoardLayout>
+      <BoardLayout className={"h-[calc(100%-2rem)]"}>
         {groups.all.map((group, index) => (
           <NoteLayout
             key={index}
             title={Title({ title: group.id, date: calcDayOfWeek(index) })}
             trailing={AddTodoButton({ onClick: group.addTodo })}
+            className={"h-full"}
           >
             <Group groupId={group.id} key={group.id} className={GroupStyle()}>
               {group.items.map((item, index) => (
@@ -122,7 +123,7 @@ const addTodoStyle = cva([
   "hover:text-on-surface",
 ]);
 
-const GroupStyle = cva("h-40 overflow-y-scroll");
+const GroupStyle = cva("h-full overflow-y-scroll");
 const headerStyle = cva("h-[2rem] text-gray-800");
 
 export default App;
