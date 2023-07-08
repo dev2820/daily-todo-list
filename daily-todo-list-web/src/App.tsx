@@ -11,6 +11,7 @@ import {
   GroupItem,
   NoteLayout,
   Button,
+  TodoItem,
 } from "@/components";
 
 function App() {
@@ -39,21 +40,12 @@ function App() {
   return (
     <div className="h-full">
       <header className={headerStyle()}>Todo</header>
-      <TodoBoard
-        groups={dailyTodoList}
-        ItemComponent={TodoComponent}
-      ></TodoBoard>
+      <TodoBoard groups={dailyTodoList}></TodoBoard>
     </div>
   );
 }
 
-const TodoBoard = ({
-  groups,
-  ItemComponent,
-}: {
-  groups: DailyTodoList;
-  ItemComponent: React.ComponentType<{ item: Todo }>;
-}) => {
+const TodoBoard = ({ groups }: { groups: DailyTodoList }) => {
   const calcDayOfWeek = (day: number) =>
     new Date(Date.now() + ONE_DAY_MS * (day - new Date().getDay()));
 
@@ -69,7 +61,13 @@ const TodoBoard = ({
             <Group groupId={group.id} key={group.id} className={GroupStyle()}>
               {group.items.map((item, index) => (
                 <GroupItem itemId={item.id} index={index} key={item.id}>
-                  <ItemComponent item={item}></ItemComponent>
+                  <TodoItem
+                    todo={item}
+                    onRemove={() => group.removeTodo(item.id)}
+                    onChangeContent={(newContent: string) =>
+                      group.changeContent(item.id, newContent)
+                    }
+                  ></TodoItem>
                 </GroupItem>
               ))}
             </Group>
@@ -78,9 +76,6 @@ const TodoBoard = ({
       </BoardLayout>
     </GroupContext>
   );
-};
-const TodoComponent = ({ item }: { item: Todo }) => {
-  return <div>{item.content}</div>;
 };
 
 const Title = ({ title, date }: { title: string; date: Date }) => {

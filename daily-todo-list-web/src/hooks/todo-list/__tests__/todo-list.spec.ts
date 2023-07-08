@@ -11,6 +11,7 @@ describe("useTodoList", () => {
 
   it("should return todo list", () => {
     const { result: todoList } = renderHook(() => useTodoList("mustdo", items));
+
     expect(todoList.current.todos).toEqual([
       { id: "0", content: "A", done: false },
       { id: "1", content: "B", done: false },

@@ -53,7 +53,7 @@ export const useTodoList = (
   };
 
   const addTodo = () => {
-    const newTodo = { id: uid(), content: "Test Code", done: false };
+    const newTodo = { id: uid(), content: "", done: false };
     todoGroup.insertItem(0, newTodo);
   };
 
