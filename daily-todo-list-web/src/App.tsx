@@ -5,7 +5,6 @@ import { useDailyTodoService, type DailyTodoService } from "@/services";
 import { DAY, DAYS, type Day } from "@/constants";
 import { ONE_DAY_MS } from "@/utils";
 import {
-  useGroup,
   GroupContext,
   BoardLayout,
   Group,
@@ -42,17 +41,6 @@ function App() {
       if (key === DAY.SUN) service.write(key, dailyTodos[DAY.SUN].todos);
     });
   };
-
-  const todoNotesGroup = [
-    useGroup<Todo>("월요일", initialTodoMap[DAY.MON]),
-    useGroup<Todo>("화요일", initialTodoMap[DAY.TUE]),
-    useGroup<Todo>("수요일", initialTodoMap[DAY.WED]),
-    useGroup<Todo>("목요일", initialTodoMap[DAY.THR]),
-    useGroup<Todo>("금요일", initialTodoMap[DAY.FRI]),
-    useGroup<Todo>("토요일", initialTodoMap[DAY.SAT]),
-    useGroup<Todo>("일요일", initialTodoMap[DAY.SUN]),
-  ];
-  console.log(initialTodoMap[DAY.MON], todoNotesGroup);
 
   return (
     <div className="h-full">
