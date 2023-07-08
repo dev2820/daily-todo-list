@@ -1,17 +1,15 @@
-import { DropResult } from "react-beautiful-dnd";
 import {
   Draggable,
   Droppable,
   DragDropContext,
   BoardLayout,
 } from "@/components";
+import { GroupContext } from "./index";
 import { PropsWithChildren } from "react";
 import { cva } from "class-variance-authority";
 import { type GroupHook } from "./group-hook";
-import { useGroupBoard, type OnMove } from "./group-board-hook";
+import { useGroupBoard } from "./group-board-hook";
 import { type Identifiable } from "@/components/types";
-
-export type OnDragEnd = (result: DropResult) => void;
 
 export const GroupBoard = <T extends Identifiable>({
   groups,
@@ -40,26 +38,6 @@ export const GroupBoard = <T extends Identifiable>({
       </BoardLayout>
     </GroupContext>
   );
-};
-
-const GroupContext = ({
-  children,
-  onMove,
-}: PropsWithChildren<{ onMove: OnMove }>) => {
-  const onDragEnd: OnDragEnd = (result) => {
-    const { destination, source } = result;
-    if (!destination || !source) return;
-    const fromGroupId = source.droppableId;
-    const toGroupId = destination.droppableId;
-    const fromIndex = source.index;
-    const toIndex = destination.index;
-
-    if (!fromGroupId || !toGroupId) return;
-
-    onMove({ fromGroupId, fromIndex, toGroupId, toIndex });
-  };
-
-  return <DragDropContext onDragEnd={onDragEnd}>{children}</DragDropContext>;
 };
 
 const Group = ({
