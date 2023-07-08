@@ -1,12 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { renderHook, act } from "@testing-library/react-hooks";
-import { type Identifiable } from "@/components/types";
 import { useGroup } from "../group-hook";
 
 describe("useGroup", () => {
-  const item1: Identifiable = { id: "1" };
-  const item2: Identifiable = { id: "2" };
-  const item3: Identifiable = { id: "3" };
+  const item1 = { id: "1", content: "A" };
+  const item2 = { id: "2", content: "A" };
+  const item3 = { id: "3", content: "A" };
 
   it("should find index by id", () => {
     const { result } = renderHook(() =>
@@ -45,7 +44,7 @@ describe("useGroup", () => {
     const { result } = renderHook(() =>
       useGroup("group1", [item1, item2, item3])
     );
-    const newItem = { id: "4" };
+    const newItem = { id: "4", content: "A" };
     act(() => result.current.insertItem(1, newItem));
 
     expect(result.current.items).toStrictEqual([item1, newItem, item2, item3]);
@@ -59,5 +58,18 @@ describe("useGroup", () => {
     result.current.removeItem(1);
 
     expect(result.current.items).toStrictEqual([item1, item3]);
+  });
+
+  it("should be able to change item", () => {
+    const { result } = renderHook(() =>
+      useGroup("group1", [item1, item2, item3])
+    );
+
+    result.current.changeItem(1, { content: "B" });
+
+    expect(result.current.findByIndex(1)).toStrictEqual({
+      id: "2",
+      content: "B",
+    });
   });
 });
