@@ -61,20 +61,19 @@ const TodoBoard = ({
     <GroupContext onMove={groups.move}>
       <BoardLayout>
         {groups.all.map((group, index) => (
-          <div key={index}>
-            <NoteLayout
-              title={Title({ title: group.id, date: calcDayOfWeek(index) })}
-              trailing={AddTodoButton({ onClick: group.addTodo })}
-            >
-              <Group groupId={group.id} key={group.id} className={GroupStyle()}>
-                {group.items.map((item, index) => (
-                  <GroupItem itemId={item.id} index={index} key={item.id}>
-                    <ItemComponent item={item}></ItemComponent>
-                  </GroupItem>
-                ))}
-              </Group>
-            </NoteLayout>
-          </div>
+          <NoteLayout
+            key={index}
+            title={Title({ title: group.id, date: calcDayOfWeek(index) })}
+            trailing={AddTodoButton({ onClick: group.addTodo })}
+          >
+            <Group groupId={group.id} key={group.id} className={GroupStyle()}>
+              {group.items.map((item, index) => (
+                <GroupItem itemId={item.id} index={index} key={item.id}>
+                  <ItemComponent item={item}></ItemComponent>
+                </GroupItem>
+              ))}
+            </Group>
+          </NoteLayout>
         ))}
       </BoardLayout>
     </GroupContext>
