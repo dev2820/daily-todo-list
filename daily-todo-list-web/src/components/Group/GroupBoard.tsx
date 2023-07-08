@@ -1,10 +1,5 @@
-import {
-  Draggable,
-  Droppable,
-  DragDropContext,
-  BoardLayout,
-} from "@/components";
-import { GroupContext } from "./index";
+import { Droppable, BoardLayout } from "@/components";
+import { GroupContext, GroupItem } from "./index";
 import { PropsWithChildren } from "react";
 import { cva } from "class-variance-authority";
 import { type GroupHook } from "./group-hook";
@@ -49,21 +44,6 @@ const Group = ({
     <Droppable droppableId={groupId} key={groupId} className={className}>
       {children}
     </Droppable>
-  );
-};
-
-const GroupItem = ({
-  itemId,
-  children,
-  index,
-}: PropsWithChildren<{
-  itemId: string;
-  index: number;
-}>) => {
-  return (
-    <Draggable draggableId={itemId} index={index} key={itemId}>
-      {children}
-    </Draggable>
   );
 };
 
