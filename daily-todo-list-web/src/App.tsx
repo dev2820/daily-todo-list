@@ -122,7 +122,7 @@ const addTodoStyle = cva([
   "hover:text-on-surface",
 ]);
 
-const GroupStyle = cva("h-full overflow-y-scroll");
+const GroupStyle = cva("h-full overflow-y-auto");
 const headerStyle = cva("h-[2rem] text-gray-800");
 
 export default App;
