@@ -63,18 +63,16 @@ const TodoBoard = ({ groups }: { groups: DailyTodoList }) => {
             <Group groupId={group.id} key={group.id} className={GroupStyle()}>
               {group.items.map((item, index) => (
                 <GroupItem itemId={item.id} index={index} key={item.id}>
-                  <Card>
-                    <div className="flex flex-row">
-                      <DragHandle></DragHandle>
-                      <TodoItem
-                        todo={item}
-                        onRemove={() => group.removeTodo(item.id)}
-                        onChangeContent={(newContent: string) =>
-                          group.changeContent(item.id, newContent)
-                        }
-                      ></TodoItem>
-                    </div>
-                  </Card>
+                  <div className="flex flex-row p-2">
+                    <DragHandle></DragHandle>
+                    <TodoItem
+                      todo={item}
+                      onRemove={() => group.removeTodo(item.id)}
+                      onChangeContent={(newContent: string) =>
+                        group.changeContent(item.id, newContent)
+                      }
+                    ></TodoItem>
+                  </div>
                 </GroupItem>
               ))}
             </Group>
@@ -124,7 +122,7 @@ const addTodoStyle = cva([
   "hover:text-on-surface",
 ]);
 
-const GroupStyle = cva("h-40");
+const GroupStyle = cva("h-40 overflow-y-scroll");
 const headerStyle = cva("h-[2rem] text-gray-800");
 
 export default App;

@@ -28,7 +28,7 @@ export const Draggable = ({
   );
 };
 
-const itemStyle = cva("rounded-md overflow-hidden", {
+const itemStyle = cva("", {
   variants: {
     isDraggingOver: {
       true: "bg-surface-light drop-shadow-lg",
