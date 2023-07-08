@@ -1,6 +1,6 @@
 import { useEffect, type MouseEvent } from "react";
 import { cva } from "class-variance-authority";
-import { useDailyTodoList, type DailyTodoList, type Todo } from "@/hooks";
+import { useDailyTodoList, type DailyTodoList } from "@/hooks";
 import { useDailyTodoService, type DailyTodoService } from "@/services";
 import { DAY, DAYS, type Day } from "@/constants";
 import { ONE_DAY_MS } from "@/utils";
@@ -12,7 +12,6 @@ import {
   NoteLayout,
   Button,
   TodoItem,
-  Card,
   DragHandle,
 } from "@/components";
 
