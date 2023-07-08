@@ -15,10 +15,10 @@ export type OnDragEnd = (result: DropResult) => void;
 
 export const GroupBoard = <T extends Identifiable>({
   groups,
-  renderItem,
+  ItemComponent,
 }: {
   groups: GroupHook<T>[];
-  renderItem: (item: T) => JSX.Element;
+  ItemComponent: React.ComponentType<{ item: T }>;
 }) => {
   const groupBoard = useGroupBoard(groups);
 
@@ -26,13 +26,16 @@ export const GroupBoard = <T extends Identifiable>({
     <GroupContext onMove={groupBoard.move}>
       <BoardLayout>
         {groups.map((group) => (
-          <Group groupId={group.id} key={group.id} className={GroupStyle()}>
-            {group.items.map((item, index) => (
-              <GroupItem itemId={item.id} index={index} key={item.id}>
-                {renderItem(item)}
-              </GroupItem>
-            ))}
-          </Group>
+          <div>
+            <h3>{group.id}</h3>
+            <Group groupId={group.id} key={group.id} className={GroupStyle()}>
+              {group.items.map((item, index) => (
+                <GroupItem itemId={item.id} index={index} key={item.id}>
+                  <ItemComponent item={item}></ItemComponent>
+                </GroupItem>
+              ))}
+            </Group>
+          </div>
         ))}
       </BoardLayout>
     </GroupContext>

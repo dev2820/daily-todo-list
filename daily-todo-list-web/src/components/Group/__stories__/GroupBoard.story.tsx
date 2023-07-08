@@ -33,7 +33,7 @@ const Example = () => {
   ]);
   const groups = [group1, group2, group3];
 
-  const renderItem = (item: Item) => <div>{item.content}</div>;
+  const Component = ({ item }: { item: Item }) => <div>{item.content}</div>;
 
-  return <GroupBoard groups={groups} renderItem={renderItem}></GroupBoard>;
+  return <GroupBoard groups={groups} ItemComponent={Component}></GroupBoard>;
 };
