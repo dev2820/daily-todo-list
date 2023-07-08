@@ -12,6 +12,8 @@ import {
   BoardLayout,
   Group,
   GroupItem,
+  NoteLayout,
+  Button,
 } from "@/components";
 import { type Identifiable } from "@/components/types";
 
@@ -84,14 +86,18 @@ const GroupBoard = <T extends Identifiable>({
       <BoardLayout>
         {groups.map((group, index) => (
           <div>
-            <Title title={group.id} date={calcDayOfWeek(index)}></Title>
-            <Group groupId={group.id} key={group.id} className={GroupStyle()}>
-              {group.items.map((item, index) => (
-                <GroupItem itemId={item.id} index={index} key={item.id}>
-                  <ItemComponent item={item}></ItemComponent>
-                </GroupItem>
-              ))}
-            </Group>
+            <NoteLayout
+              title={Title({ title: group.id, date: calcDayOfWeek(index) })}
+              trailing={AddTodoButton()}
+            >
+              <Group groupId={group.id} key={group.id} className={GroupStyle()}>
+                {group.items.map((item, index) => (
+                  <GroupItem itemId={item.id} index={index} key={item.id}>
+                    <ItemComponent item={item}></ItemComponent>
+                  </GroupItem>
+                ))}
+              </Group>
+            </NoteLayout>
           </div>
         ))}
       </BoardLayout>
@@ -121,6 +127,21 @@ const Title = ({ title, date }: { title: string; date: Date }) => {
     </div>
   );
 };
+
+const AddTodoButton = () => {
+  return (
+    <Button className={addTodoStyle()}>
+      <i className="pi pi-plus"></i>
+    </Button>
+  );
+};
+
+const addTodoStyle = cva([
+  "py-1 px-2",
+  "duration-200",
+  "text-on-surface-dark",
+  "hover:text-on-surface",
+]);
 
 const GroupStyle = cva("h-40");
 const headerStyle = cva("h-[2rem] text-gray-800");
