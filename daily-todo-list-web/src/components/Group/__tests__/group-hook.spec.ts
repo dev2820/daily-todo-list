@@ -8,6 +8,15 @@ describe("useGroup", () => {
   const item2: Identifiable = { id: "2" };
   const item3: Identifiable = { id: "3" };
 
+  it("should find index by id", () => {
+    const { result } = renderHook(() =>
+      useGroup("group1", [item1, item2, item3])
+    );
+
+    const index = result.current.findIndex("3");
+    expect(index).toBe(2);
+  });
+
   it("should init from list", () => {
     const { result } = renderHook(() =>
       useGroup("group1", [item1, item2, item3])

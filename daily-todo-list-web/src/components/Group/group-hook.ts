@@ -22,9 +22,11 @@ export const useGroup = <T extends Identifiable>(
       ...items.slice(index),
     ]);
   };
+  const findIndex = (id: Id) => items.findIndex((item) => item.id === id);
   return {
     items,
     id,
+    findIndex,
     findByIndex,
     findById,
     removeItem,
